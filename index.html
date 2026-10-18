@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Império Barber Shop - Links Oficiais</title>
-    <!-- Font Awesome Icons -->
+    <title>Império Barber Shop - Cartão Digital</title>
+    <!-- Fontes e Ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -35,8 +34,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 24px 16px;
+            padding: 20px 14px;
             position: relative;
+            overflow-x: hidden;
         }
 
         body::before {
@@ -46,9 +46,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(180deg, rgba(10, 10, 10, 0.8) 0%, rgba(10, 10, 10, 0.96) 100%), 
+            background: linear-gradient(180deg, rgba(10, 10, 10, 0.75) 0%, rgba(10, 10, 10, 0.95) 100%), 
                         url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80') center/cover no-repeat;
             z-index: -1;
+            filter: blur(2px);
+            transform: scale(1.05);
         }
 
         .container {
@@ -60,9 +62,9 @@
             text-align: center;
         }
 
-        /* Topo e Logo */
+        /* Topo e Logo PNG Oficial */
         .header {
-            margin-bottom: 24px;
+            margin-bottom: 22px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -70,51 +72,37 @@
         }
 
         .logo-box {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #fceca4, #d4af37, #aa8c2c);
+            width: 180px;
+            height: auto;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
-            margin-bottom: 12px;
-            border: 2px solid #fff;
+            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.45));
         }
 
-        .logo-box i {
-            font-size: 45px;
-            color: #000;
-        }
-
-        .brand-title {
-            font-family: 'Cinzel', serif;
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #fff;
-            letter-spacing: 2px;
-            margin-bottom: 4px;
-        }
-
-        .brand-title span {
-            color: var(--gold-main);
+        .logo-box img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            display: block;
         }
 
         .slogan {
             font-size: 0.72rem;
             letter-spacing: 2.5px;
             color: var(--gold-light);
-            font-weight: 600;
+            font-weight: 500;
             text-transform: uppercase;
             opacity: 0.9;
         }
 
-        /* Botões de Ação */
+        /* Botões Glassmorphic */
         .links-container {
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 13px;
             margin-bottom: 22px;
         }
 
@@ -123,18 +111,20 @@
             align-items: center;
             justify-content: space-between;
             background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border);
-            border-radius: 18px;
+            border-radius: 20px;
             padding: 14px 20px;
             text-decoration: none;
             color: var(--text-main);
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             cursor: pointer;
         }
 
-        .link-card:hover {
-            background: rgba(35, 33, 25, 0.95);
+        .link-card:hover, .link-card:active {
+            background: rgba(212, 175, 55, 0.15);
             border-color: var(--gold-main);
             transform: translateY(-2px);
         }
@@ -142,7 +132,7 @@
         .link-left {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 15px;
             text-align: left;
         }
 
@@ -155,14 +145,14 @@
             align-items: center;
             font-size: 1.2rem;
             flex-shrink: 0;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
 
-        .whatsapp-bg { background: #25D366; color: white; }
-        .instagram-bg { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: white; }
+        .whatsapp-bg { background: linear-gradient(135deg, #25D366, #1ebe5d); color: white; }
+        .instagram-bg { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; }
         .google-bg { background: #ffffff; color: #4285F4; }
-        .pix-bg { background: #32BCAD; color: white; }
-        .wifi-bg { background: #d4af37; color: black; }
+        .pix-bg { background: linear-gradient(135deg, #32BCAD, #1d887c); color: white; }
+        .wifi-bg { background: linear-gradient(135deg, #d4af37, #aa8c2c); color: #000; }
 
         .link-info {
             display: flex;
@@ -190,14 +180,16 @@
         .wifi-card {
             width: 100%;
             background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border);
-            border-radius: 18px;
+            border-radius: 20px;
             padding: 18px 20px;
             display: flex;
             flex-direction: column;
             gap: 14px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-            margin-bottom: 22px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            margin-bottom: 25px;
         }
 
         .wifi-row {
@@ -237,7 +229,7 @@
         }
 
         .wifi-value-input {
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(212, 175, 55, 0.2);
             border-radius: 8px;
             color: var(--text-main);
@@ -269,10 +261,10 @@
             color: #000;
         }
 
-        /* Galeria de Cortes */
+        /* Galeria */
         .gallery-section {
             width: 100%;
-            margin-bottom: 22px;
+            margin-bottom: 25px;
             text-align: left;
         }
 
@@ -292,7 +284,7 @@
         }
 
         .gallery-item {
-            border-radius: 14px;
+            border-radius: 16px;
             overflow: hidden;
             aspect-ratio: 1 / 1;
             border: 1px solid var(--glass-border);
@@ -307,193 +299,5 @@
         /* Rodapé */
         .footer {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-            opacity: 0.8;
-        }
+            flex-direction
 
-        .footer-brand {
-            font-family: 'Cinzel', serif;
-            color: var(--gold-main);
-            font-size: 0.78rem;
-            letter-spacing: 2px;
-        }
-
-        .footer-tagline {
-            font-size: 0.62rem;
-            color: var(--text-muted);
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-        }
-
-        /* Toast */
-        .toast {
-            position: fixed;
-            bottom: 25px;
-            background: #d4af37;
-            color: #000;
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 0.82rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.35s ease;
-            pointer-events: none;
-            z-index: 1000;
-        }
-
-        .toast.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
-</head>
-<body>
-
-    <div class="container">
-        <!-- Cabeçalho -->
-        <header class="header">
-            <div class="logo-box">
-                <i class="fa-solid fa-crown"></i>
-            </div>
-            <div class="brand-title">IMPÉRIO <span>BARBER SHOP</span></div>
-            <div class="slogan">Mais que um corte, é o seu estilo</div>
-        </header>
-
-        <!-- Links Principais -->
-        <div class="links-container">
-            <a href="https://api.whatsapp.com/send?phone=5598985819586" target="_blank" class="link-card">
-                <div class="link-left">
-                    <div class="icon-box whatsapp-bg"><i class="fa-brands fa-whatsapp"></i></div>
-                    <div class="link-info">
-                        <span class="link-title">CHAMA NO WHATSAPP</span>
-                        <span class="link-subtitle">Agende seu horário</span>
-                    </div>
-                </div>
-                <i class="fa-solid fa-chevron-right arrow-icon"></i>
-            </a>
-
-            <a href="https://www.instagram.com/imperio_barbershop10/" target="_blank" class="link-card">
-                <div class="link-left">
-                    <div class="icon-box instagram-bg"><i class="fa-brands fa-instagram"></i></div>
-                    <div class="link-info">
-                        <span class="link-title">NOSSO INSTAGRAM</span>
-                        <span class="link-subtitle">@imperio_barbershop10</span>
-                    </div>
-                </div>
-                <i class="fa-solid fa-chevron-right arrow-icon"></i>
-            </a>
-
-            <a href="https://search.google.com/local/writereview?placeid=ChIJm3xCfaiR9gcRKegAm2XkBEI" target="_blank" class="link-card">
-                <div class="link-left">
-                    <div class="icon-box google-bg"><i class="fa-brands fa-google"></i></div>
-                    <div class="link-info">
-                        <span class="link-title">AVALIE NO GOOGLE</span>
-                        <span class="link-subtitle">Sua opinião é importante</span>
-                    </div>
-                </div>
-                <i class="fa-solid fa-chevron-right arrow-icon"></i>
-            </a>
-
-            <div class="link-card" onclick="copyText('9898487-3070', 'Chave Pix')">
-                <div class="link-left">
-                    <div class="icon-box pix-bg"><i class="fa-solid fa-qrcode"></i></div>
-                    <div class="link-info">
-                        <span class="link-title">PAGUE COM PIX</span>
-                        <span class="link-subtitle">Toque para copiar a chave Pix</span>
-                    </div>
-                </div>
-                <i class="fa-regular fa-copy arrow-icon"></i>
-            </div>
-
-            <a href="#wifi-section" class="link-card">
-                <div class="link-left">
-                    <div class="icon-box wifi-bg"><i class="fa-solid fa-wifi"></i></div>
-                    <div class="link-info">
-                        <span class="link-title">WI-FI GRÁTIS</span>
-                        <span class="link-subtitle">Conecte-se enquanto espera</span>
-                    </div>
-                </div>
-                <i class="fa-solid fa-chevron-right arrow-icon"></i>
-            </a>
-        </div>
-
-        <!-- Bloco de Wi-Fi -->
-        <div class="wifi-card" id="wifi-section">
-            <div class="wifi-row">
-                <div class="wifi-item">
-                    <i class="fa-solid fa-wifi"></i>
-                    <div class="wifi-details">
-                        <span class="wifi-label">Rede Wi-Fi</span>
-                        <input type="text" readonly value="JRDL-ST1-6G" id="wifi-ssid" class="wifi-value-input">
-                    </div>
-                </div>
-                <button class="copy-btn" onclick="copyValue('wifi-ssid', 'Nome da rede')">
-                    <i class="fa-regular fa-copy"></i> Copiar
-                </button>
-            </div>
-
-            <div class="wifi-row">
-                <div class="wifi-item">
-                    <i class="fa-solid fa-lock"></i>
-                    <div class="wifi-details">
-                        <span class="wifi-label">Senha de Acesso</span>
-                        <input type="text" readonly value="Ri01Da28Ju14#" id="wifi-pass" class="wifi-value-input">
-                    </div>
-                </div>
-                <button class="copy-btn" onclick="copyValue('wifi-pass', 'Senha')">
-                    <i class="fa-regular fa-copy"></i> Copiar
-                </button>
-            </div>
-        </div>
-
-        <!-- Galeria de Cortes -->
-        <div class="gallery-section">
-            <div class="gallery-title">Nossos Trabalhos</div>
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&q=80" alt="Corte 1">
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&q=80" alt="Corte 2">
-                </div>
-            </div>
-        </div>
-
-        <!-- Rodapé -->
-        <footer class="footer">
-            <div class="footer-brand">IMPÉRIO BARBER SHOP</div>
-            <div class="footer-tagline">Qualidade • Respeito • Estilo</div>
-        </footer>
-    </div>
-
-    <div id="toast" class="toast">Copiado com sucesso!</div>
-
-    <script>
-        function copyValue(elementId, labelText) {
-            const input = document.getElementById(elementId);
-            input.select();
-            input.setSelectionRange(0, 99999);
-            navigator.clipboard.writeText(input.value).then(() => {
-                showToast(`${labelText} copiada com sucesso!`);
-            });
-        }
-
-        function copyText(text, labelText) {
-            navigator.clipboard.writeText(text).then(() => {
-                showToast(`${labelText} copiada com sucesso!`);
-            });
-        }
-
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.classList.add('show');
-            setTimeout(() => { toast.classList.remove('show'); }, 2500);
-        }
-    </script>
-</body>
-</html>
