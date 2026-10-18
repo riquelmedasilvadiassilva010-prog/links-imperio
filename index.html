@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Império Barber Shop - Cartão Digital</title>
-    <!-- Fontes e Ícones -->
+    <title>Império Barber Shop - Links Oficiais</title>
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -34,9 +35,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px 14px;
+            padding: 24px 16px;
             position: relative;
-            overflow-x: hidden;
         }
 
         body::before {
@@ -46,11 +46,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(180deg, rgba(10, 10, 10, 0.75) 0%, rgba(10, 10, 10, 0.95) 100%), 
+            background: linear-gradient(180deg, rgba(10, 10, 10, 0.8) 0%, rgba(10, 10, 10, 0.96) 100%), 
                         url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80') center/cover no-repeat;
             z-index: -1;
-            filter: blur(2px);
-            transform: scale(1.05);
         }
 
         .container {
@@ -62,9 +60,9 @@
             text-align: center;
         }
 
-        /* Topo e Logo PNG Oficial */
+        /* Topo e Logo */
         .header {
-            margin-bottom: 22px;
+            margin-bottom: 24px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -72,9 +70,9 @@
         }
 
         .logo-box {
-            width: 180px;
+            width: 160px;
             height: auto;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -92,17 +90,17 @@
             font-size: 0.72rem;
             letter-spacing: 2.5px;
             color: var(--gold-light);
-            font-weight: 500;
+            font-weight: 600;
             text-transform: uppercase;
             opacity: 0.9;
         }
 
-        /* Botões Glassmorphic */
+        /* Botões de Ação */
         .links-container {
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 13px;
+            gap: 14px;
             margin-bottom: 22px;
         }
 
@@ -111,20 +109,18 @@
             align-items: center;
             justify-content: space-between;
             background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border);
-            border-radius: 20px;
+            border-radius: 18px;
             padding: 14px 20px;
             text-decoration: none;
             color: var(--text-main);
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
             cursor: pointer;
         }
 
-        .link-card:hover, .link-card:active {
-            background: rgba(212, 175, 55, 0.15);
+        .link-card:hover {
+            background: rgba(35, 33, 25, 0.95);
             border-color: var(--gold-main);
             transform: translateY(-2px);
         }
@@ -132,7 +128,7 @@
         .link-left {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 14px;
             text-align: left;
         }
 
@@ -145,14 +141,14 @@
             align-items: center;
             font-size: 1.2rem;
             flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        .whatsapp-bg { background: linear-gradient(135deg, #25D366, #1ebe5d); color: white; }
-        .instagram-bg { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; }
+        .whatsapp-bg { background: #25D366; color: white; }
+        .instagram-bg { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: white; }
         .google-bg { background: #ffffff; color: #4285F4; }
-        .pix-bg { background: linear-gradient(135deg, #32BCAD, #1d887c); color: white; }
-        .wifi-bg { background: linear-gradient(135deg, #d4af37, #aa8c2c); color: #000; }
+        .pix-bg { background: #32BCAD; color: white; }
+        .wifi-bg { background: #d4af37; color: black; }
 
         .link-info {
             display: flex;
@@ -180,16 +176,14 @@
         .wifi-card {
             width: 100%;
             background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border);
-            border-radius: 20px;
+            border-radius: 18px;
             padding: 18px 20px;
             display: flex;
             flex-direction: column;
             gap: 14px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            margin-bottom: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            margin-bottom: 22px;
         }
 
         .wifi-row {
@@ -229,7 +223,7 @@
         }
 
         .wifi-value-input {
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(212, 175, 55, 0.2);
             border-radius: 8px;
             color: var(--text-main);
@@ -261,10 +255,10 @@
             color: #000;
         }
 
-        /* Galeria */
+        /* Galeria de Cortes */
         .gallery-section {
             width: 100%;
-            margin-bottom: 25px;
+            margin-bottom: 22px;
             text-align: left;
         }
 
@@ -284,7 +278,7 @@
         }
 
         .gallery-item {
-            border-radius: 16px;
+            border-radius: 14px;
             overflow: hidden;
             aspect-ratio: 1 / 1;
             border: 1px solid var(--glass-border);
@@ -323,7 +317,7 @@
         .toast {
             position: fixed;
             bottom: 25px;
-            background: linear-gradient(135deg, #d4af37, #aa8c2c);
+            background: #d4af37;
             color: #000;
             padding: 12px 24px;
             border-radius: 30px;
@@ -346,10 +340,10 @@
 <body>
 
     <div class="container">
-        <!-- Topo com a Logo PNG Exata -->
+        <!-- Cabeçalho com a Logo -->
         <header class="header">
             <div class="logo-box">
-                <img src="1000867840.png" alt="Império Barber Shop Logo" onerror="this.onerror=null; this.src='logo.png';">
+                <img src="1000867840.png" alt="Império Barber Shop Logo">
             </div>
             <div class="slogan">Mais que um corte, é o seu estilo</div>
         </header>
@@ -361,7 +355,7 @@
                     <div class="icon-box whatsapp-bg"><i class="fa-brands fa-whatsapp"></i></div>
                     <div class="link-info">
                         <span class="link-title">CHAMA NO WHATSAPP</span>
-                        <span class="link-subtitle">Agende seu horário com facilidade</span>
+                        <span class="link-subtitle">Agende seu horário</span>
                     </div>
                 </div>
                 <i class="fa-solid fa-chevron-right arrow-icon"></i>
@@ -383,7 +377,7 @@
                     <div class="icon-box google-bg"><i class="fa-brands fa-google"></i></div>
                     <div class="link-info">
                         <span class="link-title">AVALIE NO GOOGLE</span>
-                        <span class="link-subtitle">Sua opinião é muito importante</span>
+                        <span class="link-subtitle">Sua opinião é importante</span>
                     </div>
                 </div>
                 <i class="fa-solid fa-chevron-right arrow-icon"></i>
@@ -441,7 +435,7 @@
             </div>
         </div>
 
-        <!-- Galeria -->
+        <!-- Galeria de Cortes -->
         <div class="gallery-section">
             <div class="gallery-title">Nossos Trabalhos</div>
             <div class="gallery-grid">
@@ -488,4 +482,3 @@
     </script>
 </body>
 </html>
-
