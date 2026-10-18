@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pagamento Pix - Império Barber Shop</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+*{box-sizing:border-box;font-family:Arial,sans-serif}
+body{margin:0;min-height:100vh;background:#0a0a0a;color:white;display:flex;justify-content:center;align-items:center;padding:20px}
+.card{width:100%;max-width:400px;background:#141414;border:1px solid #d4af37;border-radius:18px;padding:26px 20px;text-align:center;box-shadow:0 4px 25px #000}
+h1{font-size:23px;color:#d4af37;margin:0 0 8px}
+p{color:#bbb;font-size:14px;line-height:1.5}
+label{display:block;text-align:left;font-size:13px;color:#fceca4;margin:22px 0 8px}
+input{width:100%;padding:14px;border-radius:10px;border:1px solid #aa8c2c;background:#080808;color:white;font-size:20px;outline:none}
+button{width:100%;border:0;border-radius:10px;padding:14px;margin-top:12px;background:#d4af37;color:#111;font-size:15px;font-weight:bold;cursor:pointer}
+#resultado{display:none;margin-top:22px}
+#qrcode{display:flex;justify-content:center;background:white;padding:14px;width:max-content;max-width:100%;margin:16px auto;border-radius:10px}
+#qrcode img{max-width:100%}
+.codigo{width:100%;height:100px;background:#080808;color:#eee;border:1px solid #555;border-radius:8px;padding:10px;resize:vertical;font-size:12px}
+.aviso{font-size:12px;color:#aaa;margin-top:18px}
+</style>
+</head>
+<body>
+<div class="card">
+    <h1>IMPÉRIO BARBER SHOP</h1>
+    <p>Pagamento seguro via Pix</p>
+
+    <label for="valor">Digite o valor do pagamento (R$)</label>
+    <input id="valor" type="number" min="0.01" step="0.01"
+           placeholder="Ex.: 30,00" inputmode="decimal">
+
+    <button onclick="gerarPix()">GERAR QR CODE PIX</button>
+
+    <div id="resultado">
+        <p>Escaneie o QR Code no aplicativo do seu banco.</p>
+        <div id="qrcode"></div>
+        <p>Ou copie o código Pix abaixo:</p>
+        <textarea id="codigo" class="codigo" readonly></textarea>
+        <button onclick="copiarPix()">COPIAR PIX</button>
+    </div>
+
+    <p class="aviso">
+        Confira o nome do recebedor e o valor no aplicativo do banco
+        antes de confirmar o pagamento.
+    </p>
+</div>
+
+<script>
+// Confira se esta chave é exatamente a chave Pix cadastrada no banco.
+const PIX_KEY = "+5598984873070";
+const NOME = "RIQUELME DA SILVA DIAS";
+const CIDADE = "SAO LUIS";
+
+function campo(id, valor) {
+    return id + String(valor.length).padStart(2, "0") + valor;
+}
+
+function crc16(texto) {
+    let crc = 0xFFFF;
+    for (let i = 0; i < texto.length; i++) {
+        crc ^= texto.charCodeAt(i) << 8;
+        for (let j = 0; j < 8; j++) {
+            crc = crc & 0x8000
+                ? ((crc << 1) ^ 0x1021)
+                : (crc << 1);
+            crc &= 0xFFFF;
+        }
+    }
+    return crc.toString(16).toUpperCase().padStart(4, "0");
+}
+
+function gerarPix() {
+    const entrada = document.getElementById("valor").value.trim();
+    const valor = Number(entrada);
+
+    if (!entrada || !Number.isFinite(valor) || valor <= 0) {
+        alert("Digite um valor válido, maior que zero.");
+        return;
+    }
+
+    if (typeof QRCode === "undefined") {
+        alert("Não foi possível carregar o gerador de QR Code. Verifique sua conexão e tente novamente.");
+        return;
+    }
+
+    const valorFormatado = valor.toFixed(2);
+
+    const contaPix = campo("00", "br.gov.bcb.pix")
+                   + campo("01", PIX_KEY);
+
+    const adicional = campo("05", "***");
+
+    let payload =
+        campo("00", "01") +
+        campo("01", "11") +
+        campo("26", contaPix) +
+        campo("52", "0000") +
+        campo("53", "986") +
+        campo("54", valorFormatado) +
+        campo("58", "BR") +
+        campo("59", NOME) +
+        campo("60", CIDADE) +
+        campo("62", adicional) +
+        "6304";
+
+    payload += crc16(payload);
+
+    document.getElementById("codigo").value = payload;
+    document.getElementById("resultado").style.display = "block";
+
+    const area = document.getElementById("qrcode");
+    area.innerHTML = "";
+
+    new QRCode(area, {
+        text: payload,
+        width: 220,
+        height: 220,
+        correctLevel: QRCode.CorrectLevel.M
+    });
+}
+
+async function copiarPix() {
+    const codigo = document.getElementById("codigo").value;
+
+    try {
+        await navigator.clipboard.writeText(codigo);
+        alert("Código Pix copiado!");
+    } catch (erro) {
+        const area = document.getElementById("codigo");
+        area.select();
+        alert("Selecione e copie o código Pix.");
+    }
+}
+</script>
+</body>
+</html>
