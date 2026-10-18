@@ -1,0 +1,248 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wi-Fi Grátis - Império Barber Shop</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<style>
+:root {
+    --gold: #d4af37;
+    --gold-light: #fceca4;
+    --bg: #0a0a0a;
+    --glass: rgba(20,20,20,.85);
+    --border: rgba(212,175,55,.4);
+}
+* { box-sizing: border-box; font-family: Arial,sans-serif; }
+body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 24px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    color: white;
+}
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(rgba(10,10,10,.88),rgba(10,10,10,.96)),
+    url("https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80") center/cover;
+    z-index: -1;
+}
+.container {
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+}
+.logo {
+    display: block;
+    width: 210px;
+    max-width: 80%;
+    height: auto;
+    margin: 0 auto 12px;
+}
+h1 {
+    color: var(--gold-light);
+    font-size: 23px;
+    letter-spacing: 2px;
+    margin: 8px 0;
+}
+.subtitle {
+    color: #b3b3b3;
+    font-size: 13px;
+    margin-bottom: 24px;
+}
+.card {
+    background: var(--glass);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 22px 18px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.4);
+}
+.wifi-icon {
+    color: var(--gold);
+    font-size: 34px;
+    margin-bottom: 12px;
+}
+#qrcode {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    padding: 14px;
+    width: max-content;
+    max-width: 100%;
+    margin: 18px auto;
+    border-radius: 10px;
+}
+#qrcode img, #qrcode canvas {
+    max-width: 100%;
+    height: auto;
+}
+.hint {
+    font-size: 12px;
+    color: #bbb;
+    line-height: 1.6;
+}
+.info {
+    text-align: left;
+    padding: 14px;
+    border-radius: 12px;
+    background: rgba(0,0,0,.45);
+    border: 1px solid rgba(212,175,55,.2);
+    margin-top: 12px;
+}
+.label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--gold-light);
+    margin-bottom: 8px;
+}
+.value-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+.value {
+    font-size: 15px;
+    font-weight: bold;
+    overflow-wrap: anywhere;
+}
+button {
+    border: 1px solid var(--border);
+    background: rgba(212,175,55,.15);
+    color: var(--gold-light);
+    border-radius: 9px;
+    padding: 9px 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+button:hover {
+    background: var(--gold);
+    color: #000;
+}
+.main-button {
+    width: 100%;
+    background: var(--gold);
+    color: #000;
+    padding: 14px;
+    margin-top: 16px;
+    font-size: 14px;
+}
+.footer {
+    color: #888;
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+<main class="container">
+    <img src="./logo.png" alt="Império Barber Shop" class="logo">
+
+    <h1>WI-FI GRÁTIS</h1>
+    <p class="subtitle">Conecte-se enquanto espera</p>
+
+    <section class="card">
+        <div class="wifi-icon">
+            <i>◉</i> Wi-Fi
+        </div>
+
+        <p>Escaneie o QR Code com a câmera do celular para solicitar a conexão.</p>
+
+        <div id="qrcode"></div>
+
+        <p class="hint">
+            Aponte a câmera para o código e toque na opção de conectar,
+            se ela aparecer no seu aparelho.
+        </p>
+    </section>
+
+    <section class="card">
+        <div class="info">
+            <span class="label">NOME DA REDE</span>
+            <div class="value-row">
+                <span class="value" id="network">JRDL-ST1-6G</span>
+                <button onclick="copiar('network')">Copiar</button>
+            </div>
+        </div>
+
+        <div class="info">
+            <span class="label">SENHA DO WI-FI</span>
+            <div class="value-row">
+                <span class="value" id="password">Ri01Da28Ju14#</span>
+                <button onclick="copiar('password')">Copiar</button>
+            </div>
+        </div>
+
+        <button class="main-button" onclick="copiar('password')">
+            COPIAR SENHA DO WI-FI
+        </button>
+    </section>
+
+    <div class="footer">IMPÉRIO BARBER SHOP • QUALIDADE • RESPEITO • ESTILO</div>
+</main>
+
+<script>
+const nomeRede = "JRDL-ST1-6G";
+const senhaRede = "Ri01Da28Ju14#";
+
+// WPA é comum em redes protegidas por senha.
+// Se o roteador usar outro tipo de segurança, este campo precisa mudar.
+const tipoSeguranca = "WPA";
+
+function escaparWiFi(texto) {
+    return texto.replace(/([\\;,:"])/g, "\\$1");
+}
+
+function gerarQRCode() {
+    if (typeof QRCode === "undefined") {
+        document.getElementById("qrcode").textContent =
+            "Não foi possível carregar o QR Code. Verifique sua conexão.";
+        return;
+    }
+
+    const dados = "WIFI:T:" + tipoSeguranca +
+        ";S:" + escaparWiFi(nomeRede) +
+        ";P:" + escaparWiFi(senhaRede) + ";;";
+
+    new QRCode(document.getElementById("qrcode"), {
+        text: dados,
+        width: 220,
+        height: 220,
+        correctLevel: QRCode.CorrectLevel.M
+    });
+}
+
+async function copiar(id) {
+    const texto = document.getElementById(id).textContent;
+
+    try {
+        await navigator.clipboard.writeText(texto);
+        alert("Copiado com sucesso!");
+    } catch (erro) {
+        const campo = document.createElement("textarea");
+        campo.value = texto;
+        document.body.appendChild(campo);
+        campo.select();
+        document.execCommand("copy");
+        campo.remove();
+        alert("Texto copiado!");
+    }
+}
+
+gerarQRCode();
+</script>
+</body>
+</html>
