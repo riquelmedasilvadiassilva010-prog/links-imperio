@@ -61,18 +61,20 @@
     text-align: center;
 }
 
+ 
 /* Ajustes para telas de computador */
 @media (min-width: 768px) {
     body {
-        padding: 40px;
+        padding: 40px 24px;
         align-items: flex-start;
     }
 
     .container {
-        max-width: 900px;
+        width: 100%;
+        max-width: 1000px;
         margin: 0 auto;
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
         column-gap: 40px;
         row-gap: 24px;
         align-items: start;
@@ -82,10 +84,6 @@
     .header {
         grid-column: 1 / -1;
         margin-bottom: 0;
-    }
-
-    .logo-box {
-        max-width: 300px;
     }
 
     .links-container {
@@ -109,7 +107,8 @@
         width: 100%;
         margin-top: 8px;
     }
-    }
+}
+
         
         /* Topo e Logo */
         .header {
