@@ -8,8 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <!-- Gerador de QR Code -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -44,15 +42,22 @@
         }
 
         /* Avatar / Logo */
-        .profile-img {
+        .profile-img-wrapper {
             width: 100px;
             height: 100px;
             border-radius: 50%;
             border: 3px solid #d4af37;
             padding: 3px;
             margin: 0 auto 16px;
-            object-fit: cover;
             background: #101010;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-img-wrapper i {
+            font-size: 40px;
+            color: #d4af37;
         }
 
         /* Títulos */
@@ -96,14 +101,11 @@
             border: 1px solid #333333;
             transition: all 0.3s ease;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
         }
 
         .btn i {
             font-size: 18px;
             color: #d4af37;
-            transition: color 0.3s ease;
         }
 
         .btn:hover {
@@ -230,12 +232,13 @@
             border-top: 1px dashed #333;
         }
 
-        #qrcode {
+        .qr-image {
             background: #fff;
-            padding: 12px;
+            padding: 10px;
             border-radius: 12px;
-            display: inline-block;
             margin: 15px 0;
+            width: 180px;
+            height: 180px;
         }
 
         .copy-box {
@@ -255,5 +258,171 @@
 <body>
 
     <div class="card">
-        <!-- Ícone / Logo -->
-        <div
+        <div class="profile-img-wrapper">
+            <i class="fa-solid fa-scissors"></i>
+        </div>
+
+        <h1>Império Barber Shop</h1>
+        <p class="subtitle">Elegância e Tradição</p>
+
+        <div class="links-container">
+            <!-- Botão do PIX -->
+            <button class="btn" onclick="openPixModal()">
+                <i class="fa-brands fa-pix"></i>
+                Chave PIX
+            </button>
+
+            <!-- Botão Wi-Fi -->
+            <button class="btn" onclick="copyWifi()">
+                <i class="fa-solid fa-wifi"></i>
+                Senha do Wi-Fi
+            </button>
+
+            <!-- Agendamento WhatsApp -->
+            <a href="https://wa.me/5598984873070?text=Olá,%20gostaria%20de%20agendar%20um%20horário!" target="_blank" class="btn">
+                <i class="fa-brands fa-whatsapp"></i>
+                Agendar Horário
+            </a>
+
+            <!-- Instagram -->
+            <a href="https://instagram.com" target="_blank" class="btn">
+                <i class="fa-brands fa-instagram"></i>
+                Siga no Instagram
+            </a>
+        </div>
+    </div>
+
+    <!-- Toast de Confirmação -->
+    <div id="toast" class="toast">Copiado com sucesso!</div>
+
+    <!-- Modal do PIX -->
+    <div class="modal-overlay" id="pixModal">
+        <div class="modal-card">
+            <button class="close-btn" onclick="closePixModal()">&times;</button>
+            <div class="modal-title"><i class="fa-brands fa-pix" style="color: #20c997;"></i> Pagamento PIX</div>
+            <p style="font-size: 12px; color: #aaa;">Digite o valor do serviço para gerar o QR Code de pagamento.</p>
+
+            <div class="input-group">
+                <label for="pixValue">Valor a pagar (R$):</label>
+                <input type="number" id="pixValue" placeholder="0.00" step="0.01" min="0.01">
+            </div>
+
+            <button class="btn-action" onclick="generatePix()">Gerar QR Code PIX</button>
+
+            <!-- Resultado do QR Code -->
+            <div class="qr-section" id="qrSection">
+                <p style="font-size: 13px; color: #fff; font-weight: 600;">Escaneie o QR Code abaixo:</p>
+                <img id="qrImg" class="qr-image" src="" alt="QR Code PIX">
+                <div class="copy-box" id="pixPayloadText">---</div>
+                <button class="btn-action" style="background: #222; color: #fff; border: 1px solid #d4af37;" onclick="copyPixCode()">
+                    <i class="fa-regular fa-copy"></i> Copiar PIX Copia e Cola
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const wifiPass = "imperio2024";
+        const PIX_KEY = "98984873070";
+        const PIX_NAME = "Riquelme da silva dias";
+        const PIX_CITY = "SAO LUIS";
+
+        let currentPayload = "";
+
+        function showToast(text) {
+            const toast = document.getElementById("toast");
+            toast.innerText = text;
+            toast.classList.add("show");
+            setTimeout(() => {
+                toast.classList.remove("show");
+            }, 2500);
+        }
+
+        function copyWifi() {
+            navigator.clipboard.writeText(wifiPass).then(() => {
+                showToast("Senha do Wi-Fi copiada!");
+            });
+        }
+
+        function openPixModal() {
+            document.getElementById('pixModal').style.display = 'flex';
+        }
+
+        function closePixModal() {
+            document.getElementById('pixModal').style.display = 'none';
+            document.getElementById('qrSection').style.display = 'none';
+            document.getElementById('pixValue').value = '';
+        }
+
+        function generatePix() {
+            const rawVal = document.getElementById('pixValue').value;
+            const val = parseFloat(rawVal);
+
+            if (!val || val <= 0) {
+                alert("Por favor, digite um valor válido (ex: 35.00)");
+                return;
+            }
+
+            const formattedVal = val.toFixed(2);
+            currentPayload = createPixPayload(PIX_KEY, PIX_NAME, PIX_CITY, formattedVal);
+
+            // Gerar imagem do QR Code usando API ultra rápida e confiável
+            const qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(currentPayload);
+            document.getElementById("qrImg").src = qrUrl;
+
+            document.getElementById("pixPayloadText").innerText = currentPayload;
+            document.getElementById("qrSection").style.display = "block";
+        }
+
+        function copyPixCode() {
+            if (!currentPayload) return;
+            navigator.clipboard.writeText(currentPayload).then(() => {
+                showToast("PIX Copia e Cola copiado!");
+            });
+        }
+
+        function createPixPayload(key, name, city, value) {
+            function formatField(id, val) {
+                const len = val.length.toString().padStart(2, '0');
+                return `${id}${len}${val}`;
+            }
+
+            const cleanKey = key.replace(/\D/g, '');
+            const cleanName = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").substring(0, 25).toUpperCase();
+            const cleanCity = city.normalize("NFD").replace(/[\u0300-\u036f]/g, "").substring(0, 15).toUpperCase();
+
+            const merchantAccount = formatField('00', 'br.gov.bcb.pix') + formatField('01', cleanKey);
+            
+            let payload = 
+                formatField('00', '01') +
+                formatField('26', merchantAccount) +
+                formatField('52', '0000') +
+                formatField('53', '986') +
+                formatField('54', value) +
+                formatField('58', 'BR') +
+                formatField('59', cleanName) +
+                formatField('60', cleanCity) +
+                formatField('62', formatField('05', '***')) +
+                '6304';
+
+            return payload + crc16(payload);
+        }
+
+        function crc16(str) {
+            let crc = 0xFFFF;
+            for (let i = 0; i < str.length; i++) {
+                crc ^= (str.charCodeAt(i) << 8);
+                for (let j = 0; j < 8; j++) {
+                    if ((crc & 0x8000) !== 0) {
+                        crc = ((crc << 1) ^ 0x1021) & 0xFFFF;
+                    } else {
+                        crc = (crc << 1) & 0xFFFF;
+                    }
+                }
+            }
+            return crc.toString(16).toUpperCase().padStart(4, '0');
+        }
+    </script>
+</body>
+</html>
+
