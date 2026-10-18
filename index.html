@@ -70,19 +70,24 @@
         }
 
         .logo-box {
-            width: 160px;
-            height: auto;
-            margin-bottom: 12px;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            padding: 4px;
+            background: linear-gradient(135deg, #fceca4, #d4af37, #aa8c2c);
             display: flex;
             align-items: center;
             justify-content: center;
-            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.45));
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+            margin-bottom: 12px;
+            overflow: hidden;
         }
 
         .logo-box img {
             width: 100%;
-            height: auto;
-            object-fit: contain;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
             display: block;
         }
 
@@ -343,7 +348,7 @@
         <!-- Cabeçalho com a Logo -->
         <header class="header">
             <div class="logo-box">
-                <img src="1000867840.png" alt="Império Barber Shop Logo">
+                <img src="1000867840.png" alt="Império Barber Shop Logo" onerror="this.onerror=null; this.src='1000867613.jpg';">
             </div>
             <div class="slogan">Mais que um corte, é o seu estilo</div>
         </header>
@@ -482,3 +487,4 @@
     </script>
 </body>
 </html>
+
