@@ -3,21 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Império Barber Shop - Links Oficiais</title>
-    <!-- Font Awesome Icons -->
+    <title>Império Barber Shop - Cartão Digital</title>
+    <!-- Fontes e Ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #070707;
-            --card-bg: rgba(18, 18, 18, 0.85);
-            --card-border: rgba(212, 175, 55, 0.35);
-            --gold-primary: #f3e5ab;
+            --bg-dark: #0a0a0a;
+            --glass-bg: rgba(20, 20, 20, 0.65);
+            --glass-border: rgba(212, 175, 55, 0.3);
+            --gold-light: #fceca4;
             --gold-main: #d4af37;
             --gold-dark: #aa8c2c;
             --text-main: #ffffff;
-            --text-muted: #9c9c9c;
+            --text-muted: #b3b3b3;
         }
 
         * {
@@ -25,6 +24,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Montserrat', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -34,11 +34,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 24px 16px;
+            padding: 20px 14px;
             position: relative;
             overflow-x: hidden;
         }
 
+        /* Fundo Fotográfico Profissional com Blur Elegante */
         body::before {
             content: "";
             position: fixed;
@@ -46,23 +47,31 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(180deg, rgba(7, 7, 7, 0.85) 0%, rgba(7, 7, 7, 0.96) 100%), 
+            background: linear-gradient(180deg, rgba(10, 10, 10, 0.75) 0%, rgba(10, 10, 10, 0.95) 100%), 
                         url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80') center/cover no-repeat;
             z-index: -1;
+            filter: blur(2px);
+            transform: scale(1.05);
         }
 
         .container {
             width: 100%;
-            max-width: 440px;
+            max-width: 420px;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
+            animation: fadeIn 0.8s ease-out;
         }
 
-        /* Cabeçalho com a Logo PNG Transparente */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Topo e Logo em Destaque */
         .header {
-            margin-bottom: 20px;
+            margin-bottom: 22px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -70,13 +79,18 @@
         }
 
         .logo-box {
-            width: 160px;
+            width: 165px;
             height: auto;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.4));
+            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.45));
+            transition: transform 0.4s ease;
+        }
+
+        .logo-box:hover {
+            transform: scale(1.03);
         }
 
         .logo-box img {
@@ -87,68 +101,71 @@
         }
 
         .slogan {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             letter-spacing: 2.5px;
-            color: var(--gold-primary);
-            font-weight: 600;
+            color: var(--gold-light);
+            font-weight: 500;
             text-transform: uppercase;
             opacity: 0.9;
-            margin-top: 4px;
+            margin-top: 2px;
         }
 
-        /* Container de Links */
+        /* Botões Estilo Glassmorphic Fino (Referência Lynkame) */
         .links-container {
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 14px;
-            margin-bottom: 20px;
+            gap: 13px;
+            margin-bottom: 22px;
         }
 
         .link-card {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 14px 18px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 14px 20px;
             text-decoration: none;
             color: var(--text-main);
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             cursor: pointer;
         }
 
-        .link-card:hover {
-            background: rgba(35, 33, 25, 0.95);
+        .link-card:hover, .link-card:active {
+            background: rgba(212, 175, 55, 0.15);
             border-color: var(--gold-main);
             transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.25);
         }
 
         .link-left {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 15px;
             text-align: left;
         }
 
         .icon-box {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             flex-shrink: 0;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
 
         .whatsapp-bg { background: linear-gradient(135deg, #25D366, #1ebe5d); color: white; }
         .instagram-bg { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; }
-        .google-bg { background: linear-gradient(135deg, #ffffff, #f1f1f1); color: #4285F4; }
-        .pix-bg { background: linear-gradient(135deg, #32BCAD, #22998c); color: white; }
+        .google-bg { background: #ffffff; color: #4285F4; }
+        .pix-bg { background: linear-gradient(135deg, #32BCAD, #1d887c); color: white; }
         .wifi-bg { background: linear-gradient(135deg, #d4af37, #aa8c2c); color: #000; }
 
         .link-info {
@@ -160,32 +177,39 @@
             font-size: 0.88rem;
             font-weight: 700;
             letter-spacing: 0.5px;
-            color: var(--text-main);
         }
 
         .link-subtitle {
-            font-size: 0.73rem;
+            font-size: 0.72rem;
             color: var(--text-muted);
-            margin-top: 3px;
+            margin-top: 2px;
+            font-weight: 400;
         }
 
         .arrow-icon {
             color: var(--gold-main);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
+            transition: transform 0.3s ease;
         }
 
-        /* Bloco de Wi-Fi */
+        .link-card:hover .arrow-icon {
+            transform: translateX(3px);
+        }
+
+        /* Bloco de Wi-Fi Estilizado */
         .wifi-card {
             width: 100%;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 18px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 18px 20px;
             display: flex;
             flex-direction: column;
             gap: 14px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-            margin-bottom: 24px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            margin-bottom: 25px;
         }
 
         .wifi-row {
@@ -205,8 +229,8 @@
 
         .wifi-item > i {
             color: var(--gold-main);
-            font-size: 1.2rem;
-            width: 24px;
+            font-size: 1.1rem;
+            width: 22px;
             text-align: center;
         }
 
@@ -225,12 +249,12 @@
         }
 
         .wifi-value-input {
-            background: rgba(10, 10, 10, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(212, 175, 55, 0.2);
             border-radius: 8px;
             color: var(--text-main);
             padding: 6px 10px;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             font-weight: 600;
             width: 100%;
             margin-top: 3px;
@@ -239,13 +263,13 @@
         }
 
         .copy-btn {
-            background: rgba(212, 175, 55, 0.12);
-            border: 1px solid var(--card-border);
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid var(--glass-border);
             color: var(--gold-main);
-            padding: 9px 14px;
+            padding: 8px 14px;
             border-radius: 10px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -258,20 +282,72 @@
             color: #000;
         }
 
-        /* Rodapé */
+        /* Galeria de Fotos de Cortes (Seção Trabalhos) */
+        .gallery-section {
+            width: 100%;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .gallery-title {
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--gold-light);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .gallery-title::after {
+            content: '';
+            flex-grow: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--glass-border), transparent);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            aspect-ratio: 1 / 1;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.08);
+        }
+
+        /* Rodapé Fino */
         .footer {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
+            opacity: 0.8;
             margin-top: 5px;
-            opacity: 0.85;
         }
 
         .footer-brand {
             font-family: 'Cinzel', serif;
             color: var(--gold-main);
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             letter-spacing: 2px;
             display: flex;
             align-items: center;
@@ -279,13 +355,13 @@
         }
 
         .footer-tagline {
-            font-size: 0.65rem;
+            font-size: 0.62rem;
             color: var(--text-muted);
             letter-spacing: 2.5px;
             text-transform: uppercase;
         }
 
-        /* Toast */
+        /* Toast Alerta */
         .toast {
             position: fixed;
             bottom: 25px;
@@ -294,11 +370,11 @@
             padding: 12px 24px;
             border-radius: 30px;
             font-weight: 700;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.6);
             opacity: 0;
             transform: translateY(30px);
-            transition: all 0.3s ease;
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             pointer-events: none;
             z-index: 1000;
         }
@@ -312,44 +388,8 @@
 <body>
 
     <div class="container">
-        <!-- Cabeçalho -->
+        <!-- Topo / Logo Oficial -->
         <header class="header">
             <div class="logo-box">
-                <!-- Tenta carregar logo.png ou 1000867840.png -->
-                <img src="logo.png" alt="Império Barber Shop Logo" onerror="this.onerror=null; this.src='1000867840.png';">
-            </div>
-            <div class="slogan">Mais que um corte, é o seu estilo</div>
-        </header>
-
-        <!-- Links Principais -->
-        <div class="links-container">
-            <!-- WhatsApp -->
-            <a href="https://api.whatsapp.com/send?phone=5598985819586" target="_blank" class="link-card">
-                <div class="link-left">
-                    <div class="icon-box whatsapp-bg"><i class="fa-brands fa-whatsapp"></i></div>
-                    <div class="link-info">
-                        <span class="link-title">CHAMA NO WHATSAPP</span>
-                        <span class="link-subtitle">Agende seu horário</span>
-                    </div>
-                </div>
-                <i class="fa-solid fa-chevron-right arrow-icon"></i>
-            </a>
-
-            <!-- Instagram -->
-            <a href="https://www.instagram.com/imperio_barbershop10/" target="_blank" class="link-card">
-                <div class="link-left">
-                    <div class="icon-box instagram-bg"><i class="fa-brands fa-instagram"></i></div>
-                    <div class="link-info">
-                        <span class="link-title">NOSSO INSTAGRAM</span>
-                        <span class="link-subtitle">@imperio_barbershop10</span>
-                    </div>
-                </div>
-                <i class="fa-solid fa-chevron-right arrow-icon"></i>
-            </a>
-
-            <!-- Avaliação Google -->
-            <a href="
-
-
-            
+                <!--
 
