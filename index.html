@@ -37,7 +37,6 @@
             border: 1px solid #2a2a2a;
         }
 
-        /* Topo / Logo */
         .header-logo {
             margin-bottom: 15px;
         }
@@ -69,7 +68,6 @@
             font-weight: 600;
         }
 
-        /* Lista de Links */
         .links-list {
             display: flex;
             flex-direction: column;
@@ -131,7 +129,7 @@
             margin-top: 2px;
         }
 
-        /* Seção Wi-Fi (Original do vídeo) */
+        /* Seção Wi-Fi e Pix originais */
         .wifi-box {
             background: #222222;
             border: 1px solid #333333;
@@ -197,137 +195,19 @@
         .toast.show {
             transform: translateX(-50%) translateY(0);
         }
-
-        /* Modal do PIX */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(5px);
-            z-index: 100;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .modal-card {
-            background: #1c1c1c;
-            border: 1px solid #d4af37;
-            border-radius: 20px;
-            padding: 25px;
-            width: 100%;
-            max-width: 380px;
-            position: relative;
-            text-align: center;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 18px;
-            background: none;
-            border: none;
-            color: #aaa;
-            font-size: 22px;
-            cursor: pointer;
-        }
-
-        .modal-title {
-            color: #d4af37;
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .input-group {
-            margin: 20px 0 15px 0;
-            text-align: left;
-        }
-
-        .input-group label {
-            display: block;
-            font-size: 12px;
-            color: #aaa;
-            margin-bottom: 5px;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 14px;
-            background: #101010;
-            border: 1px solid #333;
-            border-radius: 10px;
-            color: #fff;
-            font-size: 18px;
-            font-weight: 700;
-            text-align: center;
-            outline: none;
-        }
-
-        .input-group input:focus {
-            border-color: #d4af37;
-        }
-
-        .btn-action {
-            width: 100%;
-            padding: 14px;
-            background: #d4af37;
-            color: #000;
-            border: none;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 15px;
-            cursor: pointer;
-            margin-top: 5px;
-        }
-
-        .qr-section {
-            display: none;
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px dashed #333;
-        }
-
-        .qr-image {
-            background: #fff;
-            padding: 10px;
-            border-radius: 12px;
-            margin: 15px auto;
-            width: 180px;
-            height: 180px;
-            display: block;
-        }
-
-        .copy-box {
-            background: #101010;
-            border: 1px solid #333;
-            border-radius: 8px;
-            padding: 10px;
-            font-size: 11px;
-            color: #888;
-            word-break: break-all;
-            margin-bottom: 10px;
-            max-height: 50px;
-            overflow-y: auto;
-            text-align: left;
-        }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- Logo / Cabeçalho original -->
+        <!-- Logo / Cabeçalho -->
         <div class="header-logo">
             <i class="fa-solid fa-scissors"></i>
         </div>
         <h1>Império Barber</h1>
         <p class="subtitle">Mais que um corte, é o seu estilo!</p>
 
-        <!-- Links originais -->
+        <!-- Links -->
         <div class="links-list">
             <a href="https://wa.me/5598984873070?text=Olá,%20gostaria%20de%20agendar%20um%20horário!" target="_blank" class="link-btn">
                 <div class="link-icon"><i class="fa-brands fa-whatsapp"></i></div>
@@ -353,17 +233,17 @@
                 </div>
             </a>
 
-            <!-- Botão Pix Modificado (Abre o modal de valor) -->
-            <button onclick="openPixModal()" class="link-btn" style="border-color: #d4af37;">
+            <!-- Botão Pix Copia Chave Direto -->
+            <div onclick="copyPixKey()" class="link-btn" style="border-color: #d4af37; cursor: pointer;">
                 <div class="link-icon" style="background: rgba(212, 175, 55, 0.2);"><i class="fa-brands fa-pix"></i></div>
                 <div class="link-text">
                     <span class="link-title">Pague com Pix</span>
-                    <span class="link-desc">Toque para gerar o QR Code</span>
+                    <span class="link-desc">Toque para copiar a chave Pix</span>
                 </div>
-            </button>
+            </div>
         </div>
 
-        <!-- Bloco de Wi-Fi original -->
+        <!-- Bloco de Wi-Fi -->
         <div class="wifi-box">
             <div class="wifi-header">
                 <div class="link-icon" style="width: 30px; height: 30px; margin-right: 10px;"><i class="fa-solid fa-wifi" style="font-size: 13px;"></i></div>
@@ -377,43 +257,29 @@
                 <i class="fa-regular fa-copy" style="color: #d4af37;"></i>
             </div>
         </div>
+
+        <!-- Bloco da Chave Pix (Visual Antigo) -->
+        <div class="wifi-box" style="margin-top: 10px;">
+            <div class="wifi-header">
+                <div class="link-icon" style="width: 30px; height: 30px; margin-right: 10px;"><i class="fa-brands fa-pix" style="font-size: 13px;"></i></div>
+                <span style="font-size: 13px; font-weight: 700;">Chave Pix</span>
+            </div>
+            <div class="wifi-content" onclick="copyPixKey()">
+                <div class="wifi-info">
+                    <span class="wifi-label">CHAVE TELEFONE</span>
+                    <span class="wifi-pass">98984873070</span>
+                </div>
+                <i class="fa-regular fa-copy" style="color: #d4af37;"></i>
+            </div>
+        </div>
     </div>
 
     <!-- Toast -->
     <div id="toast" class="toast">Copiado com sucesso!</div>
 
-    <!-- Modal do PIX Dinâmico -->
-    <div class="modal-overlay" id="pixModal">
-        <div class="modal-card">
-            <button class="close-btn" onclick="closePixModal()">&times;</button>
-            <div class="modal-title"><i class="fa-brands fa-pix" style="color: #20c997;"></i> Pagamento PIX</div>
-            <p style="font-size: 12px; color: #aaa;">Digite o valor do serviço consumido:</p>
-
-            <div class="input-group">
-                <label for="pixValue">Valor (R$):</label>
-                <input type="number" id="pixValue" placeholder="0.00" step="0.01" min="0.01">
-            </div>
-
-            <button class="btn-action" onclick="generatePix()">Gerar QR Code Pix</button>
-
-            <div class="qr-section" id="qrSection">
-                <p style="font-size: 12px; color: #fff; font-weight: 600;">Escaneie o QR Code:</p>
-                <img id="qrImg" class="qr-image" src="" alt="QR Code PIX">
-                <div class="copy-box" id="pixPayloadText">---</div>
-                <button class="btn-action" style="background: #222; color: #fff; border: 1px solid #d4af37;" onclick="copyPixCode()">
-                    <i class="fa-regular fa-copy"></i> Copiar Pix Copia e Cola
-                </button>
-            </div>
-        </div>
-    </div>
-
     <script>
         const wifiPass = "JRDL-5TI-6G";
-        const PIX_KEY = "98984873070";
-        const PIX_NAME = "Riquelme da silva dias";
-        const PIX_CITY = "SAO LUIS";
-
-        let currentPayload = "";
+        const pixKey = "98984873070";
 
         function showToast(text) {
             const toast = document.getElementById("toast");
@@ -426,86 +292,14 @@
 
         function copyWifi() {
             navigator.clipboard.writeText(wifiPass).then(() => {
-                showToast("Senha do Wi-Fi copiada!");
+                showToast("Senha do Wi-Fi copiada com sucesso!");
             });
         }
 
-        function openPixModal() {
-            document.getElementById('pixModal').style.display = 'flex';
-        }
-
-        function closePixModal() {
-            document.getElementById('pixModal').style.display = 'none';
-            document.getElementById('qrSection').style.display = 'none';
-            document.getElementById('pixValue').value = '';
-        }
-
-        function generatePix() {
-            const rawVal = document.getElementById('pixValue').value;
-            const val = parseFloat(rawVal);
-
-            if (!val || val <= 0) {
-                alert("Por favor, digite um valor válido (ex: 35.00)");
-                return;
-            }
-
-            const formattedVal = val.toFixed(2);
-            currentPayload = createPixPayload(PIX_KEY, PIX_NAME, PIX_CITY, formattedVal);
-
-            const qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(currentPayload);
-            document.getElementById("qrImg").src = qrUrl;
-
-            document.getElementById("pixPayloadText").innerText = currentPayload;
-            document.getElementById("qrSection").style.display = "block";
-        }
-
-        function copyPixCode() {
-            if (!currentPayload) return;
-            navigator.clipboard.writeText(currentPayload).then(() => {
-                showToast("Pix Copia e Cola copiado!");
+        function copyPixKey() {
+            navigator.clipboard.writeText(pixKey).then(() => {
+                showToast("Chave Pix copiada com sucesso!");
             });
-        }
-
-        function createPixPayload(key, name, city, value) {
-            function formatField(id, val) {
-                const len = val.length.toString().padStart(2, '0');
-                return `${id}${len}${val}`;
-            }
-
-            const cleanKey = key.replace(/\D/g, '');
-            const cleanName = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").substring(0, 25).toUpperCase();
-            const cleanCity = city.normalize("NFD").replace(/[\u0300-\u036f]/g, "").substring(0, 15).toUpperCase();
-
-            const merchantAccount = formatField('00', 'br.gov.bcb.pix') + formatField('01', cleanKey);
-            
-            let payload = 
-                formatField('00', '01') +
-                formatField('26', merchantAccount) +
-                formatField('52', '0000') +
-                formatField('53', '986') +
-                formatField('54', value) +
-                formatField('58', 'BR') +
-                formatField('59', cleanName) +
-                formatField('60', cleanCity) +
-                formatField('62', formatField('05', '***')) +
-                '6304';
-
-            return payload + crc16(payload);
-        }
-
-        function crc16(str) {
-            let crc = 0xFFFF;
-            for (let i = 0; i < str.length; i++) {
-                crc ^= (str.charCodeAt(i) << 8);
-                for (let j = 0; j < 8; j++) {
-                    if ((crc & 0x8000) !== 0) {
-                        crc = ((crc << 1) ^ 0x1021) & 0xFFFF;
-                    } else {
-                        crc = (crc << 1) & 0xFFFF;
-                    }
-                }
-            }
-            return crc.toString(16).toUpperCase().padStart(4, '0');
         }
     </script>
 </body>
