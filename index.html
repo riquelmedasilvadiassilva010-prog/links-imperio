@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Império Barber Shop</title>
-    <!-- Fontes e Ícones -->
+    <title>Império Barber Shop - Links</title>
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
     <!-- Gerador de QR Code -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -25,74 +26,114 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            position: relative;
         }
 
-        .container {
-            width: 100%;
-            max-width: 420px;
+        /* Container Principal */
+        .card {
             background: #181818;
             border: 1px solid #2a2a2a;
-            border-radius: 20px;
-            padding: 30px 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border-radius: 24px;
+            padding: 40px 24px;
+            width: 100%;
+            max-width: 400px;
             text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            position: relative;
+            z-index: 1;
         }
 
-        .logo {
-            width: 110px;
-            height: 110px;
+        /* Avatar / Logo */
+        .profile-img {
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             border: 3px solid #d4af37;
+            padding: 3px;
+            margin: 0 auto 16px;
             object-fit: cover;
-            margin-bottom: 15px;
+            background: #101010;
         }
 
+        /* Títulos */
         h1 {
             font-size: 22px;
             font-weight: 800;
-            color: #d4af37;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            color: #ffffff;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
         }
 
         p.subtitle {
             font-size: 13px;
-            color: #a0a0a0;
-            margin-bottom: 25px;
+            color: #d4af37;
+            font-weight: 600;
+            margin-bottom: 32px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
         }
 
-        .links-wrapper {
+        /* Lista de Links */
+        .links-container {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 16px;
         }
 
-        .btn-link {
+        .btn {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 12px;
-            padding: 16px;
-            background: #222222;
-            color: #ffffff;
-            text-decoration: none;
-            border-radius: 12px;
-            font-weight: 600;
+            width: 100%;
+            padding: 16px 20px;
+            border-radius: 14px;
             font-size: 15px;
-            border: 1px solid #333;
+            font-weight: 600;
+            text-decoration: none;
+            color: #ffffff;
+            background: #222222;
+            border: 1px solid #333333;
             transition: all 0.3s ease;
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
 
-        .btn-link:hover {
+        .btn i {
+            font-size: 18px;
+            color: #d4af37;
+            transition: color 0.3s ease;
+        }
+
+        .btn:hover {
             border-color: #d4af37;
             background: #2a2a2a;
             transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.15);
         }
 
-        .btn-link i {
-            color: #d4af37;
-            font-size: 18px;
+        /* Notificação Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #d4af37;
+            color: #000000;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 13px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 200;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
         }
 
         /* Modal do PIX */
@@ -209,168 +250,10 @@
             max-height: 50px;
             overflow-y: auto;
         }
-
-        .toast {
-            display: none;
-            margin-top: 8px;
-            font-size: 12px;
-            color: #2eb85c;
-            font-weight: 600;
-        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- Substitua pelo link direto da sua logo se possuir -->
-        <img src="https://via.placeholder.com/150/181818/d4af37?text=IMPERIO" alt="Império Barber" class="logo">
-        <h1>Império Barber</h1>
-        <p class="subtitle">Estilo, Tradição e Excelência</p>
-
-        <div class="links-wrapper">
-            <!-- Botão do PIX com Modal -->
-            <button class="btn-link" onclick="openPixModal()">
-                <i class="fa-brands fa-pix">
-                Pagar com PIX
-            </button>
-
-            <!-- Outros links normais -->
-            <a href="https://wa.me/5598984873070" target="_blank" class="btn-link">
-                <i class="fa-brands fa-whatsapp">
-                Agendar Horário
-            </a>
-
-            <a href="https://instagram.com" target="_blank" class="btn-link">
-                <i class="fa-brands fa-instagram">
-                Nosso Instagram
-            </a>
-        </div>
-    </div>
-
-    <!-- Modal do PIX -->
-    <div class="modal-overlay" id="pixModal">
-        <div class="modal-card">
-            <button class="close-btn" onclick="closePixModal()">&times;</button>
-            <div class="modal-title"><i class="fa-brands fa-pix" style="color: #20c997;"> Pagamento PIX</div>
-            <p style="font-size: 12px; color: #aaa;">Digite o valor do seu consumo para gerar o QR Code de pagamento.</p>
-
-            <div class="input-group">
-                <label for="pixValue">Valor a pagar (R$):</label>
-                <input type="number" id="pixValue" placeholder="0.00" step="0.01" min="0.01">
-            </div>
-
-            <button class="btn-action" onclick="generatePix()">Gerar QR Code PIX</button>
-
-            <!-- Resultado do QR Code -->
-            <div class="qr-section" id="qrSection">
-                <p style="font-size: 13px; color: #fff; font-weight: 600;">Escaneie o QR Code abaixo:</p>
-                <div id="qrcode"></div>
-                <div class="copy-box" id="pixPayloadText">---</div>
-                <button class="btn-action" style="background: #222; color: #fff; border: 1px solid #d4af37;" onclick="copyPixCode()">
-                    <i class="fa-regular fa-copy"> Copiar PIX Copia e Cola
-                </button>
-                <div class="toast" id="toast">Copiado com sucesso!</div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const PIX_KEY = "98984873070";
-        const PIX_NAME = "Riquelme da silva dias";
-        const PIX_CITY = "SAO LUIS";
-
-        function openPixModal() {
-            document.getElementById('pixModal').style.display = 'flex';
-        }
-
-        function closePixModal() {
-            document.getElementById('pixModal').style.display = 'none';
-            document.getElementById('qrSection').style.display = 'none';
-            document.getElementById('pixValue').value = '';
-        }
-
-        let currentPayload = "";
-
-        function generatePix() {
-            const rawVal = document.getElementById('pixValue').value;
-            const val = parseFloat(rawVal);
-
-            if (!val || val <= 0) {
-                alert("Por favor, digite um valor válido ex: 35.00");
-                return;
-            }
-
-            const formattedVal = val.toFixed(2);
-            currentPayload = createPixPayload(PIX_KEY, PIX_NAME, PIX_CITY, formattedVal);
-
-            // Gerar QR Code
-            const qrContainer = document.getElementById("qrcode");
-            qrContainer.innerHTML = "";
-            new QRCode(qrContainer, {
-                text: currentPayload,
-                width: 180,
-                height: 180
-            });
-
-            document.getElementById("pixPayloadText").innerText = currentPayload;
-            document.getElementById("qrSection").style.display = "block";
-        }
-
-        function copyPixCode() {
-            if (!currentPayload) return;
-            navigator.clipboard.writeText(currentPayload).then(() => {
-                const toast = document.getElementById("toast");
-                toast.style.display = "block";
-                setTimeout(() => { toast.style.display = "none"; }, 2500);
-            });
-        }
-
-        // Função de montagem do Payload Padrão BR Code (EMVCo)
-        function createPixPayload(key, name, city, value) {
-            function formatField(id, val) {
-                const len = val.length.toString().padStart(2, '0');
-                return `${id}${len}${val}`;
-            }
-
-            // Sanitização
-            const cleanKey = key.replace(/\D/g, '');
-            const cleanName = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").substring(0, 25).toUpperCase();
-            const cleanCity = city.normalize("NFD").replace(/[\u0300-\u036f]/g, "").substring(0, 15).toUpperCase();
-
-            const merchantAccount = formatField('00', 'br.gov.bcb.pix') + formatField('01', cleanKey);
-            
-            let payload = 
-                formatField('00', '01') +
-                formatField('26', merchantAccount) +
-                formatField('52', '0000') +
-                formatField('53', '986') +
-                formatField('54', value) +
-                formatField('58', 'BR') +
-                formatField('59', cleanName) +
-                formatField('60', cleanCity) +
-                formatField('62', formatField('05', '***')) +
-                '6304';
-
-            const crc = crc16(payload);
-            return payload + crc;
-        }
-
-        // Cálculo do CRC16 CCITT
-        function crc16(str) {
-            let crc = 0xFFFF;
-            for (let i = 0; i < str.length; i++) {
-                crc ^= (str.charCodeAt(i) << 8);
-                for (let j = 0; j < 8; j++) {
-                    if ((crc & 0x8000) !== 0) {
-                        crc = ((crc << 1) ^ 0x1021) & 0xFFFF;
-                    } else {
-                        crc = (crc << 1) & 0xFFFF;
-                    }
-                }
-            }
-            return crc.toString(16).toUpperCase().padStart(4, '0');
-        }
-    </script>
-</body>
-</html>
-
+    <div class="card">
+        <!-- Ícone / Logo -->
+        <div
