@@ -315,40 +315,106 @@
             color: #000;
         }
 
-        /* Galeria de Cortes */
-        .gallery-section {
-            width: 100%;
-            margin-bottom: 22px;
-            text-align: left;
-        }
+        
+/* Galeria de Cortes - Carrossel */
+.gallery-section {
+    width: 100%;
+    margin-bottom: 22px;
+    text-align: left;
+    min-width: 0;
+}
 
-        .gallery-title {
-            font-size: 0.78rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: var(--gold-light);
-            text-transform: uppercase;
-            margin-bottom: 12px;
-        }
+.gallery-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--gold-light);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
 
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
+.carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 14px;
+}
 
-        .gallery-item {
-            border-radius: 14px;
-            overflow: hidden;
-            aspect-ratio: 1 / 1;
-            border: 1px solid var(--glass-border);
-        }
+.gallery-grid {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+}
 
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+.gallery-grid::-webkit-scrollbar {
+    display: none;
+}
+
+.gallery-item {
+    flex: 0 0 100%;
+    min-width: 0;
+    aspect-ratio: 4 / 3;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    scroll-snap-align: start;
+}
+
+.gallery-item img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--gold-main);
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.75);
+    color: var(--gold-light);
+    cursor: pointer;
+    z-index: 2;
+}
+
+.carousel-prev {
+    left: 8px;
+}
+
+.carousel-next {
+    right: 8px;
+}
+
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.carousel-dot {
+    width: 8px;
+    height: 8px;
+    border: none;
+    border-radius: 50%;
+    background: #666;
+    cursor: pointer;
+    padding: 0;
+}
+
+.carousel-dot.active {
+    background: var(--gold-main);
+    transform: scale(1.2);
+}
+
 
         /* Rodapé */
         .footer {
@@ -473,18 +539,58 @@
             </a>
         </div>
 
-        <!-- Galeria de Cortes -->
-        <div class="gallery-section">
-            <div class="gallery-title">Nossos Trabalhos</div>
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&q=80" alt="Corte 1">
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&q=80" alt="Corte 2">
-                </div>
+        
+<!-- Galeria de Cortes -->
+<div class="gallery-section">
+    <div class="gallery-title">Nossos Trabalhos</div>
+
+    <div class="carousel">
+        <button class="carousel-btn carousel-prev"
+                onclick="moveGallery(-1)"
+                aria-label="Foto anterior">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+
+        <div class="gallery-grid" id="gallery-track">
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&q=80"
+                     alt="Corte de cabelo 1">
+            </div>
+
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&q=80"
+                     alt="Corte de cabelo 2">
+            </div>
+
+            <div class="gallery-item">
+                <img src="./corte3.jpg" alt="Corte de cabelo 3">
+            </div>
+
+            <div class="gallery-item">
+                <img src="./corte4.jpg" alt="Corte de cabelo 4">
+            </div>
+
+            <div class="gallery-item">
+                <img src="./corte5.jpg" alt="Corte de cabelo 5">
             </div>
         </div>
+
+        <button class="carousel-btn carousel-next"
+                onclick="moveGallery(1)"
+                aria-label="Próxima foto">
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <div class="carousel-dots" id="gallery-dots">
+        <button class="carousel-dot active" onclick="goToGallery(0)" aria-label="Foto 1"></button>
+        <button class="carousel-dot" onclick="goToGallery(1)" aria-label="Foto 2"></button>
+        <button class="carousel-dot" onclick="goToGallery(2)" aria-label="Foto 3"></button>
+        <button class="carousel-dot" onclick="goToGallery(3)" aria-label="Foto 4"></button>
+        <button class="carousel-dot" onclick="goToGallery(4)" aria-label="Foto 5"></button>
+    </div>
+</div>
+
 
         <!-- Rodapé -->
         <footer class="footer">
@@ -496,27 +602,47 @@
     <div id="toast" class="toast">Copiado com sucesso!</div>
 
     <script>
-        function copyValue(elementId, labelText) {
-            const input = document.getElementById(elementId);
-            input.select();
-            input.setSelectionRange(0, 99999);
-            navigator.clipboard.writeText(input.value).then(() => {
-                showToast(`${labelText} copiada com sucesso!`);
-            });
-        }
+        
+const galleryTrack = document.getElementById('gallery-track');
+const galleryDots = document.querySelectorAll('.carousel-dot');
 
-        function copyText(text, labelText) {
-            navigator.clipboard.writeText(text).then(() => {
-                showToast(`${labelText} copiada com sucesso!`);
-            });
-        }
+function goToGallery(index) {
+    const slides = galleryTrack.querySelectorAll('.gallery-item');
+    if (index < 0 || index >= slides.length) return;
 
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.classList.add('show');
-            setTimeout(() => { toast.classList.remove('show'); }, 2500);
-        }
+    galleryTrack.scrollTo({
+        left: slides[index].offsetLeft - slides[0].offsetLeft,
+        behavior: 'smooth'
+    });
+
+    galleryDots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+    });
+}
+
+function moveGallery(direction) {
+    const slides = galleryTrack.querySelectorAll('.gallery-item');
+    const current = Math.round(
+        galleryTrack.scrollLeft / slides[0].offsetWidth
+    );
+
+    goToGallery(Math.max(
+        0,
+        Math.min(slides.length - 1, current + direction)
+    ));
+}
+
+galleryTrack.addEventListener('scroll', () => {
+    const slides = galleryTrack.querySelectorAll('.gallery-item');
+    const current = Math.round(
+        galleryTrack.scrollLeft / slides[0].offsetWidth
+    );
+
+    galleryDots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === current);
+    });
+});
+
     </script>
 </body>
 </html>
