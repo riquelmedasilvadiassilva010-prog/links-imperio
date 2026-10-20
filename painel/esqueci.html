@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recuperar senha | Império Digital</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+      background: #101114;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    main {
+      width: 100%;
+      max-width: 400px;
+      padding: 25px;
+      box-sizing: border-box;
+      background: #1b1c21;
+      border-radius: 16px;
+    }
+    h1 { color: #e8b84a; }
+    input, button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 14px;
+      box-sizing: border-box;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    input {
+      background: #101114;
+      border: 1px solid #444650;
+      color: white;
+    }
+    button {
+      border: 0;
+      background: #e8b84a;
+      font-weight: bold;
+    }
+    p { line-height: 1.5; overflow-wrap: anywhere; }
+    a { color: #e8b84a; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Recuperar senha</h1>
+    <p>Digite o e-mail da sua conta de administrador. Enviaremos um link para criar uma nova senha.</p>
+
+    <form id="form">
+      <input id="email" type="email" placeholder="Seu e-mail" required>
+      <button id="botao" type="submit">Enviar link de recuperação</button>
+    </form>
+
+    <p id="status" role="status"></p>
+    <p><a href="index.html">Voltar ao login</a></p>
+  </main>
+
+  <script type="module">
+    import { createClient } from
+      'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+    const supabase = createClient(
+      'https://hqoqbjwjjmnhctjizvcs.supabase.co',
+      'COLE_SUA_CHAVE_PUBLISHABLE_AQUI'
+    );
+
+    const status = document.getElementById('status');
+    const form = document.getElementById('form');
+    const botao = document.getElementById('botao');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      botao.disabled = true;
+      status.textContent = 'Enviando...';
+
+      try {
+        const { error } = await supabase.auth.resetPasswordForEmail(
+          document.getElementById('email').value.trim(),
+          {
+            redirectTo:
+              'https://riquelmedasilvadiassilva010-prog.github.io/links-imperio/painel/recuperar.html'
+          }
+        );
+
+        if (error) throw error;
+
+        status.textContent =
+          'Se o e-mail estiver cadastrado, você receberá um link de recuperação. Confira sua caixa de entrada e o spam.';
+      } catch (error) {
+        status.textContent = 'Não foi possível enviar: ' + error.message;
+      } finally {
+        botao.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
