@@ -158,11 +158,13 @@ document.getElementById('sairPainel').onclick = async () => {
 async function carregarSites() {
   listaSites.textContent = 'Carregando sites...';
 
-  const { data, error } = await supabase
-    .from('sites')
-    .select('id, name, slug, published, 
-    created_at, content')
-    .order('created_at', { ascending: false });
+  
+const { data, error } = await supabase
+  .from('sites')
+  .select('id, name, slug, published, 
+created_at, content')
+  .order('created_at', { ascending: false });
+
   
   if (error) {
     listaSites.textContent = 'Erro ao carregar: ' + error.message;
