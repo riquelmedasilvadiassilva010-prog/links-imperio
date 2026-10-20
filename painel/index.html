@@ -113,7 +113,27 @@
 
           status.textContent =
             'Login confirmado! Sua conta de administrador foi validada.';
-        } catch (error) {
+          document.querySelector('main').innerHTML = `
+  <h1>IMPÉRIO DIGITAL</h1>
+  <p>Bem-vindo ao painel de gerenciamento!</p>
+
+  <button id="cadastrarSite">+ Cadastrar site</button>
+
+  <h2>Meus sites</h2>
+  <div id="listaSites">Carregando sites...</div>
+
+  <button id="sairPainel">Sair</button>
+`;
+
+document.getElementById('sairPainel').onclick = async () => {
+  await supabase.auth.signOut();
+  location.reload();
+};
+
+document.getElementById('cadastrarSite').onclick = () => {
+  alert('A próxima etapa será configurar o cadastro de sites.');
+};
+    } catch (error) {
           status.textContent = 'Não foi possível entrar: ' + error.message;
         } finally {
           button.disabled = false;
