@@ -159,11 +159,12 @@ async function carregarSites() {
   listaSites.textContent = 'Carregando sites...';
 
   
+
 const { data, error } = await supabase
   .from('sites')
-  .select('id, name, slug, published, 
-created_at, content')
+  .select('id, name, slug, published, created_at, content')
   .order('created_at', { ascending: false });
+
 
   
   if (error) {
