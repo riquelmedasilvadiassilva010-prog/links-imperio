@@ -197,28 +197,54 @@ editar.onclick = () => {
   editor.style.cssText =
     'border:1px solid #e8b84a;padding:16px;margin-top:16px;border-radius:12px;';
 
-  editor.innerHTML = `
-    <h2>Editar site</h2>
+  
+editor.innerHTML = `
+    <h2>Personalizar site</h2>
+
     <label>Nome do site</label>
     <input id="editarNome" value="">
+
     <label>Identificador</label>
     <input id="editarSlug" value="">
+
+    <label>Cor principal</label>
+    <input id="corPrincipal" type="color" value="#e8b84a">
+
+    <label>Cor de fundo</label>
+    <input id="corFundo" type="color" value="#101114">
+
+    <label>Link do logotipo (URL da imagem)</label>
+    <input id="logoSite" type="url" placeholder="https://...">
+
     <button id="salvarEdicao">Salvar alterações</button>
     <button id="fecharEditor">Fechar</button>
+
     <p id="mensagemEdicao"></p>
   `;
+
 
   listaSites.before(editor);
 
   document.getElementById('editarNome').value = site.name;
   document.getElementById('editarSlug').value = site.slug;
 
+  document.getElementById('corPrincipal').value =
+  site.content?.corPrincipal || '#e8b84a';
+
+  document.getElementById('corFundo').value =
+  site.content?.corFundo || '#101114';
+
+  document.getElementById('logoSite').value =
+  site.content?.logo || '';
   document.getElementById('fecharEditor').onclick = () => {
     editor.remove();
   };
 
   document.getElementById('salvarEdicao').onclick = async () => {
     const nomeNovo = document.getElementById('editarNome').value.trim();
+    const corPrincipal = document.getElementById('corPrincipal').value;
+const corFundo = document.getElementById('corFundo').value;
+const logoSite = document.getElementById('logoSite').value.trim();
     const slugNovo = document.getElementById('editarSlug').value
       .trim()
       .toLowerCase()
@@ -238,10 +264,21 @@ editar.onclick = () => {
     mensagem.textContent = 'Salvando...';
 
     try {
-      const { error } = await supabase
-        .from('sites')
-        .update({ name: nomeNovo, slug: slugNovo })
-        .eq('id', site.id);
+      
+    const { error } = await supabase
+    .from('sites')
+    .update({
+    name: nomeNovo,
+    slug: slugNovo,
+    content: {
+      ...(site.content || {}),
+      corPrincipal: corPrincipal,
+      corFundo: corFundo,
+      logo: logoSite
+    }
+  })
+  .eq('id', site.id);
+
 
       if (error) throw error;
 
