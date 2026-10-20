@@ -187,9 +187,75 @@ async function carregarSites() {
     const editar = document.createElement('button');
 editar.textContent = 'Editar site';
 
+
 editar.onclick = () => {
-  alert('Vamos abrir o editor do site: ' + site.name);
+  const editorAntigo = document.getElementById('editorSite');
+  if (editorAntigo) editorAntigo.remove();
+
+  const editor = document.createElement('section');
+  editor.id = 'editorSite';
+  editor.style.cssText =
+    'border:1px solid #e8b84a;padding:16px;margin-top:16px;border-radius:12px;';
+
+  editor.innerHTML = `
+    <h2>Editar site</h2>
+    <label>Nome do site</label>
+    <input id="editarNome" value="">
+    <label>Identificador</label>
+    <input id="editarSlug" value="">
+    <button id="salvarEdicao">Salvar alterações</button>
+    <button id="fecharEditor">Fechar</button>
+    <p id="mensagemEdicao"></p>
+  `;
+
+  listaSites.before(editor);
+
+  document.getElementById('editarNome').value = site.name;
+  document.getElementById('editarSlug').value = site.slug;
+
+  document.getElementById('fecharEditor').onclick = () => {
+    editor.remove();
+  };
+
+  document.getElementById('salvarEdicao').onclick = async () => {
+    const nomeNovo = document.getElementById('editarNome').value.trim();
+    const slugNovo = document.getElementById('editarSlug').value
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9-]/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '');
+
+    const mensagem = document.getElementById('mensagemEdicao');
+
+    if (!nomeNovo || !slugNovo) {
+      mensagem.textContent = 'Preencha os dois campos.';
+      return;
+    }
+
+    const botaoSalvar = document.getElementById('salvarEdicao');
+    botaoSalvar.disabled = true;
+    mensagem.textContent = 'Salvando...';
+
+    try {
+      const { error } = await supabase
+        .from('sites')
+        .update({ name: nomeNovo, slug: slugNovo })
+        .eq('id', site.id);
+
+      if (error) throw error;
+
+      mensagem.textContent = 'Alterações salvas!';
+      await carregarSites();
+      editor.remove();
+    } catch (error) {
+      mensagem.textContent = 'Erro ao salvar: ' + error.message;
+    } finally {
+      botaoSalvar.disabled = false;
+    }
+  };
 };
+
     
     const status = document.createElement('p');
     status.textContent = site.published ? 'Publicado' : 'Não publicado';
