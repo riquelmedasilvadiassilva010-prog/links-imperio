@@ -1,4 +1,4 @@
-
+k
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -119,20 +119,131 @@
 
   <button id="cadastrarSite">+ Cadastrar site</button>
 
+  <section id="formularioSite" style="display:none; margin-top:20px;">
+    <h2>Novo site</h2>
+    <input id="nomeSite" placeholder="Nome do site">
+    <br><br>
+    <input id="slugSite" placeholder="Identificador (ex.: cliente1)">
+    <br><br>
+    <button id="salvarSite">Salvar site</button>
+    <button id="cancelarSite">Cancelar</button>
+    <p id="mensagemSite"></p>
+  </section>
+
   <h2>Meus sites</h2>
   <div id="listaSites">Carregando sites...</div>
 
   <button id="sairPainel">Sair</button>
 `;
 
+const formularioSite = document.getElementById('formularioSite');
+const mensagemSite = document.getElementById('mensagemSite');
+const listaSites = document.getElementById('listaSites');
+
+document.getElementById('cadastrarSite').onclick = () => {
+  formularioSite.style.display = 'block';
+};
+
+document.getElementById('cancelarSite').onclick = () => {
+  formularioSite.style.display = 'none';
+};
+
 document.getElementById('sairPainel').onclick = async () => {
   await supabase.auth.signOut();
   location.reload();
 };
 
-document.getElementById('cadastrarSite').onclick = () => {
-  alert('A próxima etapa será configurar o cadastro de sites.');
+async function carregarSites() {
+  listaSites.textContent = 'Carregando sites...';
+
+  const { data, error } = await supabase
+    .from('sites')
+    .select('id, name, slug, published, created_at')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    listaSites.textContent = 'Erro ao carregar: ' + error.message;
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    listaSites.textContent = 'Nenhum site cadastrado ainda.';
+    return;
+  }
+
+  listaSites.innerHTML = '';
+
+  data.forEach(site => {
+    const item = document.createElement('div');
+    item.style.cssText = 'border:1px solid #888;padding:12px;margin:10px 0;';
+
+    const nome = document.createElement('strong');
+    nome.textContent = site.name;
+
+    const slug = document.createElement('p');
+    slug.textContent = 'Identificador: ' + site.slug;
+
+    const status = document.createElement('p');
+    status.textContent = site.published ? 'Publicado' : 'Não publicado';
+
+    item.append(nome, slug, status);
+    listaSites.appendChild(item);
+  });
+}
+
+document.getElementById('salvarSite').onclick = async () => {
+  const nome = document.getElementById('nomeSite').value.trim();
+  const slug = document.getElementById('slugSite').value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9-]/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+
+  if (!nome || !slug) {
+    mensagemSite.textContent = 'Preencha os dois campos.';
+    return;
+  }
+
+  const { data: { user }, error: erroUsuario } =
+    await supabase.auth.getUser();
+
+  if (erroUsuario || !user) {
+    mensagemSite.textContent = 'Entre novamente no painel.';
+    return;
+  }
+
+  const botao = document.getElementById('salvarSite');
+  botao.disabled = true;
+  mensagemSite.textContent = 'Salvando...';
+
+  try {
+    const { error } = await supabase.from('sites').insert({
+      owner_id: user.id,
+      name: nome,
+      slug: slug,
+      content: {},
+      published: false
+    });
+
+    if (error) {
+      mensagemSite.textContent = 'Erro ao salvar: ' + error.message;
+      return;
+    }
+
+    mensagemSite.textContent = 'Site cadastrado!';
+    document.getElementById('nomeSite').value = '';
+    document.getElementById('slugSite').value = '';
+    formularioSite.style.display = 'none';
+    await carregarSites();
+  } catch (error) {
+    mensagemSite.textContent = 'Erro inesperado: ' + error.message;
+  } finally {
+    botao.disabled = false;
+  }
 };
+
+carregarSites();
     } catch (error) {
           status.textContent = 'Não foi possível entrar: ' + error.message;
         } finally {
