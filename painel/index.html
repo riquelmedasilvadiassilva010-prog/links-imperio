@@ -160,8 +160,7 @@ async function carregarSites() {
 
   const { data, error } = await supabase
     .from('sites')
-    .select('id, name, slug, published, created_at')
-    .order('created_at', { ascending: false });
+    .select('id, name, slug, published, created_at, content')
 
   if (error) {
     listaSites.textContent = 'Erro ao carregar: ' + error.message;
