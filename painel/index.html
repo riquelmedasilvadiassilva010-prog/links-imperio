@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Império Digital | Painel</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101114;color:#f5f5f5;font-family:Arial,sans-serif;padding:22px}
+main{max-width:650px;margin:auto}
+h1{color:#e7b84b}
+.card{background:#1c1d22;border:1px solid #393a40;border-radius:14px;padding:20px;margin:18px 0}
+input,button{width:100%;padding:13px;margin-top:10px;border-radius:8px;font-size:16px}
+input{background:#111216;border:1px solid #50515a;color:white}
+button{background:#d9aa3c;border:0;color:#171717;font-weight:bold}
+small{color:#bbb;line-height:1.6}
+</style>
+</head>
+<body>
+<main>
+<h1>IMPÉRIO DIGITAL</h1>
+<p>Painel administrativo de sites</p>
+<div class="card">
+<h2>Conectar ao Supabase</h2>
+<p>Vamos preparar a conexão com teu banco de dados.</p>
+<label for="url">URL do projeto</label>
+<input id="url" placeholder="https://seuprojeto.supabase.co">
+<label for="key">Publishable key</label>
+<input id="key" placeholder="sb_publishable_..." autocomplete="off">
+<button id="check">Verificar configuração</button>
+<p id="msg" aria-live="polite"></p>
+<small>Esta é uma tela inicial. A autenticação, o cadastro de clientes e a edição dos sites ainda precisam ser implementados.</small>
+</div>
+</main>
+<script>
+document.getElementById('check').onclick=function(){
+const u=document.getElementById('url').value.trim().replace(/\/$/,'');
+const k=document.getElementById('key').value.trim();
+const m=document.getElementById('msg');
+if(!/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(u)){
+m.textContent='Confere a URL completa do projeto.';
+return;
+}
+if(!k.startsWith('sb_publishable_')){
+m.textContent='Confere se copiaste a Publishable key.';
+return;
+}
+m.textContent='Os dados parecem válidos. A conexão real ainda precisa ser programada.';
+};
+</script>
+</body>
+</html>
