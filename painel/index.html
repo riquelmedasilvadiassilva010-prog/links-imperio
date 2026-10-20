@@ -184,11 +184,18 @@ async function carregarSites() {
 
     const slug = document.createElement('p');
     slug.textContent = 'Identificador: ' + site.slug;
+    const editar = document.createElement('button');
+editar.textContent = 'Editar site';
 
+editar.onclick = () => {
+  alert('Vamos abrir o editor do site: ' + site.name);
+};
+
+item.append(nome, slug, editar);
     const status = document.createElement('p');
     status.textContent = site.published ? 'Publicado' : 'Não publicado';
 
-    item.append(nome, slug, status);
+    item.append(nome, slug, status, editar);
     listaSites.appendChild(item);
   });
 }
