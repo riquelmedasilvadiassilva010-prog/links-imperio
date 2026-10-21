@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A carregar site...</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: #101114;
+      color: #ffffff;
+      text-align: center;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    #logo {
+      max-width: 120px;
+      max-height: 120px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      display: none;
+    }
+    h1 {
+      margin: 0 0 10px 0;
+      font-size: 28px;
+    }
+    p {
+      color: #cccccc;
+      font-size: 16px;
+    }
+    #mensagemErro {
+      color: #f87171;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <img id="logo" src="" alt="Logo do Site">
+  <h1 id="nomeSite">A carregar...</h1>
+  <p id="mensagemErro"></p>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+    const SUPABASE_URL = 'https://hqoqbjwjjmnhctjizvcs.supabase.co';
+    const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_QK2T4-OP6omrbgGmTwbmsw_VKfgeFuk';
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+    // Obter o identificador (slug) a partir da URL (ex: cliente.html?slug=site-teste)
+    const urlParams = new URLSearchParams(window.location.search);
+    const slug = urlParams.get('slug') || 'site-teste';
+
+    async function carregarSitePublico() {
+      const elNome = document.getElementById('nomeSite');
+      const elLogo = document.getElementById('logo');
+      const elErro = document.getElementById('mensagemErro');
+
+      try {
+        const { data, error } = await supabase
+          .from('sites')
+          .select('name, published, content')
+          .eq('slug', slug)
+          .single();
+
+        if (error || !data) {
+          elNome.textContent = 'Site não encontrado';
+          elErro.textContent = 'O identificador solicitado não existe.';
+          return;
+        }
+
+        if (!data.published) {
+          elNome.textContent = data.name;
+          elErro.textContent = 'Este site ainda não está publicado.';
+          return;
+        }
+
+        // Se estiver publicado, aplica o nome, cores e logo
+        document.title = data.name;
+        elNome.textContent = data.name;
+
+        const content = data.content || {};
+
+        if (content.corFundo) {
+          document.body.style.backgroundColor = content.corFundo;
+        }
+
+        if (content.corPrincipal) {
+          elNome.style.color = content.corPrincipal;
+        }
+
+        if (content.logo) {
+          elLogo.src = content.logo;
+          elLogo.style.display = 'block';
+        }
+
+      } catch (err) {
+        elNome.textContent = 'Erro ao carregar';
+        elErro.textContent = err.message;
+      }
+    }
+
+    carregarSitePublico();
+  </script>
+</body>
+</html>
