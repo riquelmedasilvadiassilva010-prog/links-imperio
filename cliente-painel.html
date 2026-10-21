@@ -1,14 +1,13 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IMPÉRIO DIGITAL | Painel Master</title>
+  <title>IMPÉRIO DIGITAL | Área do Cliente</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
       --bg-dark: #0a0b0e;
-      --bg-sidebar: #0f1015;
       --bg-card: #14151c;
       --bg-input: #0d0e12;
       --primary: #e8b84a;
@@ -20,399 +19,42 @@
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
-    body { background: var(--bg-dark); color: var(--text); min-height: 100vh; }
+    body { background: var(--bg-dark); color: var(--text); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 16px; }
 
-    .app-layout { display: flex; flex-direction: column; width: 100%; min-height: 100vh; }
+    .container { width: 100%; max-width: 480px; }
 
-    aside {
-      width: 100%; background: var(--bg-sidebar); border-bottom: 1px solid var(--border);
-      padding: 16px 20px; display: flex; align-items: center; justify-content: space-between;
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
 
-    .brand-area { display: flex; align-items: center; gap: 10px; }
-    .brand-icon { color: var(--primary); font-size: 24px; }
-    .brand-name { font-size: 16px; font-weight: 800; color: var(--primary); letter-spacing: 0.5px; }
-    .brand-sub { font-size: 9px; color: var(--text-muted); text-transform: uppercase; }
+    .brand-header { text-align: center; margin-bottom: 24px; }
+    .brand-icon { font-size: 36px; color: var(--primary); margin-bottom: 8px; }
+    .brand-title { font-size: 20px; font-weight: 800; color: var(--primary); letter-spacing: 0.5px; }
+    .brand-sub { font-size: 11px; color: var(--text-muted); text-transform: uppercase; margin-top: 2px; }
 
-    nav { display: none; }
+    /* ABAS LOGIN / CADASTRO */
+    .tabs { display: flex; background: var(--bg-input); border-radius: 10px; padding: 4px; margin-bottom: 20px; border: 1px solid var(--border); }
+    .tab-btn { flex: 1; padding: 10px; background: transparent; border: none; color: var(--text-muted); font-weight: 600; font-size: 13px; border-radius: 8px; cursor: pointer; transition: 0.2s; }
+    .tab-btn.active { background: var(--primary); color: #101114; font-weight: 700; }
 
-    main { flex: 1; padding: 16px; width: 100%; max-width: 1200px; margin: 0 auto; }
-
-    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; margin-bottom: 16px; }
-
-    .input-group { margin-bottom: 12px; }
-    .input-group label { display: block; font-size: 11px; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; }
-    .input-field { width: 100%; padding: 12px; background: var(--bg-input); border: 1px solid var(--border); border-radius: 8px; color: white; outline: none; font-size: 14px; }
+    .input-group { margin-bottom: 14px; }
+    .input-group label { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; font-weight: 600; }
+    .input-group label i { color: var(--primary); }
+    .input-field { width: 100%; padding: 12px 14px; background: var(--bg-input); border: 1px solid var(--border); border-radius: 10px; color: white; outline: none; font-size: 14px; transition: 0.2s; }
     .input-field:focus { border-color: var(--primary); }
 
-    .btn-main { width: 100%; padding: 12px 20px; background: var(--primary); color: #101114; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 14px; }
-    .btn-secondary { width: 100%; padding: 10px; background: #232430; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 13px; margin-top: 8px; }
+    .btn-main { width: 100%; padding: 14px; background: var(--primary); color: #101114; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; }
+    .btn-main:hover { opacity: 0.9; }
+    
+    .btn-view { width: 100%; padding: 12px; background: rgba(34, 197, 94, 0.15); color: var(--success); border: 1px solid var(--success); border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; margin-top: 10px; }
+    .btn-logout { width: 100%; padding: 10px; background: transparent; color: var(--danger); border: none; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; margin-top: 12px; }
 
-    .site-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 12px; }
-    .site-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-    .badge { padding: 4px 8px; border-radius: 12px; font-size: 10px; font-weight: bold; }
-    .badge-active { background: rgba(34, 197, 94, 0.15); color: var(--success); }
-    .badge-inactive { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+    .status-alert { font-size: 12px; text-align: center; margin-top: 12px; font-weight: 600; padding: 10px; border-radius: 8px; }
+    .alert-warning { background: rgba(239, 68, 68, 0.15); color: var(--danger); border: 1px solid var(--danger); }
+    .alert-success { background: rgba(34, 197, 94, 0.15); color: var(--success); }
 
-    .action-row { display: flex; gap: 8px; margin-top: 12px; }
-    .btn-act { flex: 1; padding: 10px; border: none; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; }
-    .btn-act-edit { background: var(--primary); color: #101114; }
-    .btn-act-view { background: #232430; color: white; }
-    .btn-act-toggle { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
-
-    .login-wrapper { display: flex; min-height: 80vh; align-items: center; justify-content: center; }
-    .section-title { font-size: 14px; font-weight: bold; color: var(--primary); margin: 16px 0 10px 0; border-bottom: 1px dashed var(--border); padding-bottom: 6px; text-transform: uppercase; }
-
-    .user-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; background: var(--bg-input); border-radius: 8px; margin-bottom: 8px; font-size: 13px; }
-
-    @media (min-width: 768px) {
-      .app-layout { flex-direction: row; }
-      aside { width: 260px; border-bottom: none; border-right: 1px solid var(--border); flex-direction: column; justify-content: space-between; padding: 24px; align-items: flex-start; }
-      .brand-icon { font-size: 32px; }
-      .brand-name { font-size: 18px; }
-      nav { display: flex; flex-direction: column; gap: 8px; width: 100%; margin-top: 30px; }
-      .nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 10px; color: var(--text-muted); text-decoration: none; font-size: 14px; font-weight: 600; cursor: pointer; transition: 0.2s; }
-      .nav-item:hover, .nav-item.active { background: var(--primary); color: #101114; }
-      main { padding: 32px; }
-      .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-      .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-      .btn-main { width: auto; }
-    }
-  </style>
-</head>
-<body>
-
-  <div id="root">
-    <div class="login-wrapper">
-      <div class="card" style="width: 100%; max-width: 380px;">
-        <div class="brand-area" style="justify-content: center; margin-bottom: 20px;">
-          <i class="fa-solid fa-crown brand-icon"></i>
-          <div>
-            <div class="brand-name">IMPÉRIO DIGITAL</div>
-            <div class="brand-sub">Painel do Administrador</div>
-          </div>
-        </div>
-
-        <div class="input-group">
-          <label>E-mail</label>
-          <input type="email" id="email" class="input-field" placeholder="seuemail@exemplo.com">
-        </div>
-
-        <div class="input-group">
-          <label>Senha</label>
-          <input type="password" id="password" class="input-field" placeholder="••••••••">
-        </div>
-
-        <button type="button" id="loginBtn" class="btn-main" style="width:100%; margin-top:8px;">Entrar no Painel</button>
-        <p id="statusMsg" style="margin-top: 12px; text-align: center; font-size: 12px;"></p>
-      </div>
-    </div>
-  </div>
-
-  <script type="module">
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-
-    const SUPABASE_URL = 'https://hqoqbjwjjmnhctjizvcs.supabase.co';
-    const SUPABASE_KEY = 'sb_publishable_QK2T4-OP6omrbgGmTwbmsw_VKfgeFuk';
-    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-
-    const root = document.getElementById('root');
-
-    async function init() {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session?.user) {
-        renderPainel(session.user);
-      }
-    }
-
-    document.getElementById('loginBtn').onclick = async () => {
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
-      const statusMsg = document.getElementById('statusMsg');
-
-      if (!email || !password) {
-        statusMsg.style.color = 'var(--danger)';
-        statusMsg.textContent = 'Preencha o e-mail e a senha.';
-        return;
-      }
-
-      statusMsg.style.color = 'var(--primary)';
-      statusMsg.textContent = 'Autenticando...';
-
-      try {
-        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) throw error;
-        renderPainel(data.user);
-      } catch (err) {
-        statusMsg.style.color = 'var(--danger)';
-        statusMsg.textContent = 'Erro de acesso: ' + err.message;
-      }
-    };
-
-    function renderPainel(user) {
-      root.innerHTML = `
-        <div class="app-layout">
-          <aside>
-            <div class="brand-area">
-              <i class="fa-solid fa-crown brand-icon"></i>
-              <div>
-                <div class="brand-name">IMPÉRIO DIGITAL</div>
-                <div class="brand-sub">${user.email}</div>
-              </div>
-            </div>
-
-            <nav>
-              <a class="nav-item active"><i class="fa-solid fa-house"></i> Dashboard</a>
-              <a class="nav-item" id="btnNavNovo"><i class="fa-solid fa-plus"></i> Cadastrar Site</a>
-            </nav>
-
-            <button type="button" id="sairBtn" class="btn-secondary"><i class="fa-solid fa-right-from-bracket"></i> Sair</button>
-          </aside>
-
-          <main>
-            <!-- ÁREA DE CLIENTES CADASTRADOS (SOLICITAÇÕES) -->
-            <div class="card" style="border-color: var(--primary);">
-              <div class="section-title" style="margin-top:0;"><i class="fa-solid fa-users"></i> Clientes Cadastrados no Portal</div>
-              <div id="usersList" style="margin-top: 10px;">Carregando cadastros recentes...</div>
-            </div>
-
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px; margin-top:24px;">
-              <h2>Gerenciador de Sites</h2>
-              <button type="button" id="btnNovo" class="btn-main">+ Novo Cliente</button>
-            </div>
-
-            <div id="formContainer"></div>
-
-            <div id="sitesList">Carregando sites...</div>
-          </main>
-        </div>
-      `;
-
-      document.getElementById('sairBtn').onclick = async () => {
-        await supabase.auth.signOut();
-        location.reload();
-      };
-
-      document.getElementById('btnNovo').onclick = () => mostrarFormNovo();
-      if (document.getElementById('btnNavNovo')) {
-        document.getElementById('btnNavNovo').onclick = () => mostrarFormNovo();
-      }
-
-      carregarClientesECadastros();
-    }
-
-    async function carregarClientesECadastros() {
-      const sitesList = document.getElementById('sitesList');
-      const usersList = document.getElementById('usersList');
-
-      // Buscar sites
-      const { data: sites, error } = await supabase.from('sites').select('*').order('created_at', { ascending: false });
-
-      if (error || !sites) {
-        sitesList.innerHTML = '<p style="color:var(--danger);">Erro ao carregar sites.</p>';
-        return;
-      }
-
-      // Renderizar Clientes Cadastrados (Com base nos e-mails vinculados ou para vincular)
-      let e-mailsVinculados = sites.map(s => s.content?.clientEmail).filter(Boolean);
-      
-      // Mostrar lista visual de vínculos
-      usersList.innerHTML = `
-        <p style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">
-          Para aprovar um cliente que se cadastrou no portal, crie ou edite o site dele e insira o e-mail de cadastro.
-        </p>
-      `;
-
-      sitesList.innerHTML = '';
-      sites.forEach(site => {
-        const div = document.createElement('div');
-        div.className = 'site-card';
-        div.innerHTML = `
-          <div class="site-header">
-            <div>
-              <strong style="font-size:16px;">${site.name}</strong>
-              <div style="font-size:12px; color:var(--text-muted);">
-                /${site.slug} ${site.content?.clientEmail ? `<span style="color:var(--success); font-weight:bold;">• 👤 ${site.content.clientEmail}</span>` : '<span style="color:var(--danger);">• ⚠️ Sem cliente vinculado</span>'}
-              </div>
-            </div>
-            <span class="badge ${site.published ? 'badge-active' : 'badge-inactive'}">
-              ${site.published ? 'Ativo' : 'Inativo'}
-            </span>
-          </div>
-          <div class="action-row">
-            <button class="btn-act btn-act-edit btn-edit"><i class="fa-solid fa-user-check"></i> Editar / Liberar</button>
-            <a href="https://riquelmedasilvadiassilva010-prog.github.io/links-imperio/cliente.html?slug=${site.slug}" target="_blank" class="btn-act btn-act-view"><i class="fa-solid fa-eye"></i> Ver Site</a>
-            <button class="btn-act btn-act-toggle btn-toggle"><i class="fa-solid fa-power-off"></i></button>
-          </div>
-        `;
-
-        div.querySelector('.btn-toggle').onclick = async () => {
-          await supabase.from('sites').update({ published: !site.published }).eq('id', site.id);
-          carregarClientesECadastros();
-        };
-
-        div.querySelector('.btn-edit').onclick = () => abrirEditor(site);
-
-        sitesList.appendChild(div);
-      });
-    }
-
-    function mostrarFormNovo(emailPadrao = '') {
-      const container = document.getElementById('formContainer');
-      container.innerHTML = `
-        <div class="card" style="border-color: var(--primary);">
-          <h3>+ Cadastrar Novo Cliente</h3>
-          <div class="grid-2" style="margin-top:12px;">
-            <div class="input-group">
-              <label>Nome do Negócio</label>
-              <input id="nNome" class="input-field" placeholder="Ex: Império Barber">
-            </div>
-            <div class="input-group">
-              <label>Slug / URL</label>
-              <input id="nSlug" class="input-field" placeholder="Ex: imperio">
-            </div>
-            <div class="input-group" style="grid-column: span 2;">
-              <label>E-mail do Cliente (Para liberar o login dele)</label>
-              <input id="nClientEmail" class="input-field" value="${emailPadrao}" placeholder="exemplo@cliente.com">
-            </div>
-          </div>
-          <div style="display:flex; gap:8px; margin-top:8px;">
-            <button type="button" id="salvarNovo" class="btn-main">Salvar & Liberar</button>
-            <button type="button" id="cancelarNovo" class="btn-secondary" style="margin-top:0;">Cancelar</button>
-          </div>
-        </div>
-      `;
-
-      document.getElementById('cancelarNovo').onclick = () => container.innerHTML = '';
-      document.getElementById('salvarNovo').onclick = async () => {
-        const nome = document.getElementById('nNome').value.trim();
-        const slug = document.getElementById('nSlug').value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '-');
-        const clientEmail = document.getElementById('nClientEmail').value.trim().toLowerCase();
-        if (!nome || !slug) return;
-
-        const { data: { user } } = await supabase.auth.getUser();
-        await supabase.from('sites').insert({ 
-          owner_id: user.id, 
-          name: nome, 
-          slug: slug, 
-          content: { clientEmail: clientEmail }, 
-          published: true 
-        });
-        container.innerHTML = '';
-        carregarClientesECadastros();
-      };
-    }
-
-    function abrirEditor(site) {
-      const container = document.getElementById('formContainer');
-      const c = site.content || {};
-
-      container.innerHTML = `
-        <div class="card" style="border-color: var(--primary);">
-          <h3 style="font-size:18px;">🛠️ Liberar Acesso & Design: ${site.name}</h3>
-
-          <div class="section-title"><i class="fa-solid fa-user-lock"></i> Liberação do Cliente</div>
-          <div class="input-group">
-            <label>E-mail que o Cliente Cadastrou</label>
-            <input id="eClientEmail" class="input-field" value="${c.clientEmail || ''}" placeholder="digite.o.email@do.cliente.com">
-          </div>
-
-          <div class="section-title"><i class="fa-solid fa-address-book"></i> Informações do Cliente</div>
-          <div class="grid-2">
-            <div class="input-group"><label>Nome do Negócio</label><input id="eNome" class="input-field" value="${site.name}"></div>
-            <div class="input-group"><label>WhatsApp (números)</label><input id="eWhats" class="input-field" value="${c.whatsapp || ''}"></div>
-            <div class="input-group"><label>Instagram (@)</label><input id="eInsta" class="input-field" value="${c.instagram || ''}"></div>
-            <div class="input-group"><label>Chave Pix</label><input id="ePix" class="input-field" value="${c.pix || ''}"></div>
-            <div class="input-group"><label>Wi-Fi Nome</label><input id="eWifiNome" class="input-field" value="${c.wifiNome || ''}"></div>
-            <div class="input-group"><label>Wi-Fi Senha</label><input id="eWifiSenha" class="input-field" value="${c.wifiSenha || ''}"></div>
-            <div class="input-group"><label>Google Maps Link</label><input id="eMaps" class="input-field" value="${c.maps || ''}"></div>
-            <div class="input-group"><label>URL Logotipo</label><input id="eLogo" class="input-field" value="${c.logo || ''}"></div>
-          </div>
-
-          <div class="section-title"><i class="fa-solid fa-palette"></i> Design & Identidade Visual</div>
-          
-          <div class="grid-3">
-            <div class="input-group">
-              <label>Cor de Fundo da Página</label>
-              <input type="color" id="eBgColor" class="input-field" value="${c.bgColor || '#0a0b0e'}" style="height:44px; padding:4px;">
-            </div>
-            <div class="input-group">
-              <label>Cor dos Botões / Cartões</label>
-              <input type="color" id="eCardColor" class="input-field" value="${c.cardColor || '#14151c'}" style="height:44px; padding:4px;">
-            </div>
-            <div class="input-group">
-              <label>Cor de Destaque / Ícones</label>
-              <input type="color" id="ePrimaryColor" class="input-field" value="${c.primaryColor || '#e8b84a'}" style="height:44px; padding:4px;">
-            </div>
-            <div class="input-group">
-              <label>Cor do Texto</label>
-              <input type="color" id="eTextColor" class="input-field" value="${c.textColor || '#ffffff'}" style="height:44px; padding:4px;">
-            </div>
-            <div class="input-group">
-              <label>Fonte da Página</label>
-              <select id="eFont" class="input-field">
-                <option value="system-ui" ${c.font === 'system-ui' ? 'selected' : ''}>Padrão (System UI)</option>
-                <option value="'Poppins', sans-serif" ${c.font?.includes('Poppins') ? 'selected' : ''}>Poppins (Moderna)</option>
-                <option value="'Montserrat', sans-serif" ${c.font?.includes('Montserrat') ? 'selected' : ''}>Montserrat (Elegante)</option>
-                <option value="'Playfair Display', serif" ${c.font?.includes('Playfair') ? 'selected' : ''}>Playfair (Luxo)</option>
-                <option value="'Bebas Neue', cursive" ${c.font?.includes('Bebas') ? 'selected' : ''}>Bebas Neue (Forte / Barbearia)</option>
-              </select>
-            </div>
-            <div class="input-group">
-              <label>Formato dos Botões</label>
-              <select id="eBtnStyle" class="input-field">
-                <option value="12px" ${c.btnRadius === '12px' ? 'selected' : ''}>Suave (12px)</option>
-                <option value="30px" ${c.btnRadius === '30px' ? 'selected' : ''}>Pílula / Redondo (30px)</option>
-                <option value="0px" ${c.btnRadius === '0px' ? 'selected' : ''}>Reto / Quadrado (0px)</option>
-              </select>
-            </div>
-          </div>
-
-          <div style="display:flex; gap:8px; margin-top:20px;">
-            <button type="button" id="salvarEdicao" class="btn-main">💾 Salvar & Liberar Acesso</button>
-            <button type="button" id="fecharEdicao" class="btn-secondary" style="margin-top:0;">Fechar</button>
-          </div>
-          <p id="msgEdit" style="margin-top: 10px; font-size: 12px; font-weight: bold;"></p>
-        </div>
-      `;
-
-      document.getElementById('fecharEdicao').onclick = () => container.innerHTML = '';
-      document.getElementById('salvarEdicao').onclick = async () => {
-        const msg = document.getElementById('msgEdit');
-        msg.style.color = 'var(--text-muted)';
-        msg.textContent = 'A guardar...';
-
-        await supabase.from('sites').update({
-          name: document.getElementById('eNome').value.trim(),
-          content: {
-            ...c,
-            clientEmail: document.getElementById('eClientEmail').value.trim().toLowerCase(),
-            whatsapp: document.getElementById('eWhats').value.trim(),
-            instagram: document.getElementById('eInsta').value.trim(),
-            pix: document.getElementById('ePix').value.trim(),
-            wifiNome: document.getElementById('eWifiNome').value.trim(),
-            wifiSenha: document.getElementById('eWifiSenha').value.trim(),
-            maps: document.getElementById('eMaps').value.trim(),
-            logo: document.getElementById('eLogo').value.trim(),
-            bgColor: document.getElementById('eBgColor').value,
-            cardColor: document.getElementById('eCardColor').value,
-            primaryColor: document.getElementById('ePrimaryColor').value,
-            textColor: document.getElementById('eTextColor').value,
-            font: document.getElementById('eFont').value,
-            btnRadius: document.getElementById('eBtnStyle').value
-          }
-        }).eq('id', site.id);
-
-        msg.style.color = 'var(--success)';
-        msg.textContent = '✅ Salvo e Acesso Liberado!';
-        setTimeout(() => {
-          container.innerHTML = '';
-          carregarClientesECadastros();
-        }, 1000);
-      };
-    }
-
-    init();
-  </script>
-</body>
-</html>
+    .section-title { font-size: 13px; font-weight: 700; color: var(--primary); margin: 18px 0 12px 0; border-bottom: 
