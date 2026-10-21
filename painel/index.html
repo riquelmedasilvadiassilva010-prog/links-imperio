@@ -3,62 +3,62 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Império Digital | Painel</title>
+  <title>JRB Digital | Painel de Controle</title>
   <style>
     * { box-sizing: border-box; }
     body {
-      margin: 0; font-family: Arial, sans-serif;
-      background: #101114; color: white;
-      min-height: 100vh; display: grid; place-items: center;
+      margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0d0e12; color: #e1e1e6;
+      min-height: 100vh; display: flex; flex-direction: column; align-items: center;
       padding: 20px;
     }
     main {
-      width: 100%; max-width: 420px; padding: 28px;
-      background: #1b1c21; border: 1px solid #33353d;
-      border-radius: 18px;
+      width: 100%; max-width: 480px; padding: 28px;
+      background: #17181f; border: 1px solid #2a2b36;
+      border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
     }
-    h1 { margin-top: 0; color: #e8b84a; }
-    p { color: #c4c5cc; line-height: 1.5; }
-    label { display: block; margin-top: 16px; font-size: 14px; color: #e8b84a; }
+    h1, h2 { margin-top: 0; color: #e8b84a; }
+    p { color: #a8a9b3; line-height: 1.5; font-size: 14px; }
+    label { display: block; margin-top: 14px; font-size: 13px; color: #e8b84a; font-weight: bold; }
     input {
-      width: 100%; padding: 13px; margin-top: 7px;
-      border: 1px solid #444650; border-radius: 9px;
-      background: #101114; color: white; font-size: 16px;
+      width: 100%; padding: 12px; margin-top: 6px;
+      border: 1px solid #333545; border-radius: 10px;
+      background: #0d0e12; color: white; font-size: 15px; outline: none;
     }
+    input:focus { border-color: #e8b84a; }
     button {
-      width: 100%; padding: 14px; margin-top: 12px;
-      border: 0; border-radius: 9px; cursor: pointer;
-      background: #e8b84a; color: #171717;
-      font-size: 16px; font-weight: bold;
+      width: 100%; padding: 14px; margin-top: 14px;
+      border: 0; border-radius: 10px; cursor: pointer;
+      background: #e8b84a; color: #101114;
+      font-size: 15px; font-weight: bold; transition: 0.2s;
     }
-    #status { overflow-wrap: anywhere; }
+    button:hover { opacity: 0.9; }
+    .card-site {
+      border: 1px solid #2a2b36; padding: 16px; margin: 14px 0;
+      border-radius: 14px; background: #101114;
+    }
   </style>
 </head>
 <body>
   <main>
-    <h1>IMPÉRIO DIGITAL</h1>
-    <p>Entre na sua conta para acessar o painel de gerenciamento.</p>
+    <h1>JRB DIGITAL</h1>
+    <p>Painel de gerenciamento de links e serviços.</p>
 
     <form id="loginForm">    
       <label for="email">E-mail</label>
-      <input id="email" type="email" autocomplete="username"
-        placeholder="Seu e-mail" required>
+      <input id="email" type="email" placeholder="Seu e-mail" required>
 
       <label for="password">Senha</label>
-      <input id="password" type="password"
-        autocomplete="current-password" placeholder="Sua senha" required>
+      <input id="password" type="password" placeholder="Sua senha" required>
 
-      <button id="loginButton" type="submit">Entrar no painel</button>
+      <button id="loginButton" type="submit">Entrar no Painel</button>
     </form>
-    <p style="margin-top: 15px;">
-      <a href="esqueci.html" style="color:#e8b84a">Esqueci minha senha</a>
-    </p>
-    <p id="status" role="status">Configure a conexão para começar.</p>
+
+    <p id="status" role="status" style="margin-top:15px; text-align:center;">Aguardando login...</p>
   </main>
 
   <script type="module">
-    import { createClient } from
-      'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
     const SUPABASE_URL = 'https://hqoqbjwjjmnhctjizvcs.supabase.co';
     const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_QK2T4-OP6omrbgGmTwbmsw_VKfgeFuk';
@@ -67,364 +67,238 @@
     const button = document.getElementById('loginButton');
     const form = document.getElementById('loginForm');
 
-    if (
-      !SUPABASE_URL.startsWith('https://') ||
-      !SUPABASE_URL.endsWith('.supabase.co') ||
-      SUPABASE_PUBLISHABLE_KEY.startsWith('COLE_')
-    ) {
-      status.textContent =
-        'Falta configurar a URL e a chave Publishable do Supabase no código.';
+    const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
       button.disabled = true;
-    } else {
-      const supabase = createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY
-      );
+      status.textContent = 'Verificando acesso...';
 
-      status.textContent = 'Conexão configurada. Entre com sua conta.';
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: document.getElementById('email').value.trim(),
+          password: document.getElementById('password').value
+        });
 
-      form.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        button.disabled = true;
-        status.textContent = 'Verificando acesso...';
+        if (error) throw error;
 
-        try {
-          const { data, error } = await supabase.auth.signInWithPassword({
-            email: document.getElementById('email').value.trim(),
-            password: document.getElementById('password').value
-          });
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', data.user.id)
+          .single();
 
-          if (error) throw error;
+        const userRole = profile?.role || 'user';
 
-          const { data: profile, error: profileError } = await supabase
-            .from('profiles')
-            .select('role')
-            .eq('id', data.user.id)
-            .single();
+        status.textContent = 'Login efetuado com sucesso!';
+        document.querySelector('main').innerHTML = `
+          <h2>SITES & SERVIÇOS</h2>
+          <p>Gerencie as informações do seu site dinâmico em tempo real.</p>
 
-          if (profileError) throw profileError;
+          <div id="secaoAdmin" style="display:${userRole === 'admin' ? 'block' : 'none'};">
+            <button id="cadastrarSite">+ Novo Site de Cliente</button>
 
-          const userRole = profile.role || 'user';
+            <section id="formularioSite" style="display:none; margin-top:15px; background:#101114; padding:15px; border-radius:12px;">
+              <h3 style="color:#e8b84a; margin:0 0 10px 0;">Cadastrar Cliente</h3>
+              <input id="nomeSite" placeholder="Nome do Negócio (ex: Império Barber)">
+              <input id="slugSite" placeholder="Identificador / URL (ex: imperio)">
+              <button id="salvarSite">Salvar Site</button>
+              <button id="cancelarSite" style="background:#333545; color:white;">Cancelar</button>
+              <p id="mensagemSite"></p>
+            </section>
+          </div>
 
-          status.textContent = 'Login confirmado! A carregar painel...';
-          document.querySelector('main').innerHTML = `
-            <h1>IMPÉRIO DIGITAL</h1>
-            <p>Bem-vindo ao painel (${userRole === 'admin' ? 'Administrador' : 'Cliente'})!</p>
+          <div id="listaSites">Carregando sites...</div>
 
-            <div id="secaoAdmin" style="display:${userRole === 'admin' ? 'block' : 'none'};">
-              <button id="cadastrarSite">+ Cadastrar site</button>
+          <button id="sairPainel" style="background:#333545; color:white; margin-top:20px;">Sair do Painel</button>
+        `;
 
-              <section id="formularioSite" style="display:none; margin-top:20px;">
-                <h2>Novo site</h2>
-                <input id="nomeSite" placeholder="Nome do site">
-                <br><br>
-                <input id="slugSite" placeholder="Identificador (ex.: cliente1)">
-                <br><br>
-                <button id="salvarSite">Salvar site</button>
-                <button id="cancelarSite" style="background:#444650; color:white;">Cancelar</button>
-                <p id="mensagemSite"></p>
-              </section>
-            </div>
+        const formularioSite = document.getElementById('formularioSite');
+        const listaSites = document.getElementById('listaSites');
 
-            <h2>Meus sites</h2>
-            <div id="listaSites">Carregando sites...</div>
+        if (document.getElementById('cadastrarSite')) {
+          document.getElementById('cadastrarSite').onclick = () => { formularioSite.style.display = 'block'; };
+          document.getElementById('cancelarSite').onclick = () => { formularioSite.style.display = 'none'; };
+        }
 
-            <button id="sairPainel" style="background:#444650; color:white; margin-top:30px;">Sair</button>
-          `;
+        document.getElementById('sairPainel').onclick = async () => {
+          await supabase.auth.signOut();
+          location.reload();
+        };
 
-          const formularioSite = document.getElementById('formularioSite');
-          const mensagemSite = document.getElementById('mensagemSite');
-          const listaSites = document.getElementById('listaSites');
+        async function carregarSites() {
+          listaSites.textContent = 'Carregando dados...';
 
-          const btnCadastrar = document.getElementById('cadastrarSite');
-          if (btnCadastrar) {
-            btnCadastrar.onclick = () => { formularioSite.style.display = 'block'; };
+          const { data, error } = await supabase
+            .from('sites')
+            .select('id, name, slug, published, content')
+            .order('created_at', { ascending: false });
+
+          if (error) {
+            listaSites.textContent = 'Erro ao carregar: ' + error.message;
+            return;
           }
 
-          const btnCancelar = document.getElementById('cancelarSite');
-          if (btnCancelar) {
-            btnCancelar.onclick = () => { formularioSite.style.display = 'none'; };
+          if (!data || data.length === 0) {
+            listaSites.textContent = 'Nenhum site encontrado.';
+            return;
           }
 
-          document.getElementById('sairPainel').onclick = async () => {
-            await supabase.auth.signOut();
-            location.reload();
-          };
+          listaSites.innerHTML = '';
 
-          async function carregarSites() {
-            listaSites.textContent = 'Carregando sites...';
+          data.forEach(site => {
+            const item = document.createElement('div');
+            item.className = 'card-site';
 
-            const { data, error } = await supabase
-              .from('sites')
-              .select('id, name, slug, published, created_at, content')
-              .order('created_at', { ascending: false });
+            const nome = document.createElement('strong');
+            nome.style.cssText = 'font-size:18px; color:#e8b84a; display:block;';
+            nome.textContent = site.name;
 
-            if (error) {
-              listaSites.textContent = 'Erro ao carregar: ' + error.message;
-              return;
-            }
+            const slug = document.createElement('p');
+            slug.style.margin = '4px 0 8px 0';
+            slug.textContent = 'URL: /' + site.slug;
 
-            if (!data || data.length === 0) {
-              listaSites.textContent = 'Nenhum site associado à sua conta.';
-              return;
-            }
+            const statusSite = document.createElement('p');
+            statusSite.style.cssText = `font-weight:bold; color:${site.published ? '#4ade80' : '#f87171'}; margin-bottom:10px;`;
+            statusSite.textContent = site.published ? '● Status: Publicado (Online)' : '○ Status: Desativado';
 
-            listaSites.innerHTML = '';
+            const btnEditar = document.createElement('button');
+            btnEditar.textContent = '⚙️ Gerenciar Informações';
 
-            data.forEach(site => {
-              const item = document.createElement('div');
-              item.style.cssText = 'border:1px solid #444650; padding:14px; margin:12px 0; border-radius:12px; background:#101114;';
+            const btnPublicar = document.createElement('button');
+            btnPublicar.textContent = site.published ? 'Desativar Site' : 'Publicar Site';
+            btnPublicar.style.background = site.published ? '#f87171' : '#4ade80';
+            btnPublicar.style.color = '#101114';
 
-              const nome = document.createElement('strong');
-              nome.style.fontSize = '18px';
-              nome.textContent = site.name;
+            btnPublicar.onclick = async () => {
+              btnPublicar.disabled = true;
+              await supabase.from('sites').update({ published: !site.published }).eq('id', site.id);
+              await carregarSites();
+            };
 
-              const slug = document.createElement('p');
-              slug.style.margin = '6px 0 8px 0';
-              slug.style.color = '#c4c5cc';
-              slug.textContent = 'Identificador: ' + site.slug;
+            const linkVer = document.createElement('a');
+            linkVer.href = `https://riquelmedasilvadiassilva010-prog.github.io/links-imperio/cliente.html?slug=${site.slug}`;
+            linkVer.target = '_blank';
+            linkVer.textContent = '🔗 Ver Site do Cliente';
+            linkVer.style.cssText = 'display:block; margin-top:12px; color:#e8b84a; font-size:14px; text-decoration:none; text-align:center;';
 
-              const statusSite = document.createElement('p');
-              statusSite.style.margin = '4px 0 12px 0';
-              statusSite.style.fontSize = '14px';
-              statusSite.style.fontWeight = 'bold';
-              statusSite.style.color = site.published ? '#4ade80' : '#f87171';
-              statusSite.textContent = site.published ? 'Status: Publicado' : 'Status: Não publicado';
+            btnEditar.onclick = () => {
+              const editorAntigo = document.getElementById('editorSite');
+              if (editorAntigo) editorAntigo.remove();
 
-              const editar = document.createElement('button');
-              editar.textContent = 'Editar site';
+              const editor = document.createElement('section');
+              editor.id = 'editorSite';
+              editor.style.cssText = 'border:1px solid #e8b84a; padding:16px; margin-top:16px; border-radius:14px; background:#17181f;';
 
-              const btnPublicar = document.createElement('button');
-              btnPublicar.textContent = site.published ? 'Despublicar' : 'Publicar site';
-              btnPublicar.style.background = site.published ? '#f87171' : '#4ade80';
-              btnPublicar.style.color = '#101114';
+              editor.innerHTML = `
+                <h3 style="color:#e8b84a; margin-top:0;">Editar Informações do Site</h3>
 
-              btnPublicar.onclick = async () => {
-                btnPublicar.disabled = true;
-                btnPublicar.textContent = 'A atualizar...';
-                
+                <label>Nome do Negócio</label>
+                <input id="editarNome" value="${site.name}">
+
+                <label>📱 Número do WhatsApp (somente números)</label>
+                <input id="inputWhats" placeholder="Ex: 5598912345678" value="${site.content?.whatsapp || ''}">
+
+                <label>📸 Instagram (@ do perfil)</label>
+                <input id="inputInsta" placeholder="Ex: imperio_barbershop10" value="${site.content?.instagram || ''}">
+
+                <label>💲 Chave Pix</label>
+                <input id="inputPix" placeholder="Ex: CNPJ, E-mail ou Telefone" value="${site.content?.pix || ''}">
+
+                <label>📶 Nome da Rede Wi-Fi</label>
+                <input id="inputWifiNome" placeholder="Ex: JRDL-ST1-6G" value="${site.content?.wifiNome || ''}">
+
+                <label>🔑 Senha do Wi-Fi</label>
+                <input id="inputWifiSenha" placeholder="Ex: Ri01Da28Ju14#" value="${site.content?.wifiSenha || ''}">
+
+                <label>📍 Link de Localização (Google Maps)</label>
+                <input id="inputMaps" placeholder="https://maps.google.com/..." value="${site.content?.maps || ''}">
+
+                <label>🖼️ URL do Logotipo (Imagem)</label>
+                <input id="logoSite" type="url" placeholder="https://..." value="${site.content?.logo || ''}">
+
+                <button id="salvarEdicao">💾 Salvar Alterações</button>
+                <button id="fecharEditor" style="background:#333545; color:white;">Fechar</button>
+                <p id="mensagemEdicao" style="text-align:center; font-weight:bold;"></p>
+              `;
+
+              listaSites.before(editor);
+
+              document.getElementById('fecharEditor').onclick = () => editor.remove();
+
+              document.getElementById('salvarEdicao').onclick = async () => {
+                const btnSalvar = document.getElementById('salvarEdicao');
+                const mensagem = document.getElementById('mensagemEdicao');
+                btnSalvar.disabled = true;
+                mensagem.textContent = 'Salvando no banco de dados...';
+
                 try {
-                  const { error: errPub } = await supabase
+                  const { error } = await supabase
                     .from('sites')
-                    .update({ published: !site.published })
+                    .update({
+                      name: document.getElementById('editarNome').value.trim(),
+                      content: {
+                        ...(site.content || {}),
+                        whatsapp: document.getElementById('inputWhats').value.trim(),
+                        instagram: document.getElementById('inputInsta').value.trim(),
+                        pix: document.getElementById('inputPix').value.trim(),
+                        wifiNome: document.getElementById('inputWifiNome').value.trim(),
+                        wifiSenha: document.getElementById('inputWifiSenha').value.trim(),
+                        maps: document.getElementById('inputMaps').value.trim(),
+                        logo: document.getElementById('logoSite').value.trim()
+                      }
+                    })
                     .eq('id', site.id);
 
-                  if (errPub) throw errPub;
-                  await carregarSites();
-                } catch (err) {
-                  alert('Erro ao alterar status: ' + err.message);
-                  btnPublicar.disabled = false;
-                }
-              };
+                  if (error) throw error;
 
-              // URL direta e completa para evitar erros de 404 no GitHub Pages
-              const linkVer = document.createElement('a');
-              linkVer.href = `https://riquelmedasilvadiassilva010-prog.github.io/links-imperio/cliente.html?slug=${site.slug}`;
-              linkVer.target = '_blank';
-              linkVer.textContent = '🔗 Ver site público (teste)';
-              linkVer.style.cssText = 'display:block; margin-top:10px; color:#e8b84a; font-size:14px; text-decoration:none;';
-
-              editar.onclick = () => {
-                const editorAntigo = document.getElementById('editorSite');
-                if (editorAntigo) editorAntigo.remove();
-
-                const editor = document.createElement('section');
-                editor.id = 'editorSite';
-                editor.style.cssText =
-                  'border:1px solid #e8b84a; padding:16px; margin-top:16px; border-radius:12px; background:#15161b;';
-
-                editor.innerHTML = `
-                  <h2>Personalizar site</h2>
-
-                  <label>Nome do site</label>
-                  <input id="editarNome" value="">
-
-                  <label>Identificador</label>
-                  <input id="editarSlug" value="">
-
-                  <label>Cor principal</label>
-                  <input id="corPrincipal" type="color" value="#e8b84a">
-
-                  <label>Cor de fundo</label>
-                  <input id="corFundo" type="color" value="#101114">
-
-                  <label>Link do logotipo (URL da imagem)</label>
-                  <input id="logoSite" type="url" placeholder="https://...">
-
-                  <h3 style="margin-top:20px; color:#e8b84a; font-size:16px;">Prévia Visual em Tempo Real</h3>
-                  <div id="previewBox" style="border: 2px dashed #444650; padding: 20px; border-radius: 12px; text-align: center; transition: 0.3s;">
-                    <img id="previewLogo" src="" alt="Logo" style="max-width: 80px; max-height: 80px; display: none; margin: 0 auto 10px auto; border-radius: 8px;">
-                    <p id="previewNome" style="font-weight: bold; font-size: 16px; margin: 0; color: #fff;"></p>
-                  </div>
-
-                  <button id="salvarEdicao">Salvar alterações</button>
-                  <button id="fecharEditor" style="background:#444650; color:white;">Fechar</button>
-
-                  <p id="mensagemEdicao"></p>
-                `;
-
-                listaSites.before(editor);
-
-                const inputNome = document.getElementById('editarNome');
-                const inputSlug = document.getElementById('editarSlug');
-                const inputCorPrincipal = document.getElementById('corPrincipal');
-                const inputCorFundo = document.getElementById('corFundo');
-                const inputLogo = document.getElementById('logoSite');
-                
-                const previewBox = document.getElementById('previewBox');
-                const previewLogo = document.getElementById('previewLogo');
-                const previewNome = document.getElementById('previewNome');
-
-                inputNome.value = site.name;
-                inputSlug.value = site.slug;
-                inputCorPrincipal.value = site.content?.corPrincipal || '#e8b84a';
-                inputCorFundo.value = site.content?.corFundo || '#101114';
-                inputLogo.value = site.content?.logo || '';
-
-                function atualizarPreview() {
-                  previewNome.textContent = inputNome.value.trim() || 'Nome do Site';
-                  previewNome.style.color = inputCorPrincipal.value;
-                  previewBox.style.backgroundColor = inputCorFundo.value;
-                  
-                  const urlLogo = inputLogo.value.trim();
-                  if (urlLogo) {
-                    previewLogo.src = urlLogo;
-                    previewLogo.style.display = 'block';
-                  } else {
-                    previewLogo.style.display = 'none';
-                  }
-                }
-
-                inputNome.oninput = atualizarPreview;
-                inputCorPrincipal.oninput = atualizarPreview;
-                inputCorFundo.oninput = atualizarPreview;
-                inputLogo.oninput = atualizarPreview;
-
-                atualizarPreview();
-
-                document.getElementById('fecharEditor').onclick = () => {
-                  editor.remove();
-                };
-
-                document.getElementById('salvarEdicao').onclick = async () => {
-                  const nomeNovo = inputNome.value.trim();
-                  const corPrincipal = inputCorPrincipal.value;
-                  const corFundo = inputCorFundo.value;
-                  const logoSite = inputLogo.value.trim();
-                  const slugNovo = inputSlug.value
-                    .trim()
-                    .toLowerCase()
-                    .replace(/[^a-z0-9-]/g, '-')
-                    .replace(/-+/g, '-')
-                    .replace(/^-|-$/g, '');
-
-                  const mensagem = document.getElementById('mensagemEdicao');
-
-                  if (!nomeNovo || !slugNovo) {
-                    mensagem.textContent = 'Preencha os campos obrigatórios.';
-                    return;
-                  }
-
-                  const botaoSalvar = document.getElementById('salvarEdicao');
-                  botaoSalvar.disabled = true;
-                  mensagem.textContent = 'Salvando...';
-
-                  try {
-                    const { error } = await supabase
-                      .from('sites')
-                      .update({
-                        name: nomeNovo,
-                        slug: slugNovo,
-                        content: {
-                          ...(site.content || {}),
-                          corPrincipal: corPrincipal,
-                          corFundo: corFundo,
-                          logo: logoSite
-                        }
-                      })
-                      .eq('id', site.id);
-
-                    if (error) throw error;
-
-                    mensagem.textContent = 'Alterações salvas com sucesso!';
+                  mensagem.style.color = '#4ade80';
+                  mensagem.textContent = ' Alterações salvas com sucesso!';
+                  setTimeout(async () => {
                     await carregarSites();
                     editor.remove();
-                  } catch (error) {
-                    mensagem.textContent = 'Erro ao salvar: ' + error.message;
-                  } finally {
-                    botaoSalvar.disabled = false;
-                  }
-                };
-              };
-
-              item.append(nome, slug, statusSite, editar, btnPublicar, linkVer);
-              listaSites.appendChild(item);
-            });
-          }
-
-          const btnSalvarSite = document.getElementById('salvarSite');
-          if (btnSalvarSite) {
-            btnSalvarSite.onclick = async () => {
-              const nome = document.getElementById('nomeSite').value.trim();
-              const slug = document.getElementById('slugSite').value
-                .trim()
-                .toLowerCase()
-                .replace(/[^a-z0-9-]/g, '-')
-                .replace(/-+/g, '-')
-                .replace(/^-|-$/g, '');
-
-              if (!nome || !slug) {
-                mensagemSite.textContent = 'Preencha os dois campos.';
-                return;
-              }
-
-              const { data: { user }, error: erroUsuario } =
-                await supabase.auth.getUser();
-
-              if (erroUsuario || !user) {
-                mensagemSite.textContent = 'Entre novamente no painel.';
-                return;
-              }
-
-              const botao = document.getElementById('salvarSite');
-              botao.disabled = true;
-              mensagemSite.textContent = 'Salvando...';
-
-              try {
-                const { error } = await supabase.from('sites').insert({
-                  owner_id: user.id,
-                  name: nome,
-                  slug: slug,
-                  content: {},
-                  published: false
-                });
-
-                if (error) {
-                  mensagemSite.textContent = 'Erro ao salvar: ' + error.message;
-                  return;
+                  }, 1200);
+                } catch (err) {
+                  mensagem.style.color = '#f87171';
+                  mensagem.textContent = 'Erro ao salvar: ' + err.message;
+                  btnSalvar.disabled = false;
                 }
-
-                mensagemSite.textContent = 'Site cadastrado!';
-                document.getElementById('nomeSite').value = '';
-                document.getElementById('slugSite').value = '';
-                formularioSite.style.display = 'none';
-                await carregarSites();
-              } catch (error) {
-                mensagemSite.textContent = 'Erro inesperado: ' + error.message;
-              } finally {
-                botao.disabled = false;
-              }
+              };
             };
-          }
 
-          carregarSites();
-        } catch (error) {
-          status.textContent = 'Não foi possível entrar: ' + error.message;
-        } finally {
-          button.disabled = false;
+            item.append(nome, slug, statusSite, btnEditar, btnPublicar, linkVer);
+            listaSites.appendChild(item);
+          });
         }
-      });
-    }
+
+        if (document.getElementById('salvarSite')) {
+          document.getElementById('salvarSite').onclick = async () => {
+            const nome = document.getElementById('nomeSite').value.trim();
+            const slug = document.getElementById('slugSite').value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '-');
+
+            if (!nome || !slug) return;
+
+            const { data: { user } } = await supabase.auth.getUser();
+
+            await supabase.from('sites').insert({
+              owner_id: user.id,
+              name: nome,
+              slug: slug,
+              content: {},
+              published: false
+            });
+
+            formularioSite.style.display = 'none';
+            await carregarSites();
+          };
+        }
+
+        carregarSites();
+      } catch (err) {
+        status.textContent = 'Erro de login: ' + err.message;
+        button.disabled = false;
+      }
+    });
   </script>
 </body>
 </html>
