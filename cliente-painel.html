@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IMPÉRIO DIGITAL | Área do Cliente</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Supabase CDN (Versão Estável) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root {
       --bg-dark: #0a0b0e;
@@ -46,6 +48,222 @@
     .input-field { width: 100%; padding: 12px 14px; background: var(--bg-input); border: 1px solid var(--border); border-radius: 10px; color: white; outline: none; font-size: 14px; }
     .input-field:focus { border-color: var(--primary); }
 
-    .btn-main { width: 100%; padding: 14px; background: var(--primary); color: #101114; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn-main { width: 100%; padding: 14px; background: var(--primary); color: #101114; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px; }
     .btn-view { width: 100%; padding: 12px; background: rgba(34, 197, 94, 0.15); color: var(--success); border: 1px solid var(--success); border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; margin-top: 10px; }
-    .btn-logout { width: 100%; padding: 10px; background
+    .btn-logout { width: 100%; padding: 10px; background: transparent; color: var(--danger); border: none; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; margin-top: 12px; }
+
+    .status-alert { font-size: 12px; text-align: center; margin-top: 12px; font-weight: 600; padding: 10px; border-radius: 8px; }
+    .alert-warning { background: rgba(239, 68, 68, 0.15); color: var(--danger); border: 1px solid var(--danger); }
+    .alert-success { background: rgba(34, 197, 94, 0.15); color: var(--success); }
+
+    .section-title { font-size: 13px; font-weight: 700; color: var(--primary); margin: 18px 0 12px 0; border-bottom: 1px dashed var(--border); padding-bottom: 6px; text-transform: uppercase; }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="app">
+    <div class="card">
+      <div class="brand-header">
+        <i class="fa-solid fa-store brand-icon"></i>
+        <div class="brand-title">PORTAL DO CLIENTE</div>
+        <div class="brand-sub">Gerencie as informações da sua página</div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-btn active" id="tabLogin">Entrar</button>
+        <button class="tab-btn" id="tabRegister">Cadastrar</button>
+      </div>
+
+      <form id="authForm" onsubmit="handleAuth(event)">
+        <div class="input-group">
+          <label><i class="fa-solid fa-envelope"></i> E-mail</label>
+          <input type="email" id="authEmail" class="input-field" placeholder="seuemail@exemplo.com" required>
+        </div>
+
+        <div class="input-group">
+          <label><i class="fa-solid fa-lock"></i> Senha</label>
+          <input type="password" id="authPassword" class="input-field" placeholder="••••••••" required>
+        </div>
+
+        <button type="submit" id="authBtn" class="btn-main">
+          <i class="fa-solid fa-right-to-bracket"></i> Entrar no Portal
+        </button>
+      </form>
+
+      <div id="authStatus"></div>
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://hqoqbjwjjmnhctjizvcs.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_QK2T4-OP6omrbgGmTwbmsw_VKfgeFuk';
+    
+    // Inicialização direta do cliente Supabase
+    const { createClient } = window.supabase;
+    const clientSupabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    let isLoginMode = true;
+
+    document.getElementById('tabLogin').onclick = function() {
+      isLoginMode = true;
+      this.classList.add('active');
+      document.getElementById('tabRegister').classList.remove('active');
+      document.getElementById('authBtn').innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Entrar no Portal';
+    };
+
+    document.getElementById('tabRegister').onclick = function() {
+      isLoginMode = false;
+      this.classList.add('active');
+      document.getElementById('tabLogin').classList.remove('active');
+      document.getElementById('authBtn').innerHTML = '<i class="fa-solid fa-user-plus"></i> Criar Minha Conta';
+    };
+
+    async function handleAuth(e) {
+      e.preventDefault();
+      const email = document.getElementById('authEmail').value.trim().toLowerCase();
+      const password = document.getElementById('authPassword').value;
+      const statusDiv = document.getElementById('authStatus');
+
+      statusDiv.innerHTML = '<p style="text-align:center; margin-top:12px; font-size:12px; color:var(--primary);">A processar...</p>';
+
+      try {
+        if (isLoginMode) {
+          const { data, error } = await clientSupabase.auth.signInWithPassword({ email, password });
+          if (error) throw error;
+          carregarPainelCliente(data.user);
+        } else {
+          const { data, error } = await clientSupabase.auth.signUp({ email, password });
+          if (error) throw error;
+          statusDiv.innerHTML = '<p class="status-alert alert-success">✅ Conta criada com sucesso! Pode entrar agora.</p>';
+          document.getElementById('tabLogin').click();
+        }
+      } catch (err) {
+        statusDiv.innerHTML = '<p class="status-alert alert-warning">Erro: ' + err.message + '</p>';
+      }
+    }
+
+    async function checkSession() {
+      const { data: { session } } = await clientSupabase.auth.getSession();
+      if (session?.user) {
+        carregarPainelCliente(session.user);
+      }
+    }
+
+    async function carregarPainelCliente(user) {
+      const app = document.getElementById('app');
+      const { data: sites } = await clientSupabase.from('sites').select('*');
+      
+      let siteDoCliente = null;
+      if (sites) {
+        siteDoCliente = sites.find(s => s.content && s.content.clientEmail && s.content.clientEmail.toLowerCase() === user.email.toLowerCase());
+      }
+
+      const c = siteDoCliente ? (siteDoCliente.content || {}) : {};
+
+      app.innerHTML = `
+        <div class="card">
+          <div class="brand-header">
+            <i class="fa-solid fa-shop brand-icon"></i>
+            <div class="brand-title">${siteDoCliente ? siteDoCliente.name : 'Minha Conta'}</div>
+            <div class="brand-sub">${user.email}</div>
+          </div>
+
+          ${!siteDoCliente ? `
+            <div class="status-alert alert-warning">
+              <i class="fa-solid fa-clock"></i> <strong>Aguardando Liberação:</strong><br>
+              O seu e-mail ainda não foi vinculado a uma página pelo Administrador.
+            </div>
+          ` : ''}
+
+          <form id="clientForm" onsubmit="salvarDados(event, '${siteDoCliente ? siteDoCliente.id : ''}')" style="margin-top: 10px;">
+            <div class="section-title"><i class="fa-solid fa-pen-to-square"></i> Dados do Negócio</div>
+
+            <div class="input-group">
+              <label><i class="fa-brands fa-whatsapp"></i> WhatsApp</label>
+              <input type="text" id="cWhats" class="input-field" value="${c.whatsapp || ''}" placeholder="Ex: 5598988887777" ${!siteDoCliente ? 'disabled' : ''}>
+            </div>
+
+            <div class="input-group">
+              <label><i class="fa-brands fa-instagram"></i> Instagram (@)</label>
+              <input type="text" id="cInsta" class="input-field" value="${c.instagram || ''}" placeholder="Ex: minha.loja" ${!siteDoCliente ? 'disabled' : ''}>
+            </div>
+
+            <div class="input-group">
+              <label><i class="fa-solid fa-pix"></i> Chave Pix</label>
+              <input type="text" id="cPix" class="input-field" value="${c.pix || ''}" placeholder="Chave Pix" ${!siteDoCliente ? 'disabled' : ''}>
+            </div>
+
+            <div class="section-title"><i class="fa-solid fa-wifi"></i> Wi-Fi</div>
+
+            <div class="input-group">
+              <label><i class="fa-solid fa-wifi"></i> Nome da Rede</label>
+              <input type="text" id="cWifiNome" class="input-field" value="${c.wifiNome || ''}" placeholder="Nome do Wi-Fi" ${!siteDoCliente ? 'disabled' : ''}>
+            </div>
+
+            <div class="input-group">
+              <label><i class="fa-solid fa-key"></i> Senha do Wi-Fi</label>
+              <input type="text" id="cWifiSenha" class="input-field" value="${c.wifiSenha || ''}" placeholder="Senha do Wi-Fi" ${!siteDoCliente ? 'disabled' : ''}>
+            </div>
+
+            ${siteDoCliente ? `
+              <button type="submit" class="btn-main">
+                <i class="fa-solid fa-floppy-disk"></i> Salvar Alterações
+              </button>
+
+              <a href="https://riquelmedasilvadiassilva010-prog.github.io/links-imperio/cliente.html?slug=${siteDoCliente.slug}" target="_blank" class="btn-view">
+                <i class="fa-solid fa-eye"></i> Ver Minha Página
+              </a>
+            ` : ''}
+          </form>
+
+          <div id="saveStatus"></div>
+
+          <button onclick="fazerLogout()" class="btn-logout">
+            <i class="fa-solid fa-right-from-bracket"></i> Sair da Conta
+          </button>
+        </div>
+      `;
+    }
+
+    async function salvarDados(e, siteId) {
+      e.preventDefault();
+      if(!siteId) return;
+
+      const saveStatus = document.getElementById('saveStatus');
+      saveStatus.innerHTML = '<p style="text-align:center; font-size:12px; margin-top:8px;">A guardar...</p>';
+
+      const { data: siteActual } = await clientSupabase.from('sites').select('content').eq('id', siteId).single();
+      const c = siteActual ? (siteActual.content || {}) : {};
+
+      const novosDados = {
+        ...c,
+        whatsapp: document.getElementById('cWhats').value.trim(),
+        instagram: document.getElementById('cInsta').value.trim(),
+        pix: document.getElementById('cPix').value.trim(),
+        wifiNome: document.getElementById('cWifiNome').value.trim(),
+        wifiSenha: document.getElementById('cWifiSenha').value.trim()
+      };
+
+      const { error } = await clientSupabase
+        .from('sites')
+        .update({ content: novosDados })
+        .eq('id', siteId);
+
+      if (error) {
+        saveStatus.innerHTML = '<p class="status-alert alert-warning">Erro: ' + error.message + '</p>';
+      } else {
+        saveStatus.innerHTML = '<p class="status-alert alert-success">✅ Dados atualizados com sucesso!</p>';
+        setTimeout(() => saveStatus.innerHTML = '', 3000);
+      }
+    }
+
+    async function fazerLogout() {
+      await clientSupabase.auth.signOut();
+      location.reload();
+    }
+
+    // Executa verificação ao carregar a página
+    checkSession();
+  </script>
+</body>
+</html>
