@@ -23,10 +23,8 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
     body { background: var(--bg-dark); color: var(--text); min-height: 100vh; display: flex; }
 
-    /* Layout Principal com Menu Lateral */
     .app-layout { display: flex; width: 100%; min-height: 100vh; }
     
-    /* Sidebar */
     aside {
       width: 260px; background: var(--bg-sidebar); border-right: 1px solid var(--border);
       padding: 24px; display: flex; flex-direction: column; justify-content: space-between;
@@ -45,10 +43,8 @@
     }
     .nav-item:hover, .nav-item.active { background: var(--primary); color: #101114; }
 
-    /* Main Content Area */
     main { flex: 1; padding: 30px; overflow-y: auto; }
 
-    /* Header Superior */
     .top-header {
       display: flex; justify-content: space-between; align-items: center;
       margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid var(--border);
@@ -56,15 +52,13 @@
     .user-info { display: flex; align-items: center; gap: 12px; }
     .avatar { width: 40px; height: 40px; border-radius: 50%; background: #232430; display: flex; align-items: center; justify-content: center; }
     
-    /* Metrics Grid */
     .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 25px; }
     .metric-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
-    .metric-header { display: flex; align-items: center; justify-content: justify-content; gap: 10px; margin-bottom: 10px; }
+    .metric-header { display: flex; align-items: center; justify-content: flex-start; gap: 10px; margin-bottom: 10px; }
     .metric-icon { width: 36px; height: 36px; border-radius: 10px; background: rgba(232, 184, 74, 0.1); color: var(--primary); display: flex; align-items: center; justify-content: center; }
     .metric-val { font-size: 26px; font-weight: 800; }
     .metric-title { font-size: 12px; color: var(--text-muted); }
 
-    /* Tabela de Sites */
     .content-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; }
     .box-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
     
@@ -78,13 +72,12 @@
 
     .btn-action {
       border: none; width: 34px; height: 34px; border-radius: 8px; cursor: pointer;
-      display: inline-flex; align-items: center; justify-content: center; margin-right: 4px; transition: 0.2s;
+      display: inline-flex; align-items: center; justify-content: center; margin-right: 4px; transition: 0.2s; text-decoration: none;
     }
     .btn-edit { background: var(--primary); color: #101114; }
     .btn-view { background: #232430; color: white; }
     .btn-delete { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
 
-    /* Form Modals / Sections */
     .input-field {
       width: 100%; padding: 12px; background: var(--bg-input); border: 1px solid var(--border);
       border-radius: 8px; color: white; margin-top: 6px; margin-bottom: 14px; outline: none;
@@ -92,7 +85,6 @@
     .input-field:focus { border-color: var(--primary); }
     .btn-main { background: var(--primary); color: #101114; padding: 12px 20px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
 
-    /* Login Screen Container */
     .login-container {
       width: 100%; max-width: 400px; margin: auto; background: var(--bg-card);
       border: 1px solid var(--border); border-radius: 20px; padding: 30px;
@@ -107,7 +99,6 @@
 <body>
 
   <div id="root" style="width:100%;">
-    <!-- Área de Login Inicial -->
     <div style="display:flex; min-height:100vh; align-items:center; justify-content:center; padding:20px;">
       <div class="login-container">
         <div class="brand-area" style="justify-content:center;">
@@ -164,7 +155,6 @@
     function renderDashboard(user) {
       root.innerHTML = `
         <div class="app-layout">
-          <!-- Sidebar Nav -->
           <aside>
             <div>
               <div class="brand-area">
@@ -189,9 +179,7 @@
             </div>
           </aside>
 
-          <!-- Main Body -->
           <main>
-            <!-- Topbar -->
             <div class="top-header">
               <div>
                 <h1 style="font-size:22px;">👋 Bem-vindo, Administrador!</h1>
@@ -210,7 +198,6 @@
               </div>
             </div>
 
-            <!-- Metrics Cards -->
             <div class="metrics-grid">
               <div class="metric-card">
                 <div class="metric-header">
@@ -245,10 +232,8 @@
               </div>
             </div>
 
-            <!-- Área de Formulário para Editar / Criar -->
             <div id="formContainer"></div>
 
-            <!-- Tabela Principal de Sites -->
             <div class="content-box">
               <div class="box-header">
                 <div>
@@ -406,22 +391,4 @@
               <input id="eMaps" class="input-field" value="${c.maps || ''}">
             </div>
             <div>
-              <label style="font-size:11px; color:var(--primary);">URL LOGOTIPO</label>
-              <input id="eLogo" class="input-field" value="${c.logo || ''}">
-            </div>
-          </div>
-
-          <button id="salvarEdicaoBtn" class="btn-main">💾 Salvar Alterações</button>
-          <button id="fecharEdicaoBtn" style="background:#232430; color:white; padding:12px 20px; border:none; border-radius:8px; cursor:pointer; margin-left:8px;">Fechar</button>
-          <span id="msgSalvar" style="margin-left:15px; font-weight:bold;"></span>
-        </div>
-      `;
-
-      document.getElementById('fecharEdicaoBtn').onclick = () => container.innerHTML = '';
-      document.getElementById('salvarEdicaoBtn').onclick = async () => {
-        const msg = document.getElementById('msgSalvar');
-        msg.style.color = 'var(--text-muted)';
-        msg.textContent = 'A guardar...';
-
-        await supabase.from('sites').update({
-          name: document.getElementById('eNome').value.trim(),
+              <label style="font-
