@@ -61,7 +61,6 @@
     .btn-act-toggle { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
 
     .login-wrapper { display: flex; min-height: 80vh; align-items: center; justify-content: center; }
-
     .section-title { font-size: 14px; font-weight: bold; color: var(--primary); margin: 16px 0 10px 0; border-bottom: 1px dashed var(--border); padding-bottom: 6px; text-transform: uppercase; }
 
     @media (min-width: 768px) {
@@ -211,14 +210,14 @@
           <div class="site-header">
             <div>
               <strong style="font-size:16px;">${site.name}</strong>
-              <div style="font-size:12px; color:var(--text-muted);">/${site.slug}</div>
+              <div style="font-size:12px; color:var(--text-muted);">/${site.slug} ${site.content?.clientEmail ? `• 👤 ${site.content.clientEmail}` : ''}</div>
             </div>
             <span class="badge ${site.published ? 'badge-active' : 'badge-inactive'}">
               ${site.published ? 'Ativo' : 'Inativo'}
             </span>
           </div>
           <div class="action-row">
-            <button class="btn-act btn-act-edit btn-edit"><i class="fa-solid fa-pen"></i> Editar & Design</button>
+            <button class="btn-act btn-act-edit btn-edit"><i class="fa-solid fa-pen"></i> Editar & Vinculo</button>
             <a href="https://riquelmedasilvadiassilva010-prog.github.io/links-imperio/cliente.html?slug=${site.slug}" target="_blank" class="btn-act btn-act-view"><i class="fa-solid fa-eye"></i> Ver Site</a>
             <button class="btn-act btn-act-toggle btn-toggle"><i class="fa-solid fa-power-off"></i></button>
           </div>
@@ -249,6 +248,10 @@
               <label>Slug / URL</label>
               <input id="nSlug" class="input-field" placeholder="Ex: imperio">
             </div>
+            <div class="input-group" style="grid-column: span 2;">
+              <label>E-mail do Cliente (Para vincular o Login)</label>
+              <input id="nClientEmail" class="input-field" placeholder="exemplo@cliente.com">
+            </div>
           </div>
           <div style="display:flex; gap:8px; margin-top:8px;">
             <button type="button" id="salvarNovo" class="btn-main">Salvar</button>
@@ -261,10 +264,17 @@
       document.getElementById('salvarNovo').onclick = async () => {
         const nome = document.getElementById('nNome').value.trim();
         const slug = document.getElementById('nSlug').value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '-');
+        const clientEmail = document.getElementById('nClientEmail').value.trim().toLowerCase();
         if (!nome || !slug) return;
 
         const { data: { user } } = await supabase.auth.getUser();
-        await supabase.from('sites').insert({ owner_id: user.id, name: nome, slug: slug, content: {}, published: false });
+        await supabase.from('sites').insert({ 
+          owner_id: user.id, 
+          name: nome, 
+          slug: slug, 
+          content: { clientEmail: clientEmail }, 
+          published: false 
+        });
         container.innerHTML = '';
         carregarSites();
       };
@@ -276,9 +286,14 @@
 
       container.innerHTML = `
         <div class="card" style="border-color: var(--primary);">
-          <h3 style="font-size:18px;">🛠️ Editor Visual & Dados: ${site.name}</h3>
+          <h3 style="font-size:18px;">🛠️ Editor Visual & Vínculo: ${site.name}</h3>
 
-          <!-- DADOS DO CLIENTE -->
+          <div class="section-title"><i class="fa-solid fa-user-lock"></i> Vínculo da Conta do Cliente</div>
+          <div class="input-group">
+            <label>E-mail do Cliente (E-mail que o cliente usou ao se cadastrar)</label>
+            <input id="eClientEmail" class="input-field" value="${c.clientEmail || ''}" placeholder="cliente@email.com">
+          </div>
+
           <div class="section-title"><i class="fa-solid fa-address-book"></i> Informações do Cliente</div>
           <div class="grid-2">
             <div class="input-group"><label>Nome do Negócio</label><input id="eNome" class="input-field" value="${site.name}"></div>
@@ -291,8 +306,7 @@
             <div class="input-group"><label>URL Logotipo</label><input id="eLogo" class="input-field" value="${c.logo || ''}"></div>
           </div>
 
-          <!-- PERSONALIZAÇÃO VISUAL -->
-          <div class="section-title"><i class="fa-solid fa-palette"></i> Design & Identidade Visual (Exclusivo Master)</div>
+          <div class="section-title"><i class="fa-solid fa-palette"></i> Design & Identidade Visual</div>
           
           <div class="grid-3">
             <div class="input-group">
@@ -332,7 +346,7 @@
           </div>
 
           <div style="display:flex; gap:8px; margin-top:20px;">
-            <button type="button" id="salvarEdicao" class="btn-main">💾 Salvar Alterações & Design</button>
+            <button type="button" id="salvarEdicao" class="btn-main">💾 Salvar Alterações</button>
             <button type="button" id="fecharEdicao" class="btn-secondary" style="margin-top:0;">Fechar</button>
           </div>
           <p id="msgEdit" style="margin-top: 10px; font-size: 12px; font-weight: bold;"></p>
@@ -349,6 +363,7 @@
           name: document.getElementById('eNome').value.trim(),
           content: {
             ...c,
+            clientEmail: document.getElementById('eClientEmail').value.trim().toLowerCase(),
             whatsapp: document.getElementById('eWhats').value.trim(),
             instagram: document.getElementById('eInsta').value.trim(),
             pix: document.getElementById('ePix').value.trim(),
@@ -356,7 +371,6 @@
             wifiSenha: document.getElementById('eWifiSenha').value.trim(),
             maps: document.getElementById('eMaps').value.trim(),
             logo: document.getElementById('eLogo').value.trim(),
-            // Estilos visuais salvos
             bgColor: document.getElementById('eBgColor').value,
             cardColor: document.getElementById('eCardColor').value,
             primaryColor: document.getElementById('ePrimaryColor').value,
