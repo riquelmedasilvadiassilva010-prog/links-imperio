@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Área do Cliente | Império Digital</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-dark: #0a0b0e;
+      --bg-card: #14151c;
+      --bg-input: #0d0e12;
+      --primary: #e8b84a;
+      --text: #ffffff;
+      --text-muted: #8e8f9e;
+      --border: #1e1f29;
+      --success: #22c55e;
+      --danger: #ef4444;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+    body { background: var(--bg-dark); color: var(--text); padding: 16px; min-height: 100vh; display: flex; justify-content: center; align-items: center; }
+
+    .container { width: 100%; max-width: 440px; }
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; }
+    
+    .brand-header { text-align: center; margin-bottom: 20px; }
+    .brand-icon { color: var(--primary); font-size: 32px; margin-bottom: 6px; }
+    .brand-title { font-size: 18px; font-weight: 800; color: var(--primary); }
+    .brand-sub { font-size: 11px; color: var(--text-muted); text-transform: uppercase; }
+
+    .input-group { margin-bottom: 12px; }
+    .input-group label { display: block; font-size: 11px; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; }
+    .input-field { width: 100%; padding: 12px; background: var(--bg-input); border: 1px solid var(--border); border-radius: 8px; color: white; outline: none; font-size: 14px; }
+    .input-field:focus { border-color: var(--primary); }
+
+    .btn-main { width: 100%; padding: 12px; background: var(--primary); color: #101114; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 14px; margin-top: 8px; }
+    .btn-sec { width: 100%; padding: 10px; background: #232430; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 12px; margin-top: 10px; }
+
+    .tabs { display: flex; gap: 8px; margin-bottom: 16px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+    .tab-btn { flex: 1; padding: 8px; background: transparent; border: none; color: var(--text-muted); font-weight: bold; font-size: 13px; cursor: pointer; text-align: center; }
+    .tab-btn.active { color: var(--primary); border-bottom: 2px solid var(--primary); }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="app">
+    <!-- TELA DE AUTENTICAÇÃO (LOGIN / CADASTRO) -->
+    <div id="authBox" class="card">
+      <div class="brand-header">
+        <i class="fa-solid fa-crown brand-icon"></i>
+        <div class="brand-title" id="authTitle">Minha Conta</div>
+        <div class="brand-sub">Atualização de Dados</div>
+      </div>
+
+      <div class="tabs">
+        <button id="tabLogin" class="tab-btn active" onclick="mudarAba('login')">Entrar</button>
+        <button id="tabRegister" class="tab-btn" onclick="mudarAba('register')">Cadastrar</button>
+      </div>
+
+      <div class="input-group">
+        <label>E-mail</label>
+        <input type="email" id="email" class="input-field" placeholder="seuemail@exemplo.com">
+      </div>
+
+      <div class="input-group">
+        <label>Senha</label>
+        <input type="password" id="password" class="input-field" placeholder="••••••••">
+      </div>
+
+      <button id="btnAuth" class="btn-main">Entrar no Painel</button>
+      <p id="authMsg" style="margin-top: 12px; text-align: center; font-size: 12px;"></p>
+    </div>
+
+    <!-- PAINEL DO CLIENTE (EXCLUSIVO PARA OS DADOS) -->
+    <div id="panelBox" class="card" style="display: none;">
+      <div class="brand-header">
+        <i class="fa-solid fa-store brand-icon"></i>
+        <div class="brand-title" id="clientSiteName">Carregando...</div>
+        <div class="brand-sub">Edição de Informações</div>
+      </div>
+
+      <div class="input-group"><label>WhatsApp (somente números)</label><input id="cWhats" class="input-field"></div>
+      <div class="input-group"><label>Instagram (@usuario)</label><input id="cInsta" class="input-field"></div>
+      <div class="input-group"><label>Chave Pix</label><input id="cPix" class="input-field"></div>
+      <div class="input-group"><label>Nome da Rede Wi-Fi</label><input id="cWifiNome" class="input-field"></div>
+      <div class="input-group"><label>Senha do Wi-Fi</label><input id="cWifiSenha" class="input-field"></div>
+      <div class="input-group"><label>Link do Google Maps</label><input id="cMaps" class="input-field"></div>
+
+      <button id="btnSalvarCliente" class="btn-main">💾 Salvar Meus Dados</button>
+      <a id="btnVerMeuSite" href="#" target="_blank" class="btn-sec" style="display:block; text-align:center; text-decoration:none;">👁️ Ver Minha Página</a>
+      <button id="btnSairCliente" class="btn-sec" style="background: rgba(239, 68, 68, 0.2); color: var(--danger);">Sair</button>
+      <p id="saveMsg" style="margin-top: 12px; text-align: center; font-size: 12px; font-weight: bold;"></p>
+    </div>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+    const SUPABASE_URL = 'https://hqoqbjwjjmnhctjizvcs.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_QK2T4-OP6omrbgGmTwbmsw_VKfgeFuk';
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    let modo = 'login';
+    let currentSite = null;
+
+    window.mudarAba = (type) => {
+      modo = type;
+      document.getElementById('tabLogin').className = `tab-btn ${type === 'login' ? 'active' : ''}`;
+      document.getElementById('tabRegister').className = `tab-btn ${type === 'register' ? 'active' : ''}`;
+      document.getElementById('btnAuth').textContent = type === 'login' ? 'Entrar no Painel' : 'Criar Minha Conta';
+    };
+
+    async function checkUser() {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) {
+        carregarDadosCliente(session.user);
+      }
+    }
+
+    document.getElementById('btnAuth').onclick = async () => {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const msg = document.getElementById('authMsg');
+
+      if (!email || !password) {
+        msg.style.color = 'var(--danger)';
+        msg.textContent = 'Preencha o e-mail e a senha.';
+        return;
+      }
+
+      msg.style.color = 'var(--primary)';
+      msg.textContent = 'A processar...';
+
+      try {
+        if (modo === 'login') {
+          const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+          if (error) throw error;
+          carregarDadosCliente(data.user);
+        } else {
+          const { data, error } = await supabase.auth.signUp({ email, password });
+          if (error) throw error;
+          msg.style.color = 'var(--success)';
+          msg.textContent = 'Conta criada com sucesso! Faça login.';
+        }
+      } catch (err) {
+        msg.style.color = 'var(--danger)';
+        msg.textContent = err.message;
+      }
+    };
+
+    async function carregarDadosCliente(user) {
+      document.getElementById('authBox').style.display = 'none';
+      document.getElementById('panelBox').style.display = 'block';
+
+      // Procura o site associado a esta conta no Supabase
+      const { data, error } = await supabase.from('sites').select('*').eq('owner_id', user.id).single();
+
+      if (error || !data) {
+        document.getElementById('clientSiteName').textContent = 'Sem site associado';
+        document.getElementById('saveMsg').style.color = 'var(--danger)';
+        document.getElementById('saveMsg').textContent = 'O seu e-mail ainda não foi vinculado a uma página pelo Administrador.';
+        document.getElementById('btnSalvarCliente').disabled = true;
+        return;
+      }
+
+      currentSite = data;
+      const c = data.content || {};
+
+      document.getElementById('clientSiteName').textContent = data.name;
+      document.getElementById('btnVerMeuSite').href = `https://riquelmedasilvadiassilva010-prog.github.io/links-imperio/cliente.html?slug=${data.slug}`;
+
+      document.getElementById('cWhats').value = c.whatsapp || '';
+      document.getElementById('cInsta').value = c.instagram || '';
+      document.getElementById('cPix').value = c.pix || '';
+      document.getElementById('cWifiNome').value = c.wifiNome || '';
+      document.getElementById('cWifiSenha').value = c.wifiSenha || '';
+      document.getElementById('cMaps').value = c.maps || '';
+    }
+
+    document.getElementById('btnSalvarCliente').onclick = async () => {
+      if (!currentSite) return;
+      const msg = document.getElementById('saveMsg');
+      msg.style.color = 'var(--primary)';
+      msg.textContent = 'A guardar...';
+
+      const c = currentSite.content || {};
+
+      const { error } = await supabase.from('sites').update({
+        content: {
+          ...c, // Mantém o design/cores criados por ti intactos
+          whatsapp: document.getElementById('cWhats').value.trim(),
+          instagram: document.getElementById('cInsta').value.trim(),
+          pix: document.getElementById('cPix').value.trim(),
+          wifiNome: document.getElementById('cWifiNome').value.trim(),
+          wifiSenha: document.getElementById('cWifiSenha').value.trim(),
+          maps: document.getElementById('cMaps').value.trim()
+        }
+      }).eq('id', currentSite.id);
+
+      if (error) {
+        msg.style.color = 'var(--danger)';
+        msg.textContent = 'Erro ao guardar dados.';
+      } else {
+        msg.style.color = 'var(--success)';
+        msg.textContent = '✅ Dados atualizados com sucesso!';
+        setTimeout(() => msg.textContent = '', 2000);
+      }
+    };
+
+    document.getElementById('btnSairCliente').onclick = async () => {
+      await supabase.auth.signOut();
+      location.reload();
+    };
+
+    checkUser();
+  </script>
+</body>
+</html>
