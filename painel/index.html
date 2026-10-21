@@ -3,59 +3,164 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>JRB Digital | Painel de Controle</title>
+  <title>JRB Digital | Dashboard Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    * { box-sizing: border-box; }
+    :root {
+      --bg-body: #0a0b0e;
+      --bg-card: #14151c;
+      --bg-input: #0d0e13;
+      --primary: #e8b84a;
+      --primary-hover: #d4a338;
+      --text: #ffffff;
+      --text-muted: #8e8f9e;
+      --border: #232430;
+      --success: #4ade80;
+      --danger: #f87171;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #0d0e12; color: #e1e1e6;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+      background: var(--bg-body); color: var(--text);
       min-height: 100vh; display: flex; flex-direction: column; align-items: center;
-      padding: 20px;
+      padding: 16px;
     }
-    main {
-      width: 100%; max-width: 480px; padding: 28px;
-      background: #17181f; border: 1px solid #2a2b36;
-      border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+
+    /* Container Principal */
+    .dashboard {
+      width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 20px;
     }
-    h1, h2 { margin-top: 0; color: #e8b84a; }
-    p { color: #a8a9b3; line-height: 1.5; font-size: 14px; }
-    label { display: block; margin-top: 14px; font-size: 13px; color: #e8b84a; font-weight: bold; }
+
+    /* Topbar Header */
+    .header-bar {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 18px; padding: 18px 20px; display: flex;
+      align-items: center; justify-content: space-between;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-logo {
+      width: 40px; height: 40px; background: linear-gradient(135deg, #e8b84a, #997320);
+      border-radius: 12px; display: flex; align-items: center; justify-content: center;
+      color: #101114; font-weight: 900; font-size: 18px;
+    }
+    .brand-title { font-size: 17px; font-weight: 800; color: var(--text); letter-spacing: 0.5px; }
+    .brand-sub { font-size: 11px; color: var(--primary); font-weight: 600; text-transform: uppercase; }
+
+    /* Login Box */
+    .login-box {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+    h2 { font-size: 20px; color: var(--primary); margin-bottom: 6px; }
+    p.desc { font-size: 13px; color: var(--text-muted); margin-bottom: 18px; line-height: 1.4; }
+
+    /* Form Inputs */
+    .field-group { margin-bottom: 14px; }
+    label { display: block; font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
     input {
-      width: 100%; padding: 12px; margin-top: 6px;
-      border: 1px solid #333545; border-radius: 10px;
-      background: #0d0e12; color: white; font-size: 15px; outline: none;
+      width: 100%; padding: 12px 14px; background: var(--bg-input);
+      border: 1px solid var(--border); border-radius: 10px; color: white;
+      font-size: 14px; outline: none; transition: border-color 0.2s;
     }
-    input:focus { border-color: #e8b84a; }
-    button {
-      width: 100%; padding: 14px; margin-top: 14px;
-      border: 0; border-radius: 10px; cursor: pointer;
-      background: #e8b84a; color: #101114;
-      font-size: 15px; font-weight: bold; transition: 0.2s;
+    input:focus { border-color: var(--primary); }
+
+    /* Botões Gerais */
+    .btn {
+      width: 100%; padding: 13px; border: none; border-radius: 12px;
+      background: var(--primary); color: #101114; font-size: 14px;
+      font-weight: 700; cursor: pointer; transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
     }
-    button:hover { opacity: 0.9; }
-    .card-site {
-      border: 1px solid #2a2b36; padding: 16px; margin: 14px 0;
-      border-radius: 14px; background: #101114;
+    .btn:hover { background: var(--primary-hover); transform: translateY(-1px); }
+    .btn-secondary { background: #232430; color: white; }
+    .btn-secondary:hover { background: #2d2e3d; }
+    .btn-danger { background: rgba(248, 113, 113, 0.15); color: var(--danger); border: 1px solid rgba(248, 113, 113, 0.3); }
+    .btn-danger:hover { background: var(--danger); color: black; }
+
+    /* Metric Cards */
+    .metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .metric-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      padding: 16px; border-radius: 16px; text-align: center;
+    }
+    .metric-num { font-size: 24px; font-weight: 800; color: var(--primary); }
+    .metric-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; margin-top: 2px; }
+
+    /* Cards dos Sites */
+    .site-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 12px;
+      position: relative; overflow: hidden;
+    }
+    .site-card-header { display: flex; justify-content: space-between; align-items: center; }
+    .site-name { font-size: 17px; font-weight: 700; color: white; }
+    .site-slug { font-size: 12px; color: var(--text-muted); }
+    
+    .status-badge {
+      padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;
+    }
+    .status-online { background: rgba(74, 222, 128, 0.1); color: var(--success); border: 1px solid rgba(74, 222, 128, 0.2); }
+    .status-offline { background: rgba(248, 113, 113, 0.1); color: var(--danger); border: 1px solid rgba(248, 113, 113, 0.2); }
+
+    .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px; }
+    
+    /* Painel Modal / Gaveta de Edição */
+    .editor-modal {
+      background: var(--bg-card); border: 1px solid var(--primary);
+      border-radius: 20px; padding: 20px; margin-bottom: 16px;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .section-title {
+      font-size: 13px; font-weight: 800; color: var(--primary);
+      border-bottom: 1px solid var(--border); padding-bottom: 6px;
+      margin: 16px 0 12px 0; text-transform: uppercase; letter-spacing: 0.5px;
     }
   </style>
 </head>
 <body>
-  <main>
-    <h1>JRB DIGITAL</h1>
-    <p>Painel de gerenciamento de links e serviços.</p>
 
-    <form id="loginForm">    
-      <label for="email">E-mail</label>
-      <input id="email" type="email" placeholder="Seu e-mail" required>
+  <div class="dashboard">
+    <!-- Topbar Header -->
+    <header class="header-bar">
+      <div class="brand">
+        <div class="brand-logo">JRB</div>
+        <div>
+          <div class="brand-title">JRB Digital</div>
+          <div class="brand-sub">Painel Administrativo</div>
+        </div>
+      </div>
+    </header>
 
-      <label for="password">Senha</label>
-      <input id="password" type="password" placeholder="Sua senha" required>
+    <!-- Formulário de Login -->
+    <main id="mainContent">
+      <div class="login-box">
+        <h2>Área do Cliente</h2>
+        <p class="desc">Acesse com suas credenciais para gerenciar seus links e serviços em tempo real.</p>
 
-      <button id="loginButton" type="submit">Entrar no Painel</button>
-    </form>
+        <form id="loginForm">
+          <div class="field-group">
+            <label><i class="fa-regular fa-envelope"></i> E-mail</label>
+            <input id="email" type="email" placeholder="seuemail@exemplo.com" required>
+          </div>
 
-    <p id="status" role="status" style="margin-top:15px; text-align:center;">Aguardando login...</p>
-  </main>
+          <div class="field-group">
+            <label><i class="fa-solid fa-lock"></i> Senha</label>
+            <input id="password" type="password" placeholder="••••••••" required>
+          </div>
+
+          <button id="loginButton" type="submit" class="btn">
+            <i class="fa-solid fa-right-to-bracket"></i> Entrar no Painel
+          </button>
+        </form>
+
+        <p id="status" style="margin-top:15px; text-align:center; font-size:13px; color:var(--text-muted);"></p>
+      </div>
+    </main>
+  </div>
 
   <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
@@ -64,241 +169,3 @@
     const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_QK2T4-OP6omrbgGmTwbmsw_VKfgeFuk';
 
     const status = document.getElementById('status');
-    const button = document.getElementById('loginButton');
-    const form = document.getElementById('loginForm');
-
-    const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
-
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      button.disabled = true;
-      status.textContent = 'Verificando acesso...';
-
-      try {
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email: document.getElementById('email').value.trim(),
-          password: document.getElementById('password').value
-        });
-
-        if (error) throw error;
-
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('role')
-          .eq('id', data.user.id)
-          .single();
-
-        const userRole = profile?.role || 'user';
-
-        status.textContent = 'Login efetuado com sucesso!';
-        document.querySelector('main').innerHTML = `
-          <h2>SITES & SERVIÇOS</h2>
-          <p>Gerencie as informações do seu site dinâmico em tempo real.</p>
-
-          <div id="secaoAdmin" style="display:${userRole === 'admin' ? 'block' : 'none'};">
-            <button id="cadastrarSite">+ Novo Site de Cliente</button>
-
-            <section id="formularioSite" style="display:none; margin-top:15px; background:#101114; padding:15px; border-radius:12px;">
-              <h3 style="color:#e8b84a; margin:0 0 10px 0;">Cadastrar Cliente</h3>
-              <input id="nomeSite" placeholder="Nome do Negócio (ex: Império Barber)">
-              <input id="slugSite" placeholder="Identificador / URL (ex: imperio)">
-              <button id="salvarSite">Salvar Site</button>
-              <button id="cancelarSite" style="background:#333545; color:white;">Cancelar</button>
-              <p id="mensagemSite"></p>
-            </section>
-          </div>
-
-          <div id="listaSites">Carregando sites...</div>
-
-          <button id="sairPainel" style="background:#333545; color:white; margin-top:20px;">Sair do Painel</button>
-        `;
-
-        const formularioSite = document.getElementById('formularioSite');
-        const listaSites = document.getElementById('listaSites');
-
-        if (document.getElementById('cadastrarSite')) {
-          document.getElementById('cadastrarSite').onclick = () => { formularioSite.style.display = 'block'; };
-          document.getElementById('cancelarSite').onclick = () => { formularioSite.style.display = 'none'; };
-        }
-
-        document.getElementById('sairPainel').onclick = async () => {
-          await supabase.auth.signOut();
-          location.reload();
-        };
-
-        async function carregarSites() {
-          listaSites.textContent = 'Carregando dados...';
-
-          const { data, error } = await supabase
-            .from('sites')
-            .select('id, name, slug, published, content')
-            .order('created_at', { ascending: false });
-
-          if (error) {
-            listaSites.textContent = 'Erro ao carregar: ' + error.message;
-            return;
-          }
-
-          if (!data || data.length === 0) {
-            listaSites.textContent = 'Nenhum site encontrado.';
-            return;
-          }
-
-          listaSites.innerHTML = '';
-
-          data.forEach(site => {
-            const item = document.createElement('div');
-            item.className = 'card-site';
-
-            const nome = document.createElement('strong');
-            nome.style.cssText = 'font-size:18px; color:#e8b84a; display:block;';
-            nome.textContent = site.name;
-
-            const slug = document.createElement('p');
-            slug.style.margin = '4px 0 8px 0';
-            slug.textContent = 'URL: /' + site.slug;
-
-            const statusSite = document.createElement('p');
-            statusSite.style.cssText = `font-weight:bold; color:${site.published ? '#4ade80' : '#f87171'}; margin-bottom:10px;`;
-            statusSite.textContent = site.published ? '● Status: Publicado (Online)' : '○ Status: Desativado';
-
-            const btnEditar = document.createElement('button');
-            btnEditar.textContent = '⚙️ Gerenciar Informações';
-
-            const btnPublicar = document.createElement('button');
-            btnPublicar.textContent = site.published ? 'Desativar Site' : 'Publicar Site';
-            btnPublicar.style.background = site.published ? '#f87171' : '#4ade80';
-            btnPublicar.style.color = '#101114';
-
-            btnPublicar.onclick = async () => {
-              btnPublicar.disabled = true;
-              await supabase.from('sites').update({ published: !site.published }).eq('id', site.id);
-              await carregarSites();
-            };
-
-            const linkVer = document.createElement('a');
-            linkVer.href = `https://riquelmedasilvadiassilva010-prog.github.io/links-imperio/cliente.html?slug=${site.slug}`;
-            linkVer.target = '_blank';
-            linkVer.textContent = '🔗 Ver Site do Cliente';
-            linkVer.style.cssText = 'display:block; margin-top:12px; color:#e8b84a; font-size:14px; text-decoration:none; text-align:center;';
-
-            btnEditar.onclick = () => {
-              const editorAntigo = document.getElementById('editorSite');
-              if (editorAntigo) editorAntigo.remove();
-
-              const editor = document.createElement('section');
-              editor.id = 'editorSite';
-              editor.style.cssText = 'border:1px solid #e8b84a; padding:16px; margin-top:16px; border-radius:14px; background:#17181f;';
-
-              editor.innerHTML = `
-                <h3 style="color:#e8b84a; margin-top:0;">Editar Informações do Site</h3>
-
-                <label>Nome do Negócio</label>
-                <input id="editarNome" value="${site.name}">
-
-                <label>📱 Número do WhatsApp (somente números)</label>
-                <input id="inputWhats" placeholder="Ex: 5598912345678" value="${site.content?.whatsapp || ''}">
-
-                <label>📸 Instagram (@ do perfil)</label>
-                <input id="inputInsta" placeholder="Ex: imperio_barbershop10" value="${site.content?.instagram || ''}">
-
-                <label>💲 Chave Pix</label>
-                <input id="inputPix" placeholder="Ex: CNPJ, E-mail ou Telefone" value="${site.content?.pix || ''}">
-
-                <label>📶 Nome da Rede Wi-Fi</label>
-                <input id="inputWifiNome" placeholder="Ex: JRDL-ST1-6G" value="${site.content?.wifiNome || ''}">
-
-                <label>🔑 Senha do Wi-Fi</label>
-                <input id="inputWifiSenha" placeholder="Ex: Ri01Da28Ju14#" value="${site.content?.wifiSenha || ''}">
-
-                <label>📍 Link de Localização (Google Maps)</label>
-                <input id="inputMaps" placeholder="https://maps.google.com/..." value="${site.content?.maps || ''}">
-
-                <label>🖼️ URL do Logotipo (Imagem)</label>
-                <input id="logoSite" type="url" placeholder="https://..." value="${site.content?.logo || ''}">
-
-                <button id="salvarEdicao">💾 Salvar Alterações</button>
-                <button id="fecharEditor" style="background:#333545; color:white;">Fechar</button>
-                <p id="mensagemEdicao" style="text-align:center; font-weight:bold;"></p>
-              `;
-
-              listaSites.before(editor);
-
-              document.getElementById('fecharEditor').onclick = () => editor.remove();
-
-              document.getElementById('salvarEdicao').onclick = async () => {
-                const btnSalvar = document.getElementById('salvarEdicao');
-                const mensagem = document.getElementById('mensagemEdicao');
-                btnSalvar.disabled = true;
-                mensagem.textContent = 'Salvando no banco de dados...';
-
-                try {
-                  const { error } = await supabase
-                    .from('sites')
-                    .update({
-                      name: document.getElementById('editarNome').value.trim(),
-                      content: {
-                        ...(site.content || {}),
-                        whatsapp: document.getElementById('inputWhats').value.trim(),
-                        instagram: document.getElementById('inputInsta').value.trim(),
-                        pix: document.getElementById('inputPix').value.trim(),
-                        wifiNome: document.getElementById('inputWifiNome').value.trim(),
-                        wifiSenha: document.getElementById('inputWifiSenha').value.trim(),
-                        maps: document.getElementById('inputMaps').value.trim(),
-                        logo: document.getElementById('logoSite').value.trim()
-                      }
-                    })
-                    .eq('id', site.id);
-
-                  if (error) throw error;
-
-                  mensagem.style.color = '#4ade80';
-                  mensagem.textContent = ' Alterações salvas com sucesso!';
-                  setTimeout(async () => {
-                    await carregarSites();
-                    editor.remove();
-                  }, 1200);
-                } catch (err) {
-                  mensagem.style.color = '#f87171';
-                  mensagem.textContent = 'Erro ao salvar: ' + err.message;
-                  btnSalvar.disabled = false;
-                }
-              };
-            };
-
-            item.append(nome, slug, statusSite, btnEditar, btnPublicar, linkVer);
-            listaSites.appendChild(item);
-          });
-        }
-
-        if (document.getElementById('salvarSite')) {
-          document.getElementById('salvarSite').onclick = async () => {
-            const nome = document.getElementById('nomeSite').value.trim();
-            const slug = document.getElementById('slugSite').value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '-');
-
-            if (!nome || !slug) return;
-
-            const { data: { user } } = await supabase.auth.getUser();
-
-            await supabase.from('sites').insert({
-              owner_id: user.id,
-              name: nome,
-              slug: slug,
-              content: {},
-              published: false
-            });
-
-            formularioSite.style.display = 'none';
-            await carregarSites();
-          };
-        }
-
-        carregarSites();
-      } catch (err) {
-        status.textContent = 'Erro de login: ' + err.message;
-        button.disabled = false;
-      }
-    });
-  </script>
-</body>
-</html>
