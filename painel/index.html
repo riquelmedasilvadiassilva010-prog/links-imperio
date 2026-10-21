@@ -217,9 +217,9 @@
                 }
               };
 
-              // Link corrigido apontando para o cliente.html na raiz do GitHub Pages
+              // URL direta e completa para evitar erros de 404 no GitHub Pages
               const linkVer = document.createElement('a');
-              linkVer.href = `/links-imperio/cliente.html?slug=${site.slug}`;
+              linkVer.href = `https://riquelmedasilvadiassilva010-prog.github.io/links-imperio/cliente.html?slug=${site.slug}`;
               linkVer.target = '_blank';
               linkVer.textContent = '🔗 Ver site público (teste)';
               linkVer.style.cssText = 'display:block; margin-top:10px; color:#e8b84a; font-size:14px; text-decoration:none;';
