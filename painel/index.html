@@ -26,7 +26,7 @@
       background: #101114; color: white; font-size: 16px;
     }
     button {
-      width: 100%; padding: 14px; margin-top: 20px;
+      width: 100%; padding: 14px; margin-top: 12px;
       border: 0; border-radius: 9px; cursor: pointer;
       background: #e8b84a; color: #171717;
       font-size: 16px; font-weight: bold;
@@ -104,13 +104,12 @@
 
           if (profileError) throw profileError;
 
-          // Validação robusta de perfil (Admin ou Cliente)
           const userRole = profile.role || 'user';
 
           status.textContent = 'Login confirmado! A carregar painel...';
           document.querySelector('main').innerHTML = `
             <h1>IMPÉRIO DIGITAL</h1>
-            <p>Bem-vindo ao painel de gerenciamento (${userRole === 'admin' ? 'Administrador' : 'Cliente'})!</p>
+            <p>Bem-vindo ao painel (${userRole === 'admin' ? 'Administrador' : 'Cliente'})!</p>
 
             <div id="secaoAdmin" style="display:${userRole === 'admin' ? 'block' : 'none'};">
               <button id="cadastrarSite">+ Cadastrar site</button>
@@ -139,16 +138,12 @@
 
           const btnCadastrar = document.getElementById('cadastrarSite');
           if (btnCadastrar) {
-            btnCadastrar.onclick = () => {
-              formularioSite.style.display = 'block';
-            };
+            btnCadastrar.onclick = () => { formularioSite.style.display = 'block'; };
           }
 
           const btnCancelar = document.getElementById('cancelarSite');
           if (btnCancelar) {
-            btnCancelar.onclick = () => {
-              formularioSite.style.display = 'none';
-            };
+            btnCancelar.onclick = () => { formularioSite.style.display = 'none'; };
           }
 
           document.getElementById('sairPainel').onclick = async () => {
@@ -185,13 +180,49 @@
               nome.textContent = site.name;
 
               const slug = document.createElement('p');
-              slug.style.margin = '6px 0 12px 0';
+              slug.style.margin = '6px 0 8px 0';
               slug.style.color = '#c4c5cc';
               slug.textContent = 'Identificador: ' + site.slug;
 
+              const statusSite = document.createElement('p');
+              statusSite.style.margin = '4px 0 12px 0';
+              statusSite.style.fontSize = '14px';
+              statusSite.style.fontWeight = 'bold';
+              statusSite.style.color = site.published ? '#4ade80' : '#f87171';
+              statusSite.textContent = site.published ? 'Status: Publicado' : 'Status: Não publicado';
+
               const editar = document.createElement('button');
               editar.textContent = 'Editar site';
-              editar.style.marginTop = '8px';
+
+              const btnPublicar = document.createElement('button');
+              btnPublicar.textContent = site.published ? 'Despublicar' : 'Publicar site';
+              btnPublicar.style.background = site.published ? '#f87171' : '#4ade80';
+              btnPublicar.style.color = '#101114';
+
+              btnPublicar.onclick = async () => {
+                btnPublicar.disabled = true;
+                btnPublicar.textContent = 'A atualizar...';
+                
+                try {
+                  const { error: errPub } = await supabase
+                    .from('sites')
+                    .update({ published: !site.published })
+                    .eq('id', site.id);
+
+                  if (errPub) throw errPub;
+                  await carregarSites();
+                } catch (err) {
+                  alert('Erro ao alterar status: ' + err.message);
+                  btnPublicar.disabled = false;
+                }
+              };
+
+              // Link corrigido apontando para o cliente.html na raiz do GitHub Pages
+              const linkVer = document.createElement('a');
+              linkVer.href = `/links-imperio/cliente.html?slug=${site.slug}`;
+              linkVer.target = '_blank';
+              linkVer.textContent = '🔗 Ver site público (teste)';
+              linkVer.style.cssText = 'display:block; margin-top:10px; color:#e8b84a; font-size:14px; text-decoration:none;';
 
               editar.onclick = () => {
                 const editorAntigo = document.getElementById('editorSite');
@@ -221,4 +252,179 @@
                   <input id="logoSite" type="url" placeholder="https://...">
 
                   <h3 style="margin-top:20px; color:#e8b84a; font-size:16px;">Prévia Visual em Tempo Real</h3>
-                  <div id="previewBox" style="border: 2px dashed #444650; padding: 20px; border-radius: 12px; text-align: center; transition: 0
+                  <div id="previewBox" style="border: 2px dashed #444650; padding: 20px; border-radius: 12px; text-align: center; transition: 0.3s;">
+                    <img id="previewLogo" src="" alt="Logo" style="max-width: 80px; max-height: 80px; display: none; margin: 0 auto 10px auto; border-radius: 8px;">
+                    <p id="previewNome" style="font-weight: bold; font-size: 16px; margin: 0; color: #fff;"></p>
+                  </div>
+
+                  <button id="salvarEdicao">Salvar alterações</button>
+                  <button id="fecharEditor" style="background:#444650; color:white;">Fechar</button>
+
+                  <p id="mensagemEdicao"></p>
+                `;
+
+                listaSites.before(editor);
+
+                const inputNome = document.getElementById('editarNome');
+                const inputSlug = document.getElementById('editarSlug');
+                const inputCorPrincipal = document.getElementById('corPrincipal');
+                const inputCorFundo = document.getElementById('corFundo');
+                const inputLogo = document.getElementById('logoSite');
+                
+                const previewBox = document.getElementById('previewBox');
+                const previewLogo = document.getElementById('previewLogo');
+                const previewNome = document.getElementById('previewNome');
+
+                inputNome.value = site.name;
+                inputSlug.value = site.slug;
+                inputCorPrincipal.value = site.content?.corPrincipal || '#e8b84a';
+                inputCorFundo.value = site.content?.corFundo || '#101114';
+                inputLogo.value = site.content?.logo || '';
+
+                function atualizarPreview() {
+                  previewNome.textContent = inputNome.value.trim() || 'Nome do Site';
+                  previewNome.style.color = inputCorPrincipal.value;
+                  previewBox.style.backgroundColor = inputCorFundo.value;
+                  
+                  const urlLogo = inputLogo.value.trim();
+                  if (urlLogo) {
+                    previewLogo.src = urlLogo;
+                    previewLogo.style.display = 'block';
+                  } else {
+                    previewLogo.style.display = 'none';
+                  }
+                }
+
+                inputNome.oninput = atualizarPreview;
+                inputCorPrincipal.oninput = atualizarPreview;
+                inputCorFundo.oninput = atualizarPreview;
+                inputLogo.oninput = atualizarPreview;
+
+                atualizarPreview();
+
+                document.getElementById('fecharEditor').onclick = () => {
+                  editor.remove();
+                };
+
+                document.getElementById('salvarEdicao').onclick = async () => {
+                  const nomeNovo = inputNome.value.trim();
+                  const corPrincipal = inputCorPrincipal.value;
+                  const corFundo = inputCorFundo.value;
+                  const logoSite = inputLogo.value.trim();
+                  const slugNovo = inputSlug.value
+                    .trim()
+                    .toLowerCase()
+                    .replace(/[^a-z0-9-]/g, '-')
+                    .replace(/-+/g, '-')
+                    .replace(/^-|-$/g, '');
+
+                  const mensagem = document.getElementById('mensagemEdicao');
+
+                  if (!nomeNovo || !slugNovo) {
+                    mensagem.textContent = 'Preencha os campos obrigatórios.';
+                    return;
+                  }
+
+                  const botaoSalvar = document.getElementById('salvarEdicao');
+                  botaoSalvar.disabled = true;
+                  mensagem.textContent = 'Salvando...';
+
+                  try {
+                    const { error } = await supabase
+                      .from('sites')
+                      .update({
+                        name: nomeNovo,
+                        slug: slugNovo,
+                        content: {
+                          ...(site.content || {}),
+                          corPrincipal: corPrincipal,
+                          corFundo: corFundo,
+                          logo: logoSite
+                        }
+                      })
+                      .eq('id', site.id);
+
+                    if (error) throw error;
+
+                    mensagem.textContent = 'Alterações salvas com sucesso!';
+                    await carregarSites();
+                    editor.remove();
+                  } catch (error) {
+                    mensagem.textContent = 'Erro ao salvar: ' + error.message;
+                  } finally {
+                    botaoSalvar.disabled = false;
+                  }
+                };
+              };
+
+              item.append(nome, slug, statusSite, editar, btnPublicar, linkVer);
+              listaSites.appendChild(item);
+            });
+          }
+
+          const btnSalvarSite = document.getElementById('salvarSite');
+          if (btnSalvarSite) {
+            btnSalvarSite.onclick = async () => {
+              const nome = document.getElementById('nomeSite').value.trim();
+              const slug = document.getElementById('slugSite').value
+                .trim()
+                .toLowerCase()
+                .replace(/[^a-z0-9-]/g, '-')
+                .replace(/-+/g, '-')
+                .replace(/^-|-$/g, '');
+
+              if (!nome || !slug) {
+                mensagemSite.textContent = 'Preencha os dois campos.';
+                return;
+              }
+
+              const { data: { user }, error: erroUsuario } =
+                await supabase.auth.getUser();
+
+              if (erroUsuario || !user) {
+                mensagemSite.textContent = 'Entre novamente no painel.';
+                return;
+              }
+
+              const botao = document.getElementById('salvarSite');
+              botao.disabled = true;
+              mensagemSite.textContent = 'Salvando...';
+
+              try {
+                const { error } = await supabase.from('sites').insert({
+                  owner_id: user.id,
+                  name: nome,
+                  slug: slug,
+                  content: {},
+                  published: false
+                });
+
+                if (error) {
+                  mensagemSite.textContent = 'Erro ao salvar: ' + error.message;
+                  return;
+                }
+
+                mensagemSite.textContent = 'Site cadastrado!';
+                document.getElementById('nomeSite').value = '';
+                document.getElementById('slugSite').value = '';
+                formularioSite.style.display = 'none';
+                await carregarSites();
+              } catch (error) {
+                mensagemSite.textContent = 'Erro inesperado: ' + error.message;
+              } finally {
+                botao.disabled = false;
+              }
+            };
+          }
+
+          carregarSites();
+        } catch (error) {
+          status.textContent = 'Não foi possível entrar: ' + error.message;
+        } finally {
+          button.disabled = false;
+        }
+      });
+    }
+  </script>
+</body>
+</html>
