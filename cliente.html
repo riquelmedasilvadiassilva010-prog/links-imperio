@@ -5,7 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Carregando...</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;700;800&family=Playfair+Display:wght@700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <style id="dynamic-styles">
     :root {
       --bg-dark: #0a0b0e;
       --bg-card: #14151c;
@@ -13,31 +17,33 @@
       --text: #ffffff;
       --text-muted: #8e8f9e;
       --border: #1e1f29;
+      --btn-radius: 12px;
+      --font-family: system-ui, -apple-system, sans-serif;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
-    body { background: var(--bg-dark); color: var(--text); display: flex; justify-content: center; min-height: 100vh; padding: 20px 16px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-family); }
+    body { background: var(--bg-dark); color: var(--text); display: flex; justify-content: center; min-height: 100vh; padding: 24px 16px; transition: 0.3s; }
 
     .container { width: 100%; max-width: 400px; text-align: center; }
 
-    .logo-img { width: 90px; height: 90px; border-radius: 50%; border: 2px solid var(--primary); object-fit: cover; margin-bottom: 12px; }
-    .brand-title { font-size: 20px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
-    .brand-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; }
+    .logo-img { width: 96px; height: 96px; border-radius: 50%; border: 2px solid var(--primary); object-fit: cover; margin-bottom: 14px; }
+    .brand-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; letter-spacing: 0.5px; }
+    .brand-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; opacity: 0.8; }
 
     .btn-link {
       display: flex; align-items: center; justify-content: space-between;
       width: 100%; padding: 16px 20px; background: var(--bg-card);
-      border: 1px solid var(--border); border-radius: 12px; color: white;
+      border: 1px solid var(--border); border-radius: var(--btn-radius); color: var(--text);
       text-decoration: none; font-weight: 700; font-size: 15px;
       margin-bottom: 12px; transition: 0.2s; cursor: pointer;
     }
-    .btn-link:hover { border-color: var(--primary); transform: translateY(-2px); }
-    .btn-icon { font-size: 20px; color: var(--primary); width: 24px; }
+    .btn-link:hover { transform: translateY(-2px); border-color: var(--primary); }
+    .btn-icon { font-size: 20px; color: var(--primary); width: 26px; text-align: center; }
 
     /* Modal / Popup */
-    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; padding: 20px; }
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; padding: 20px; z-index: 99; }
     .modal-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; width: 100%; max-width: 320px; text-align: center; }
-    .modal-btn { background: var(--primary); color: #101114; border: none; padding: 10px 18px; border-radius: 8px; font-weight: bold; margin-top: 14px; cursor: pointer; width: 100%; }
+    .modal-btn { background: var(--primary); color: #101114; border: none; padding: 12px 18px; border-radius: var(--btn-radius); font-weight: bold; margin-top: 14px; cursor: pointer; width: 100%; font-size: 14px; }
   </style>
 </head>
 <body>
@@ -52,7 +58,7 @@
       <h3 id="modalTitle" style="color: var(--primary); margin-bottom: 10px;"></h3>
       <p id="modalBody" style="font-size: 14px; word-break: break-all; color: var(--text);"></p>
       <button class="modal-btn" id="modalActionBtn">Copiar</button>
-      <button class="modal-btn" style="background: #232430; color: white; margin-top: 6px;" onclick="fecharModal()">Fechar</button>
+      <button class="modal-btn" style="background: rgba(255,255,255,0.1); color: var(--text); margin-top: 6px;" onclick="fecharModal()">Fechar</button>
     </div>
   </div>
 
@@ -82,6 +88,19 @@
       document.title = data.name;
       const c = data.content || {};
 
+      // Aplicar Estilos Dinâmicos
+      const dynamicStyles = document.getElementById('dynamic-styles');
+      dynamicStyles.innerHTML += `
+        :root {
+          --bg-dark: ${c.bgColor || '#0a0b0e'};
+          --bg-card: ${c.cardColor || '#14151c'};
+          --primary: ${c.primaryColor || '#e8b84a'};
+          --text: ${c.textColor || '#ffffff'};
+          --btn-radius: ${c.btnRadius || '12px'};
+          --font-family: ${c.font || 'system-ui, -apple-system, sans-serif'};
+        }
+      `;
+
       // Formatar Links Automáticos
       const linkWhats = c.whatsapp ? `https://wa.me/${c.whatsapp.replace(/\D/g, '')}` : null;
       const linkInsta = c.instagram ? `https://instagram.com/${c.instagram.replace('@', '')}` : null;
@@ -93,7 +112,7 @@
           <a href="${linkWhats}" target="_blank" class="btn-link">
             <i class="fa-brands fa-whatsapp btn-icon" style="color:#22c55e;"></i>
             <span>Conversar no WhatsApp</span>
-            <i class="fa-solid fa-chevron-right" style="font-size:12px; color:var(--text-muted);"></i>
+            <i class="fa-solid fa-chevron-right" style="font-size:12px; opacity:0.5;"></i>
           </a>`;
       }
 
@@ -102,7 +121,7 @@
           <a href="${linkInsta}" target="_blank" class="btn-link">
             <i class="fa-brands fa-instagram btn-icon" style="color:#e1306c;"></i>
             <span>Siga no Instagram</span>
-            <i class="fa-solid fa-chevron-right" style="font-size:12px; color:var(--text-muted);"></i>
+            <i class="fa-solid fa-chevron-right" style="font-size:12px; opacity:0.5;"></i>
           </a>`;
       }
 
@@ -111,7 +130,7 @@
           <div class="btn-link" onclick="abrirPix('${c.pix}')">
             <i class="fa-solid fa-pix btn-icon"></i>
             <span>Chave Pix para Pagamento</span>
-            <i class="fa-solid fa-copy" style="font-size:12px; color:var(--text-muted);"></i>
+            <i class="fa-solid fa-copy" style="font-size:12px; opacity:0.5;"></i>
           </div>`;
       }
 
@@ -120,7 +139,7 @@
           <div class="btn-link" onclick="abrirWifi('${c.wifiNome}', '${c.wifiSenha || 'Sem senha'}')">
             <i class="fa-solid fa-wifi btn-icon"></i>
             <span>Wi-Fi do Estabelecimento</span>
-            <i class="fa-solid fa-key" style="font-size:12px; color:var(--text-muted);"></i>
+            <i class="fa-solid fa-key" style="font-size:12px; opacity:0.5;"></i>
           </div>`;
       }
 
@@ -129,7 +148,7 @@
           <a href="${c.maps}" target="_blank" class="btn-link">
             <i class="fa-solid fa-location-dot btn-icon" style="color:#ef4444;"></i>
             <span>Como Chegar (Google Maps)</span>
-            <i class="fa-solid fa-chevron-right" style="font-size:12px; color:var(--text-muted);"></i>
+            <i class="fa-solid fa-chevron-right" style="font-size:12px; opacity:0.5;"></i>
           </a>`;
       }
 
