@@ -3,163 +3,133 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>JRB Digital | Dashboard Admin</title>
+  <title>IMPÉRIO DIGITAL | Painel de Gerenciamento</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --bg-body: #0a0b0e;
+      --bg-dark: #0a0b0e;
+      --bg-sidebar: #0f1015;
       --bg-card: #14151c;
-      --bg-input: #0d0e13;
+      --bg-input: #0d0e12;
       --primary: #e8b84a;
       --primary-hover: #d4a338;
       --text: #ffffff;
       --text-muted: #8e8f9e;
-      --border: #232430;
-      --success: #4ade80;
-      --danger: #f87171;
+      --border: #1e1f29;
+      --success: #22c55e;
+      --danger: #ef4444;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-      background: var(--bg-body); color: var(--text);
-      min-height: 100vh; display: flex; flex-direction: column; align-items: center;
-      padding: 16px;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+    body { background: var(--bg-dark); color: var(--text); min-height: 100vh; display: flex; }
 
-    /* Container Principal */
-    .dashboard {
-      width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 20px;
-    }
-
-    /* Topbar Header */
-    .header-bar {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: 18px; padding: 18px 20px; display: flex;
-      align-items: center; justify-content: space-between;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    }
-    .brand { display: flex; align-items: center; gap: 12px; }
-    .brand-logo {
-      width: 40px; height: 40px; background: linear-gradient(135deg, #e8b84a, #997320);
-      border-radius: 12px; display: flex; align-items: center; justify-content: center;
-      color: #101114; font-weight: 900; font-size: 18px;
-    }
-    .brand-title { font-size: 17px; font-weight: 800; color: var(--text); letter-spacing: 0.5px; }
-    .brand-sub { font-size: 11px; color: var(--primary); font-weight: 600; text-transform: uppercase; }
-
-    /* Login Box */
-    .login-box {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: 20px; padding: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-    }
-    h2 { font-size: 20px; color: var(--primary); margin-bottom: 6px; }
-    p.desc { font-size: 13px; color: var(--text-muted); margin-bottom: 18px; line-height: 1.4; }
-
-    /* Form Inputs */
-    .field-group { margin-bottom: 14px; }
-    label { display: block; font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
-    input {
-      width: 100%; padding: 12px 14px; background: var(--bg-input);
-      border: 1px solid var(--border); border-radius: 10px; color: white;
-      font-size: 14px; outline: none; transition: border-color 0.2s;
-    }
-    input:focus { border-color: var(--primary); }
-
-    /* Botões Gerais */
-    .btn {
-      width: 100%; padding: 13px; border: none; border-radius: 12px;
-      background: var(--primary); color: #101114; font-size: 14px;
-      font-weight: 700; cursor: pointer; transition: all 0.2s;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-    }
-    .btn:hover { background: var(--primary-hover); transform: translateY(-1px); }
-    .btn-secondary { background: #232430; color: white; }
-    .btn-secondary:hover { background: #2d2e3d; }
-    .btn-danger { background: rgba(248, 113, 113, 0.15); color: var(--danger); border: 1px solid rgba(248, 113, 113, 0.3); }
-    .btn-danger:hover { background: var(--danger); color: black; }
-
-    /* Metric Cards */
-    .metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .metric-card {
-      background: var(--bg-card); border: 1px solid var(--border);
-      padding: 16px; border-radius: 16px; text-align: center;
-    }
-    .metric-num { font-size: 24px; font-weight: 800; color: var(--primary); }
-    .metric-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; margin-top: 2px; }
-
-    /* Cards dos Sites */
-    .site-card {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 12px;
-      position: relative; overflow: hidden;
-    }
-    .site-card-header { display: flex; justify-content: space-between; align-items: center; }
-    .site-name { font-size: 17px; font-weight: 700; color: white; }
-    .site-slug { font-size: 12px; color: var(--text-muted); }
+    /* Layout Principal com Menu Lateral */
+    .app-layout { display: flex; width: 100%; min-height: 100vh; }
     
-    .status-badge {
-      padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;
+    /* Sidebar */
+    aside {
+      width: 260px; background: var(--bg-sidebar); border-right: 1px solid var(--border);
+      padding: 24px; display: flex; flex-direction: column; justify-content: space-between;
+      flex-shrink: 0;
     }
-    .status-online { background: rgba(74, 222, 128, 0.1); color: var(--success); border: 1px solid rgba(74, 222, 128, 0.2); }
-    .status-offline { background: rgba(248, 113, 113, 0.1); color: var(--danger); border: 1px solid rgba(248, 113, 113, 0.2); }
+    .brand-area { display: flex; align-items: center; gap: 12px; margin-bottom: 30px; }
+    .brand-icon { color: var(--primary); font-size: 28px; }
+    .brand-name { font-size: 18px; font-weight: 800; color: var(--primary); letter-spacing: 0.5px; }
+    .brand-sub { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
 
-    .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px; }
+    nav { display: flex; flex-direction: column; gap: 8px; }
+    .nav-item {
+      display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+      border-radius: 10px; color: var(--text-muted); text-decoration: none;
+      font-size: 14px; font-weight: 600; cursor: pointer; transition: 0.2s;
+    }
+    .nav-item:hover, .nav-item.active { background: var(--primary); color: #101114; }
+
+    /* Main Content Area */
+    main { flex: 1; padding: 30px; overflow-y: auto; }
+
+    /* Header Superior */
+    .top-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid var(--border);
+    }
+    .user-info { display: flex; align-items: center; gap: 12px; }
+    .avatar { width: 40px; height: 40px; border-radius: 50%; background: #232430; display: flex; align-items: center; justify-content: center; }
     
-    /* Painel Modal / Gaveta de Edição */
-    .editor-modal {
-      background: var(--bg-card); border: 1px solid var(--primary);
-      border-radius: 20px; padding: 20px; margin-bottom: 16px;
-      animation: fadeIn 0.3s ease-in-out;
-    }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    /* Metrics Grid */
+    .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 25px; }
+    .metric-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+    .metric-header { display: flex; align-items: center; justify-content: justify-content; gap: 10px; margin-bottom: 10px; }
+    .metric-icon { width: 36px; height: 36px; border-radius: 10px; background: rgba(232, 184, 74, 0.1); color: var(--primary); display: flex; align-items: center; justify-content: center; }
+    .metric-val { font-size: 26px; font-weight: 800; }
+    .metric-title { font-size: 12px; color: var(--text-muted); }
 
-    .section-title {
-      font-size: 13px; font-weight: 800; color: var(--primary);
-      border-bottom: 1px solid var(--border); padding-bottom: 6px;
-      margin: 16px 0 12px 0; text-transform: uppercase; letter-spacing: 0.5px;
+    /* Tabela de Sites */
+    .content-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; }
+    .box-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+    
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    th { padding: 12px 16px; font-size: 12px; color: var(--text-muted); text-transform: uppercase; border-bottom: 1px solid var(--border); }
+    td { padding: 16px; border-bottom: 1px solid var(--border); font-size: 14px; }
+    
+    .status-pill { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; display: inline-block; }
+    .pill-active { background: rgba(34, 197, 94, 0.15); color: var(--success); }
+    .pill-inactive { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+
+    .btn-action {
+      border: none; width: 34px; height: 34px; border-radius: 8px; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center; margin-right: 4px; transition: 0.2s;
+    }
+    .btn-edit { background: var(--primary); color: #101114; }
+    .btn-view { background: #232430; color: white; }
+    .btn-delete { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
+
+    /* Form Modals / Sections */
+    .input-field {
+      width: 100%; padding: 12px; background: var(--bg-input); border: 1px solid var(--border);
+      border-radius: 8px; color: white; margin-top: 6px; margin-bottom: 14px; outline: none;
+    }
+    .input-field:focus { border-color: var(--primary); }
+    .btn-main { background: var(--primary); color: #101114; padding: 12px 20px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
+
+    /* Login Screen Container */
+    .login-container {
+      width: 100%; max-width: 400px; margin: auto; background: var(--bg-card);
+      border: 1px solid var(--border); border-radius: 20px; padding: 30px;
+    }
+
+    @media (max-width: 768px) {
+      .app-layout { flex-direction: column; }
+      aside { width: 100%; height: auto; }
     }
   </style>
 </head>
 <body>
 
-  <div class="dashboard">
-    <!-- Topbar Header -->
-    <header class="header-bar">
-      <div class="brand">
-        <div class="brand-logo">JRB</div>
-        <div>
-          <div class="brand-title">JRB Digital</div>
-          <div class="brand-sub">Painel Administrativo</div>
+  <div id="root" style="width:100%;">
+    <!-- Área de Login Inicial -->
+    <div style="display:flex; min-height:100vh; align-items:center; justify-content:center; padding:20px;">
+      <div class="login-container">
+        <div class="brand-area" style="justify-content:center;">
+          <i class="fa-solid fa-crown brand-icon"></i>
+          <div>
+            <div class="brand-name">IMPÉRIO DIGITAL</div>
+            <div class="brand-sub">PAINEL DE GERENCIAMENTO</div>
+          </div>
         </div>
-      </div>
-    </header>
-
-    <!-- Formulário de Login -->
-    <main id="mainContent">
-      <div class="login-box">
-        <h2>Área do Cliente</h2>
-        <p class="desc">Acesse com suas credenciais para gerenciar seus links e serviços em tempo real.</p>
 
         <form id="loginForm">
-          <div class="field-group">
-            <label><i class="fa-regular fa-envelope"></i> E-mail</label>
-            <input id="email" type="email" placeholder="seuemail@exemplo.com" required>
-          </div>
+          <label style="font-size:12px; color:var(--text-muted);">E-MAIL</label>
+          <input id="email" type="email" class="input-field" placeholder="admin@imperio.com" required>
 
-          <div class="field-group">
-            <label><i class="fa-solid fa-lock"></i> Senha</label>
-            <input id="password" type="password" placeholder="••••••••" required>
-          </div>
+          <label style="font-size:12px; color:var(--text-muted);">SENHA</label>
+          <input id="password" type="password" class="input-field" placeholder="••••••••" required>
 
-          <button id="loginButton" type="submit" class="btn">
-            <i class="fa-solid fa-right-to-bracket"></i> Entrar no Painel
-          </button>
+          <button id="loginBtn" class="btn-main" style="width:100%; margin-top:10px;">Entrar no Dashboard</button>
         </form>
-
-        <p id="status" style="margin-top:15px; text-align:center; font-size:13px; color:var(--text-muted);"></p>
+        <p id="loginStatus" style="margin-top:15px; text-align:center; font-size:13px; color:var(--text-muted);"></p>
       </div>
-    </main>
+    </div>
   </div>
 
   <script type="module">
@@ -168,4 +138,290 @@
     const SUPABASE_URL = 'https://hqoqbjwjjmnhctjizvcs.supabase.co';
     const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_QK2T4-OP6omrbgGmTwbmsw_VKfgeFuk';
 
-    const status = document.getElementById('status');
+    const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+    const root = document.getElementById('root');
+
+    document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const status = document.getElementById('loginStatus');
+      status.textContent = 'A autenticar...';
+
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: document.getElementById('email').value.trim(),
+          password: document.getElementById('password').value
+        });
+
+        if (error) throw error;
+        renderDashboard(data.user);
+      } catch (err) {
+        status.style.color = 'var(--danger)';
+        status.textContent = 'Erro de acesso: ' + err.message;
+      }
+    });
+
+    function renderDashboard(user) {
+      root.innerHTML = `
+        <div class="app-layout">
+          <!-- Sidebar Nav -->
+          <aside>
+            <div>
+              <div class="brand-area">
+                <i class="fa-solid fa-crown brand-icon"></i>
+                <div>
+                  <div class="brand-name">IMPÉRIO DIGITAL</div>
+                  <div class="brand-sub">PAINEL DE GERENCIAMENTO</div>
+                </div>
+              </div>
+
+              <nav>
+                <a class="nav-item active"><i class="fa-solid fa-house"></i> Dashboard</a>
+                <a class="nav-item" id="btnNavNovo"><i class="fa-solid fa-plus"></i> Cadastrar Site</a>
+                <a class="nav-item"><i class="fa-solid fa-globe"></i> Meus Sites</a>
+                <a class="nav-item"><i class="fa-solid fa-users"></i> Clientes</a>
+                <a class="nav-item"><i class="fa-solid fa-gear"></i> Configurações</a>
+              </nav>
+            </div>
+
+            <div style="font-size:11px; color:var(--text-muted); text-align:center;">
+              Império Digital © 2026<br>Sua presença online com mais força.
+            </div>
+          </aside>
+
+          <!-- Main Body -->
+          <main>
+            <!-- Topbar -->
+            <div class="top-header">
+              <div>
+                <h1 style="font-size:22px;">👋 Bem-vindo, Administrador!</h1>
+                <p style="font-size:13px; color:var(--text-muted);">Gerencie todos os sites e clientes em um só lugar.</p>
+              </div>
+
+              <div class="user-info">
+                <div class="avatar"><i class="fa-solid fa-user"></i></div>
+                <div>
+                  <div style="font-size:13px; font-weight:bold;">Administrador</div>
+                  <div style="font-size:11px; color:var(--text-muted);">${user.email}</div>
+                </div>
+                <button id="sairBtn" class="btn-action btn-delete" style="margin-left:15px; width:auto; padding:0 12px;" title="Sair">
+                  <i class="fa-solid fa-right-from-bracket"></i> Sair
+                </button>
+              </div>
+            </div>
+
+            <!-- Metrics Cards -->
+            <div class="metrics-grid">
+              <div class="metric-card">
+                <div class="metric-header">
+                  <div class="metric-icon"><i class="fa-solid fa-globe"></i></div>
+                  <div class="metric-title">Total de Sites</div>
+                </div>
+                <div class="metric-val" id="totalSites">0</div>
+              </div>
+
+              <div class="metric-card">
+                <div class="metric-header">
+                  <div class="metric-icon" style="color:var(--success); background:rgba(34,197,94,0.1);"><i class="fa-solid fa-circle-check"></i></div>
+                  <div class="metric-title">Clientes Ativos</div>
+                </div>
+                <div class="metric-val" id="sitesAtivos" style="color:var(--success);">0</div>
+              </div>
+
+              <div class="metric-card">
+                <div class="metric-header">
+                  <div class="metric-icon"><i class="fa-solid fa-link"></i></div>
+                  <div class="metric-title">Links Dinâmicos</div>
+                </div>
+                <div class="metric-val">12</div>
+              </div>
+
+              <div class="metric-card">
+                <div class="metric-header">
+                  <div class="metric-icon"><i class="fa-solid fa-chart-line"></i></div>
+                  <div class="metric-title">Uptime</div>
+                </div>
+                <div class="metric-val">99.9%</div>
+              </div>
+            </div>
+
+            <!-- Área de Formulário para Editar / Criar -->
+            <div id="formContainer"></div>
+
+            <!-- Tabela Principal de Sites -->
+            <div class="content-box">
+              <div class="box-header">
+                <div>
+                  <h3 style="font-size:16px;"><i class="fa-solid fa-globe"></i> Sites Cadastrados</h3>
+                  <p style="font-size:12px; color:var(--text-muted);">Gerencie seus sites e acesse as opções de edição.</p>
+                </div>
+                <button id="btnNovoSite" class="btn-main">+ Cadastrar Site</button>
+              </div>
+
+              <div style="overflow-x:auto;">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Nome do Site</th>
+                      <th>Slug / URL</th>
+                      <th>Status</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabelaCorpo">
+                    <tr><td colspan="5" style="text-align:center; color:var(--text-muted);">A carregar dados...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </main>
+        </div>
+      `;
+
+      document.getElementById('sairBtn').onclick = async () => {
+        await supabase.auth.signOut();
+        location.reload();
+      };
+
+      document.getElementById('btnNovoSite').onclick = mostrarFormNovoSite;
+      document.getElementById('btnNavNovo').onclick = mostrarFormNovoSite;
+
+      carregarTabela();
+    }
+
+    async function carregarTabela() {
+      const tabela = document.getElementById('tabelaCorpo');
+      
+      const { data, error } = await supabase.from('sites').select('*').order('created_at', { ascending: false });
+
+      if (error || !data) {
+        tabela.innerHTML = '<tr><td colspan="5" style="color:var(--danger); text-align:center;">Erro ao carregar sites.</td></tr>';
+        return;
+      }
+
+      document.getElementById('totalSites').textContent = data.length;
+      document.getElementById('sitesAtivos').textContent = data.filter(s => s.published).length;
+
+      tabela.innerHTML = '';
+
+      data.forEach((site, idx) => {
+        const tr = document.createElement('tr');
+
+        tr.innerHTML = `
+          <td>${idx + 1}</td>
+          <td><strong>${site.name}</strong></td>
+          <td><span style="color:var(--text-muted);">/${site.slug}</span></td>
+          <td>
+            <span class="status-pill ${site.published ? 'pill-active' : 'pill-inactive'}">
+              ${site.published ? 'Ativo' : 'Desativado'}
+            </span>
+          </td>
+          <td>
+            <button class="btn-action btn-edit btn-editar-item" title="Editar Informações"><i class="fa-solid fa-pen"></i></button>
+            <a href="https://riquelmedasilvadiassilva010-prog.github.io/links-imperio/cliente.html?slug=${site.slug}" target="_blank" class="btn-action btn-view" title="Ver Site"><i class="fa-solid fa-eye"></i></a>
+            <button class="btn-action btn-delete btn-toggle-item" title="${site.published ? 'Desativar' : 'Ativar'}"><i class="fa-solid fa-power-off"></i></button>
+          </td>
+        `;
+
+        tr.querySelector('.btn-toggle-item').onclick = async () => {
+          await supabase.from('sites').update({ published: !site.published }).eq('id', site.id);
+          await carregarTabela();
+        };
+
+        tr.querySelector('.btn-editar-item').onclick = () => abrirEditorSite(site);
+
+        tabela.appendChild(tr);
+      });
+    }
+
+    function mostrarFormNovoSite() {
+      const container = document.getElementById('formContainer');
+      container.innerHTML = `
+        <div class="content-box" style="margin-bottom:20px; border-color:var(--primary);">
+          <h3>+ Cadastrar Novo Cliente</h3>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-top:14px;">
+            <div>
+              <label style="font-size:12px;">NOME DO NEGÓCIO</label>
+              <input id="novoNome" class="input-field" placeholder="Ex: Império Barber Shop">
+            </div>
+            <div>
+              <label style="font-size:12px;">IDENTIFICADOR / SLUG</label>
+              <input id="novoSlug" class="input-field" placeholder="Ex: imperio">
+            </div>
+          </div>
+          <button id="salvarNovoBtn" class="btn-main">Salvar Cliente</button>
+          <button id="cancelarNovoBtn" style="background:#232430; color:white; padding:12px 20px; border:none; border-radius:8px; cursor:pointer; margin-left:8px;">Cancelar</button>
+        </div>
+      `;
+
+      document.getElementById('cancelarNovoBtn').onclick = () => container.innerHTML = '';
+      document.getElementById('salvarNovoBtn').onclick = async () => {
+        const nome = document.getElementById('novoNome').value.trim();
+        const slug = document.getElementById('novoSlug').value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '-');
+        if (!nome || !slug) return;
+
+        const { data: { user } } = await supabase.auth.getUser();
+        await supabase.from('sites').insert({ owner_id: user.id, name: nome, slug: slug, content: {}, published: false });
+        container.innerHTML = '';
+        await carregarTabela();
+      };
+    }
+
+    function abrirEditorSite(site) {
+      const container = document.getElementById('formContainer');
+      const c = site.content || {};
+
+      container.innerHTML = `
+        <div class="content-box" style="margin-bottom:20px; border-color:var(--primary);">
+          <h3>⚙️ Gerenciar Informações: ${site.name}</h3>
+          
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-top:14px;">
+            <div>
+              <label style="font-size:11px; color:var(--primary);">NOME DO NEGÓCIO</label>
+              <input id="eNome" class="input-field" value="${site.name}">
+            </div>
+            <div>
+              <label style="font-size:11px; color:var(--primary);">WHATSAPP (NÚMEROS)</label>
+              <input id="eWhats" class="input-field" value="${c.whatsapp || ''}">
+            </div>
+            <div>
+              <label style="font-size:11px; color:var(--primary);">INSTAGRAM (@)</label>
+              <input id="eInsta" class="input-field" value="${c.instagram || ''}">
+            </div>
+            <div>
+              <label style="font-size:11px; color:var(--primary);">CHAVE PIX</label>
+              <input id="ePix" class="input-field" value="${c.pix || ''}">
+            </div>
+            <div>
+              <label style="font-size:11px; color:var(--primary);">REDE WI-FI</label>
+              <input id="eWifiNome" class="input-field" value="${c.wifiNome || ''}">
+            </div>
+            <div>
+              <label style="font-size:11px; color:var(--primary);">SENHA WI-FI</label>
+              <input id="eWifiSenha" class="input-field" value="${c.wifiSenha || ''}">
+            </div>
+            <div>
+              <label style="font-size:11px; color:var(--primary);">LINK GOOGLE MAPS</label>
+              <input id="eMaps" class="input-field" value="${c.maps || ''}">
+            </div>
+            <div>
+              <label style="font-size:11px; color:var(--primary);">URL LOGOTIPO</label>
+              <input id="eLogo" class="input-field" value="${c.logo || ''}">
+            </div>
+          </div>
+
+          <button id="salvarEdicaoBtn" class="btn-main">💾 Salvar Alterações</button>
+          <button id="fecharEdicaoBtn" style="background:#232430; color:white; padding:12px 20px; border:none; border-radius:8px; cursor:pointer; margin-left:8px;">Fechar</button>
+          <span id="msgSalvar" style="margin-left:15px; font-weight:bold;"></span>
+        </div>
+      `;
+
+      document.getElementById('fecharEdicaoBtn').onclick = () => container.innerHTML = '';
+      document.getElementById('salvarEdicaoBtn').onclick = async () => {
+        const msg = document.getElementById('msgSalvar');
+        msg.style.color = 'var(--text-muted)';
+        msg.textContent = 'A guardar...';
+
+        await supabase.from('sites').update({
+          name: document.getElementById('eNome').value.trim(),
