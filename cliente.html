@@ -3,29 +3,81 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Carregando site...</title>
+  <title>Carregando...</title>
+  <!-- FontAwesome para Ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      margin: 0; font-family: Arial, sans-serif;
-      background: #101114; color: white;
-      min-height: 100vh; display: flex; flex-direction: column;
-      align-items: center; justify-content: center; padding: 20px;
-      text-align: center;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+      background: #0d0e12; color: #ffffff;
+      min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+      padding: 20px 16px;
     }
-    .container {
-      max-width: 400px; width: 100%; padding: 24px;
-      border-radius: 16px; background: #1b1c21; border: 1px solid #33353d;
+    .app-container {
+      width: 100%; max-width: 420px; display: flex; flex-direction: column; gap: 14px;
     }
-    img.logo { max-width: 100px; max-height: 100px; border-radius: 12px; margin-bottom: 16px; }
-    h1 { margin: 0 0 10px 0; font-size: 22px; }
-    p { color: #c4c5cc; font-size: 14px; }
+    /* Header */
+    .header { text-align: center; margin-bottom: 10px; }
+    .logo { width: 90px; height: 90px; border-radius: 20px; object-fit: cover; margin-bottom: 12px; border: 2px solid rgba(255,255,255,0.1); }
+    .titulo { font-size: 20px; font-weight: 700; color: #e8b84a; letter-spacing: 1px; text-transform: uppercase; }
+    .subtitulo { font-size: 13px; color: #a0a0ab; margin-top: 4px; }
+
+    /* Cards / Botões de Ação */
+    .link-card {
+      background: #17181f; border: 1px solid #282936; border-radius: 18px;
+      padding: 14px 18px; display: flex; align-items: center; justify-content: space-between;
+      text-decoration: none; color: white; transition: transform 0.2s, border-color 0.2s;
+      cursor: pointer;
+    }
+    .link-card:active { transform: scale(0.98); }
+    .link-info { display: flex; align-items: center; gap: 14px; }
+    .icon-box {
+      width: 46px; height: 46px; border-radius: 50%; display: flex;
+      align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;
+    }
+    .text-box h3 { font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+    .text-box p { font-size: 12px; color: #9293a0; margin-top: 2px; }
+    .arrow { color: #e8b84a; font-size: 14px; }
+
+    /* Cores dos Ícones */
+    .icon-whats { background: #25d366; color: white; }
+    .icon-insta { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: white; }
+    .icon-google { background: white; color: #4285f4; }
+    .icon-pix { background: #32bcad; color: white; }
+    .icon-wifi { background: #e8b84a; color: #101114; }
+
+    /* Seção Wi-Fi Interna */
+    .wifi-box {
+      background: #121319; border: 1px solid #282936; border-radius: 16px;
+      padding: 16px; display: flex; flex-direction: column; gap: 12px; margin-top: 4px;
+    }
+    .wifi-field {
+      display: flex; align-items: center; justify-content: space-between; background: #090a0d;
+      padding: 10px 14px; border-radius: 10px; border: 1px solid #20212c;
+    }
+    .wifi-label { font-size: 11px; color: #828390; text-transform: uppercase; font-weight: bold; }
+    .wifi-val { font-size: 14px; font-weight: 600; color: white; font-family: monospace; }
+    .btn-copy {
+      background: #282936; color: #e8b84a; border: none; padding: 6px 12px;
+      border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 6px;
+    }
+
+    /* Toast Aviso */
+    #toast {
+      position: fixed; bottom: 20px; background: #e8b84a; color: #101114;
+      padding: 10px 20px; border-radius: 20px; font-weight: bold; font-size: 13px;
+      display: none; box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
   </style>
 </head>
 <body>
-  <div class="container" id="conteudo">
-    <p id="mensagem">A carregar informações do site...</p>
+
+  <div class="app-container" id="app">
+    <p style="text-align:center; margin-top: 40px; color:#828390;">Carregando dados do site...</p>
   </div>
+
+  <div id="toast">Copiado para a área de transferência!</div>
 
   <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
@@ -35,52 +87,140 @@
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
-    // Obtém o slug da URL (ex: ?slug=site-teste)
     const urlParams = new URLSearchParams(window.location.search);
     const slug = urlParams.get('slug');
+    const app = document.getElementById('app');
 
-    const mensagem = document.getElementById('mensagem');
-    const conteudo = document.getElementById('conteudo');
+    function copiarTexto(texto) {
+      navigator.clipboard.writeText(texto);
+      const toast = document.getElementById('toast');
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 2000);
+    }
+    window.copiarTexto = copiarTexto;
 
-    async function carregarSitePublico() {
+    async function carregarSite() {
       if (!slug) {
-        mensagem.textContent = 'Nenhum site especificado na URL.';
+        app.innerHTML = '<p style="text-align:center; color:#f87171;">URL inválida (nenhum cliente especificado).</p>';
         return;
       }
 
       const { data, error } = await supabase
         .from('sites')
-        .select('name, slug, published, content')
+        .select('*')
         .eq('slug', slug)
         .single();
 
-      if (error || !data) {
-        mensagem.textContent = 'Site não encontrado.';
+      if (error || !data || !data.published) {
+        app.innerHTML = '<p style="text-align:center; color:#f87171;">Site indisponível ou não publicado.</p>';
         return;
       }
 
-      if (!data.published) {
-        mensagem.textContent = 'Este site ainda não está publicado.';
-        return;
-      }
-
-      // Aplica as cores dinâmicas configuradas
-      const corPrincipal = data.content?.corPrincipal || '#e8b84a';
-      const corFundo = data.content?.corFundo || '#101114';
-      const logoUrl = data.content?.logo || '';
-
-      document.body.style.backgroundColor = corFundo;
-
+      const content = data.content || {};
       document.title = data.name;
 
-      conteudo.innerHTML = `
-        ${logoUrl ? `<img src="${logoUrl}" class="logo" alt="Logo">` : ''}
-        <h1 style="color: ${corPrincipal}">${data.name}</h1>
-        <p>Site publicado com sucesso via JRB Digital!</p>
+      app.innerHTML = `
+        <!-- Header -->
+        <div class="header">
+          ${content.logo ? `<img src="${content.logo}" class="logo" alt="Logo">` : ''}
+          <h1 class="titulo">${data.name}</h1>
+          <p class="subtitulo">QUALIDADE • RESPEITO • ESTILO</p>
+        </div>
+
+        <!-- Botão WhatsApp -->
+        ${content.whatsapp ? `
+          <a href="https://wa.me/${content.whatsapp}" target="_blank" class="link-card">
+            <div class="link-info">
+              <div class="icon-box icon-whats"><i class="fa-brands fa-whatsapp"></i></div>
+              <div class="text-box">
+                <h3>Agende seu horário</h3>
+                <p>Clique para chamar no WhatsApp</p>
+              </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow"></i>
+          </a>
+        ` : ''}
+
+        <!-- Botão Instagram -->
+        ${content.instagram ? `
+          <a href="https://instagram.com/${content.instagram.replace('@','')}" target="_blank" class="link-card">
+            <div class="link-info">
+              <div class="icon-box icon-insta"><i class="fa-brands fa-instagram"></i></div>
+              <div class="text-box">
+                <h3>Nosso Instagram</h3>
+                <p>@${content.instagram.replace('@','')}</p>
+              </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow"></i>
+          </a>
+        ` : ''}
+
+        <!-- Botão Google -->
+        ${content.maps ? `
+          <a href="${content.maps}" target="_blank" class="link-card">
+            <div class="link-info">
+              <div class="icon-box icon-google"><i class="fa-brands fa-google"></i></div>
+              <div class="text-box">
+                <h3>Avalie no Google</h3>
+                <p>Sua opinião é importante</p>
+              </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow"></i>
+          </a>
+        ` : ''}
+
+        <!-- Botão Pix -->
+        ${content.pix ? `
+          <div class="link-card" onclick="copiarTexto('${content.pix}')">
+            <div class="link-info">
+              <div class="icon-box icon-pix"><i class="fa-solid fa-qrcode"></i></div>
+              <div class="text-box">
+                <h3>Pague com Pix</h3>
+                <p>Toque para copiar a chave Pix</p>
+              </div>
+            </div>
+            <i class="fa-regular fa-copy arrow"></i>
+          </div>
+        ` : ''}
+
+        <!-- Seção Wi-Fi -->
+        ${(content.wifiNome || content.wifiSenha) ? `
+          <div class="link-card" style="cursor:default;">
+            <div class="link-info">
+              <div class="icon-box icon-wifi"><i class="fa-solid fa-wifi"></i></div>
+              <div class="text-box">
+                <h3>Wi-Fi Grátis</h3>
+                <p>Conecte-se enquanto espera</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="wifi-box">
+            ${content.wifiNome ? `
+              <div>
+                <span class="wifi-label">Rede Wi-Fi</span>
+                <div class="wifi-field">
+                  <span class="wifi-val">${content.wifiNome}</span>
+                  <button class="btn-copy" onclick="copiarTexto('${content.wifiNome}')"><i class="fa-regular fa-copy"></i> Copiar</button>
+                </div>
+              </div>
+            ` : ''}
+
+            ${content.wifiSenha ? `
+              <div>
+                <span class="wifi-label">Senha de Acesso</span>
+                <div class="wifi-field">
+                  <span class="wifi-val">${content.wifiSenha}</span>
+                  <button class="btn-copy" onclick="copiarTexto('${content.wifiSenha}')"><i class="fa-regular fa-copy"></i> Copiar</button>
+                </div>
+              </div>
+            ` : ''}
+          </div>
+        ` : ''}
       `;
     }
 
-    carregarSitePublico();
+    carregarSite();
   </script>
 </body>
 </html>
