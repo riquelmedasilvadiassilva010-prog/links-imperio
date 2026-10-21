@@ -1,4 +1,3 @@
-
 <!DOCTYPE html> 
 <html lang="pt-BR">
 <head>
@@ -20,7 +19,7 @@
     }
     h1 { margin-top: 0; color: #e8b84a; }
     p { color: #c4c5cc; line-height: 1.5; }
-    label { display: block; margin-top: 16px; }
+    label { display: block; margin-top: 16px; font-size: 14px; color: #e8b84a; }
     input {
       width: 100%; padding: 13px; margin-top: 7px;
       border: 1px solid #444650; border-radius: 9px;
@@ -51,11 +50,9 @@
 
       <button id="loginButton" type="submit">Entrar no painel</button>
     </form>
-    <p>
-  <a href="esqueci.html" style="color:#e8b84a">
-    Esqueci minha senha
-  </a>
-</p>
+    <p style="margin-top: 15px;">
+      <a href="esqueci.html" style="color:#e8b84a">Esqueci minha senha</a>
+    </p>
     <p id="status" role="status">Configure a conexão para começar.</p>
   </main>
 
@@ -63,7 +60,6 @@
     import { createClient } from
       'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-    // Preencha com os dados do seu próprio projeto Supabase.
     const SUPABASE_URL = 'https://hqoqbjwjjmnhctjizvcs.supabase.co';
     const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_QK2T4-OP6omrbgGmTwbmsw_VKfgeFuk';
 
@@ -113,253 +109,286 @@
             throw new Error('Sua conta não tem permissão de administrador.');
           }
 
-          status.textContent =
-            'Login confirmado! Sua conta de administrador foi validada.';
+          status.textContent = 'Login confirmado! Sua conta de administrador foi validada.';
           document.querySelector('main').innerHTML = `
-  <h1>IMPÉRIO DIGITAL</h1>
-  <p>Bem-vindo ao painel de gerenciamento!</p>
+            <h1>IMPÉRIO DIGITAL</h1>
+            <p>Bem-vindo ao painel de gerenciamento!</p>
 
-  <button id="cadastrarSite">+ Cadastrar site</button>
+            <button id="cadastrarSite">+ Cadastrar site</button>
 
-  <section id="formularioSite" style="display:none; margin-top:20px;">
-    <h2>Novo site</h2>
-    <input id="nomeSite" placeholder="Nome do site">
-    <br><br>
-    <input id="slugSite" placeholder="Identificador (ex.: cliente1)">
-    <br><br>
-    <button id="salvarSite">Salvar site</button>
-    <button id="cancelarSite">Cancelar</button>
-    <p id="mensagemSite"></p>
-  </section>
+            <section id="formularioSite" style="display:none; margin-top:20px;">
+              <h2>Novo site</h2>
+              <input id="nomeSite" placeholder="Nome do site">
+              <br><br>
+              <input id="slugSite" placeholder="Identificador (ex.: cliente1)">
+              <br><br>
+              <button id="salvarSite">Salvar site</button>
+              <button id="cancelarSite">Cancelar</button>
+              <p id="mensagemSite"></p>
+            </section>
 
-  <h2>Meus sites</h2>
-  <div id="listaSites">Carregando sites...</div>
+            <h2>Meus sites</h2>
+            <div id="listaSites">Carregando sites...</div>
 
-  <button id="sairPainel">Sair</button>
-`;
+            <button id="sairPainel">Sair</button>
+          `;
 
-const formularioSite = document.getElementById('formularioSite');
-const mensagemSite = document.getElementById('mensagemSite');
-const listaSites = document.getElementById('listaSites');
+          const formularioSite = document.getElementById('formularioSite');
+          const mensagemSite = document.getElementById('mensagemSite');
+          const listaSites = document.getElementById('listaSites');
 
-document.getElementById('cadastrarSite').onclick = () => {
-  formularioSite.style.display = 'block';
-};
+          document.getElementById('cadastrarSite').onclick = () => {
+            formularioSite.style.display = 'block';
+          };
 
-document.getElementById('cancelarSite').onclick = () => {
-  formularioSite.style.display = 'none';
-};
+          document.getElementById('cancelarSite').onclick = () => {
+            formularioSite.style.display = 'none';
+          };
 
-document.getElementById('sairPainel').onclick = async () => {
-  await supabase.auth.signOut();
-  location.reload();
-};
+          document.getElementById('sairPainel').onclick = async () => {
+            await supabase.auth.signOut();
+            location.reload();
+          };
 
-async function carregarSites() {
-  listaSites.textContent = 'Carregando sites...';
+          async function carregarSites() {
+            listaSites.textContent = 'Carregando sites...';
 
-  
+            const { data, error } = await supabase
+              .from('sites')
+              .select('id, name, slug, published, created_at, content')
+              .order('created_at', { ascending: false });
 
-const { data, error } = await supabase
-  .from('sites')
-  .select('id, name, slug, published, created_at, content')
-  .order('created_at', { ascending: false });
+            if (error) {
+              listaSites.textContent = 'Erro ao carregar: ' + error.message;
+              return;
+            }
 
+            if (!data || data.length === 0) {
+              listaSites.textContent = 'Nenhum site cadastrado ainda.';
+              return;
+            }
 
-  
-  if (error) {
-    listaSites.textContent = 'Erro ao carregar: ' + error.message;
-    return;
-  }
+            listaSites.innerHTML = '';
 
-  if (!data || data.length === 0) {
-    listaSites.textContent = 'Nenhum site cadastrado ainda.';
-    return;
-  }
+            data.forEach(site => {
+              const item = document.createElement('div');
+              item.style.cssText = 'border:1px solid #444650; padding:14px; margin:12px 0; border-radius:12px; background:#101114;';
 
-  listaSites.innerHTML = '';
+              const nome = document.createElement('strong');
+              nome.style.fontSize = '18px';
+              nome.textContent = site.name;
 
-  data.forEach(site => {
-    const item = document.createElement('div');
-    item.style.cssText = 'border:1px solid #888;padding:12px;margin:10px 0;';
+              const slug = document.createElement('p');
+              slug.style.margin = '6px 0 12px 0';
+              slug.style.color = '#c4c5cc';
+              slug.textContent = 'Identificador: ' + site.slug;
 
-    const nome = document.createElement('strong');
-    nome.textContent = site.name;
+              const editar = document.createElement('button');
+              editar.textContent = 'Editar site';
+              editar.style.marginTop = '8px';
 
-    const slug = document.createElement('p');
-    slug.textContent = 'Identificador: ' + site.slug;
-    const editar = document.createElement('button');
-editar.textContent = 'Editar site';
+              editar.onclick = () => {
+                const editorAntigo = document.getElementById('editorSite');
+                if (editorAntigo) editorAntigo.remove();
 
+                const editor = document.createElement('section');
+                editor.id = 'editorSite';
+                editor.style.cssText =
+                  'border:1px solid #e8b84a; padding:16px; margin-top:16px; border-radius:12px; background:#15161b;';
 
-editar.onclick = () => {
-  const editorAntigo = document.getElementById('editorSite');
-  if (editorAntigo) editorAntigo.remove();
+                editor.innerHTML = `
+                  <h2>Personalizar site</h2>
 
-  const editor = document.createElement('section');
-  editor.id = 'editorSite';
-  editor.style.cssText =
-    'border:1px solid #e8b84a;padding:16px;margin-top:16px;border-radius:12px;';
+                  <label>Nome do site</label>
+                  <input id="editarNome" value="">
 
-  
-editor.innerHTML = `
-    <h2>Personalizar site</h2>
+                  <label>Identificador</label>
+                  <input id="editarSlug" value="">
 
-    <label>Nome do site</label>
-    <input id="editarNome" value="">
+                  <label>Cor principal</label>
+                  <input id="corPrincipal" type="color" value="#e8b84a">
 
-    <label>Identificador</label>
-    <input id="editarSlug" value="">
+                  <label>Cor de fundo</label>
+                  <input id="corFundo" type="color" value="#101114">
 
-    <label>Cor principal</label>
-    <input id="corPrincipal" type="color" value="#e8b84a">
+                  <label>Link do logotipo (URL da imagem)</label>
+                  <input id="logoSite" type="url" placeholder="https://...">
 
-    <label>Cor de fundo</label>
-    <input id="corFundo" type="color" value="#101114">
+                  <h3 style="margin-top:20px; color:#e8b84a; font-size:16px;">Prévia Visual em Tempo Real</h3>
+                  <div id="previewBox" style="border: 2px dashed #444650; padding: 20px; border-radius: 12px; text-align: center; transition: 0.3s;">
+                    <img id="previewLogo" src="" alt="Logo" style="max-width: 80px; max-height: 80px; display: none; margin: 0 auto 10px auto; border-radius: 8px;">
+                    <p id="previewNome" style="font-weight: bold; font-size: 16px; margin: 0; color: #fff;"></p>
+                  </div>
 
-    <label>Link do logotipo (URL da imagem)</label>
-    <input id="logoSite" type="url" placeholder="https://...">
+                  <button id="salvarEdicao">Salvar alterações</button>
+                  <button id="fecharEditor" style="background:#444650; color:white;">Fechar</button>
 
-    <button id="salvarEdicao">Salvar alterações</button>
-    <button id="fecharEditor">Fechar</button>
+                  <p id="mensagemEdicao"></p>
+                `;
 
-    <p id="mensagemEdicao"></p>
-  `;
+                listaSites.before(editor);
 
+                const inputNome = document.getElementById('editarNome');
+                const inputSlug = document.getElementById('editarSlug');
+                const inputCorPrincipal = document.getElementById('corPrincipal');
+                const inputCorFundo = document.getElementById('corFundo');
+                const inputLogo = document.getElementById('logoSite');
+                
+                const previewBox = document.getElementById('previewBox');
+                const previewLogo = document.getElementById('previewLogo');
+                const previewNome = document.getElementById('previewNome');
 
-  listaSites.before(editor);
+                // Preencher valores atuais
+                inputNome.value = site.name;
+                inputSlug.value = site.slug;
+                inputCorPrincipal.value = site.content?.corPrincipal || '#e8b84a';
+                inputCorFundo.value = site.content?.corFundo || '#101114';
+                inputLogo.value = site.content?.logo || '';
 
-  document.getElementById('editarNome').value = site.name;
-  document.getElementById('editarSlug').value = site.slug;
+                // Função para atualizar a prévia visual
+                function atualizarPreview() {
+                  previewNome.textContent = inputNome.value.trim() || 'Nome do Site';
+                  previewNome.style.color = inputCorPrincipal.value;
+                  previewBox.style.backgroundColor = inputCorFundo.value;
+                  
+                  const urlLogo = inputLogo.value.trim();
+                  if (urlLogo) {
+                    previewLogo.src = urlLogo;
+                    previewLogo.style.display = 'block';
+                  } else {
+                    previewLogo.style.display = 'none';
+                  }
+                }
 
-  document.getElementById('corPrincipal').value =
-  site.content?.corPrincipal || '#e8b84a';
+                // Disparar atualização ao digitar/mudar campos
+                inputNome.oninput = atualizarPreview;
+                inputCorPrincipal.oninput = atualizarPreview;
+                inputCorFundo.oninput = atualizarPreview;
+                inputLogo.oninput = atualizarPreview;
 
-  document.getElementById('corFundo').value =
-  site.content?.corFundo || '#101114';
+                // Executar uma vez no início para carregar o estado atual
+                atualizarPreview();
 
-  document.getElementById('logoSite').value =
-  site.content?.logo || '';
-  document.getElementById('fecharEditor').onclick = () => {
-    editor.remove();
-  };
+                document.getElementById('fecharEditor').onclick = () => {
+                  editor.remove();
+                };
 
-  document.getElementById('salvarEdicao').onclick = async () => {
-    const nomeNovo = document.getElementById('editarNome').value.trim();
-    const corPrincipal = document.getElementById('corPrincipal').value;
-const corFundo = document.getElementById('corFundo').value;
-const logoSite = document.getElementById('logoSite').value.trim();
-    const slugNovo = document.getElementById('editarSlug').value
-      .trim()
-      .toLowerCase()
-      .replace(/[^a-z0-9-]/g, '-')
-      .replace(/-+/g, '-')
-      .replace(/^-|-$/g, '');
+                document.getElementById('salvarEdicao').onclick = async () => {
+                  const nomeNovo = inputNome.value.trim();
+                  const corPrincipal = inputCorPrincipal.value;
+                  const corFundo = inputCorFundo.value;
+                  const logoSite = inputLogo.value.trim();
+                  const slugNovo = inputSlug.value
+                    .trim()
+                    .toLowerCase()
+                    .replace(/[^a-z0-9-]/g, '-')
+                    .replace(/-+/g, '-')
+                    .replace(/^-|-$/g, '');
 
-    const mensagem = document.getElementById('mensagemEdicao');
+                  const mensagem = document.getElementById('mensagemEdicao');
 
-    if (!nomeNovo || !slugNovo) {
-      mensagem.textContent = 'Preencha os dois campos.';
-      return;
-    }
+                  if (!nomeNovo || !slugNovo) {
+                    mensagem.textContent = 'Preencha os campos obrigatórios.';
+                    return;
+                  }
 
-    const botaoSalvar = document.getElementById('salvarEdicao');
-    botaoSalvar.disabled = true;
-    mensagem.textContent = 'Salvando...';
+                  const botaoSalvar = document.getElementById('salvarEdicao');
+                  botaoSalvar.disabled = true;
+                  mensagem.textContent = 'Salvando...';
 
-    try {
-      
-    const { error } = await supabase
-    .from('sites')
-    .update({
-    name: nomeNovo,
-    slug: slugNovo,
-    content: {
-      ...(site.content || {}),
-      corPrincipal: corPrincipal,
-      corFundo: corFundo,
-      logo: logoSite
-    }
-  })
-  .eq('id', site.id);
+                  try {
+                    const { error } = await supabase
+                      .from('sites')
+                      .update({
+                        name: nomeNovo,
+                        slug: slugNovo,
+                        content: {
+                          ...(site.content || {}),
+                          corPrincipal: corPrincipal,
+                          corFundo: corFundo,
+                          logo: logoSite
+                        }
+                      })
+                      .eq('id', site.id);
 
+                    if (error) throw error;
 
-      if (error) throw error;
+                    mensagem.textContent = 'Alterações salvas com sucesso!';
+                    await carregarSites();
+                    editor.remove();
+                  } catch (error) {
+                    mensagem.textContent = 'Erro ao salvar: ' + error.message;
+                  } finally {
+                    botaoSalvar.disabled = false;
+                  }
+                };
+              };
 
-      mensagem.textContent = 'Alterações salvas!';
-      await carregarSites();
-      editor.remove();
-    } catch (error) {
-      mensagem.textContent = 'Erro ao salvar: ' + error.message;
-    } finally {
-      botaoSalvar.disabled = false;
-    }
-  };
-};
+              const statusSite = document.createElement('p');
+              statusSite.style.margin = '4px 0 10px 0';
+              statusSite.style.fontSize = '14px';
+              statusSite.style.color = site.published ? '#4ade80' : '#f87171';
+              statusSite.textContent = site.published ? 'Status: Publicado' : 'Status: Não publicado';
 
-    
-    const status = document.createElement('p');
-    status.textContent = site.published ? 'Publicado' : 'Não publicado';
+              item.append(nome, slug, statusSite, editar);
+              listaSites.appendChild(item);
+            });
+          }
 
-    item.append(nome, slug, status, editar);
-    listaSites.appendChild(item);
-  });
-}
+          document.getElementById('salvarSite').onclick = async () => {
+            const nome = document.getElementById('nomeSite').value.trim();
+            const slug = document.getElementById('slugSite').value
+              .trim()
+              .toLowerCase()
+              .replace(/[^a-z0-9-]/g, '-')
+              .replace(/-+/g, '-')
+              .replace(/^-|-$/g, '');
 
-document.getElementById('salvarSite').onclick = async () => {
-  const nome = document.getElementById('nomeSite').value.trim();
-  const slug = document.getElementById('slugSite').value
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9-]/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '');
+            if (!nome || !slug) {
+              mensagemSite.textContent = 'Preencha os dois campos.';
+              return;
+            }
 
-  if (!nome || !slug) {
-    mensagemSite.textContent = 'Preencha os dois campos.';
-    return;
-  }
+            const { data: { user }, error: erroUsuario } =
+              await supabase.auth.getUser();
 
-  const { data: { user }, error: erroUsuario } =
-    await supabase.auth.getUser();
+            if (erroUsuario || !user) {
+              mensagemSite.textContent = 'Entre novamente no painel.';
+              return;
+            }
 
-  if (erroUsuario || !user) {
-    mensagemSite.textContent = 'Entre novamente no painel.';
-    return;
-  }
+            const botao = document.getElementById('salvarSite');
+            botao.disabled = true;
+            mensagemSite.textContent = 'Salvando...';
 
-  const botao = document.getElementById('salvarSite');
-  botao.disabled = true;
-  mensagemSite.textContent = 'Salvando...';
+            try {
+              const { error } = await supabase.from('sites').insert({
+                owner_id: user.id,
+                name: nome,
+                slug: slug,
+                content: {},
+                published: false
+              });
 
-  try {
-    const { error } = await supabase.from('sites').insert({
-      owner_id: user.id,
-      name: nome,
-      slug: slug,
-      content: {},
-      published: false
-    });
+              if (error) {
+                mensagemSite.textContent = 'Erro ao salvar: ' + error.message;
+                return;
+              }
 
-    if (error) {
-      mensagemSite.textContent = 'Erro ao salvar: ' + error.message;
-      return;
-    }
+              mensagemSite.textContent = 'Site cadastrado!';
+              document.getElementById('nomeSite').value = '';
+              document.getElementById('slugSite').value = '';
+              formularioSite.style.display = 'none';
+              await carregarSites();
+            } catch (error) {
+              mensagemSite.textContent = 'Erro inesperado: ' + error.message;
+            } finally {
+              botao.disabled = false;
+            }
+          };
 
-    mensagemSite.textContent = 'Site cadastrado!';
-    document.getElementById('nomeSite').value = '';
-    document.getElementById('slugSite').value = '';
-    formularioSite.style.display = 'none';
-    await carregarSites();
-  } catch (error) {
-    mensagemSite.textContent = 'Erro inesperado: ' + error.message;
-  } finally {
-    botao.disabled = false;
-  }
-};
-
-carregarSites();
-    } catch (error) {
+          carregarSites();
+        } catch (error) {
           status.textContent = 'Não foi possível entrar: ' + error.message;
         } finally {
           button.disabled = false;
