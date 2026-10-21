@@ -54,11 +54,12 @@
     .badge-active { background: rgba(34, 197, 94, 0.15); color: var(--success); }
     .badge-inactive { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
 
-    .action-row { display: flex; gap: 8px; margin-top: 12px; }
-    .btn-act { flex: 1; padding: 10px; border: none; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; }
+    .action-row { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+    .btn-act { flex: 1; padding: 10px; border: none; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; min-width: 100px; }
     .btn-act-edit { background: var(--primary); color: #101114; }
     .btn-act-view { background: #232430; color: white; }
-    .btn-act-toggle { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
+    .btn-act-toggle { background: rgba(34, 197, 94, 0.2); color: var(--success); }
+    .btn-act-delete { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
 
     .login-wrapper { display: flex; min-height: 80vh; align-items: center; justify-content: center; }
     .section-title { font-size: 14px; font-weight: bold; color: var(--primary); margin: 16px 0 10px 0; border-bottom: 1px dashed var(--border); padding-bottom: 6px; text-transform: uppercase; }
@@ -185,9 +186,9 @@
         location.reload();
       };
 
-      document.getElementById('btnNovo').onclick = mostrarFormNovo;
+      document.getElementById('btnNovo').onclick = () => mostrarFormNovo();
       if (document.getElementById('btnNavNovo')) {
-        document.getElementById('btnNavNovo').onclick = mostrarFormNovo;
+        document.getElementById('btnNavNovo').onclick = () => mostrarFormNovo();
       }
 
       carregarSites();
@@ -210,16 +211,22 @@
           <div class="site-header">
             <div>
               <strong style="font-size:16px;">${site.name}</strong>
-              <div style="font-size:12px; color:var(--text-muted);">/${site.slug} ${site.content?.clientEmail ? `• 👤 ${site.content.clientEmail}` : ''}</div>
+              <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">
+                <strong>URL Slug:</strong> /${site.slug}
+              </div>
+              <div style="font-size:12px; margin-top:4px;">
+                ${site.content?.clientEmail ? `<span style="color:var(--success); font-weight:bold;">👤 Cliente Vinculado: ${site.content.clientEmail}</span>` : '<span style="color:var(--danger); font-weight:bold;">⚠️ Nenhum e-mail de cliente vinculado</span>'}
+              </div>
             </div>
             <span class="badge ${site.published ? 'badge-active' : 'badge-inactive'}">
               ${site.published ? 'Ativo' : 'Inativo'}
             </span>
           </div>
           <div class="action-row">
-            <button class="btn-act btn-act-edit btn-edit"><i class="fa-solid fa-pen"></i> Editar & Vinculo</button>
+            <button class="btn-act btn-act-edit btn-edit"><i class="fa-solid fa-pen"></i> Editar & Vínculo</button>
             <a href="https://riquelmedasilvadiassilva010-prog.github.io/links-imperio/cliente.html?slug=${site.slug}" target="_blank" class="btn-act btn-act-view"><i class="fa-solid fa-eye"></i> Ver Site</a>
-            <button class="btn-act btn-act-toggle btn-toggle"><i class="fa-solid fa-power-off"></i></button>
+            <button class="btn-act btn-act-toggle btn-toggle"><i class="fa-solid fa-power-off"></i> On/Off</button>
+            <button class="btn-act btn-act-delete btn-delete"><i class="fa-solid fa-trash"></i> Apagar</button>
           </div>
         `;
 
@@ -229,6 +236,14 @@
         };
 
         div.querySelector('.btn-edit').onclick = () => abrirEditor(site);
+
+        // BOTÃO DE EXCLUIR DEFINITIVAMENTE
+        div.querySelector('.btn-delete').onclick = async () => {
+          if (confirm(`Tem certeza que deseja APAGAR DEFINITIVAMENTE o site "${site.name}"?`)) {
+            await supabase.from('sites').delete().eq('id', site.id);
+            carregarSites();
+          }
+        };
 
         sitesList.appendChild(div);
       });
@@ -245,16 +260,16 @@
               <input id="nNome" class="input-field" placeholder="Ex: Império Barber">
             </div>
             <div class="input-group">
-              <label>Slug / URL</label>
-              <input id="nSlug" class="input-field" placeholder="Ex: imperio">
+              <label>Slug / URL (Sem espaços ou links)</label>
+              <input id="nSlug" class="input-field" placeholder="Ex: imperio-barber">
             </div>
             <div class="input-group" style="grid-column: span 2;">
-              <label>E-mail do Cliente (Para vincular o Login)</label>
+              <label>E-mail do Cliente (Para liberar o login dele)</label>
               <input id="nClientEmail" class="input-field" placeholder="exemplo@cliente.com">
             </div>
           </div>
           <div style="display:flex; gap:8px; margin-top:8px;">
-            <button type="button" id="salvarNovo" class="btn-main">Salvar</button>
+            <button type="button" id="salvarNovo" class="btn-main">Salvar & Liberar</button>
             <button type="button" id="cancelarNovo" class="btn-secondary" style="margin-top:0;">Cancelar</button>
           </div>
         </div>
@@ -273,7 +288,7 @@
           name: nome, 
           slug: slug, 
           content: { clientEmail: clientEmail }, 
-          published: false 
+          published: true 
         });
         container.innerHTML = '';
         carregarSites();
@@ -286,24 +301,24 @@
 
       container.innerHTML = `
         <div class="card" style="border-color: var(--primary);">
-          <h3 style="font-size:18px;">🛠️ Editor Visual & Vínculo: ${site.name}</h3>
+          <h3 style="font-size:18px;">🛠️ Liberar Acesso & Design: ${site.name}</h3>
 
-          <div class="section-title"><i class="fa-solid fa-user-lock"></i> Vínculo da Conta do Cliente</div>
+          <div class="section-title"><i class="fa-solid fa-user-lock"></i> Vínculo de E-mail do Cliente</div>
           <div class="input-group">
-            <label>E-mail do Cliente (E-mail que o cliente usou ao se cadastrar)</label>
-            <input id="eClientEmail" class="input-field" value="${c.clientEmail || ''}" placeholder="cliente@email.com">
+            <label>E-mail que o Cliente Usou para se Cadastrar no Portal</label>
+            <input id="eClientEmail" class="input-field" value="${c.clientEmail || ''}" placeholder="digite.o.email@do.cliente.com">
           </div>
 
           <div class="section-title"><i class="fa-solid fa-address-book"></i> Informações do Cliente</div>
           <div class="grid-2">
             <div class="input-group"><label>Nome do Negócio</label><input id="eNome" class="input-field" value="${site.name}"></div>
+            <div class="input-group"><label>Slug / URL</label><input id="eSlug" class="input-field" value="${site.slug}"></div>
             <div class="input-group"><label>WhatsApp (números)</label><input id="eWhats" class="input-field" value="${c.whatsapp || ''}"></div>
             <div class="input-group"><label>Instagram (@)</label><input id="eInsta" class="input-field" value="${c.instagram || ''}"></div>
             <div class="input-group"><label>Chave Pix</label><input id="ePix" class="input-field" value="${c.pix || ''}"></div>
             <div class="input-group"><label>Wi-Fi Nome</label><input id="eWifiNome" class="input-field" value="${c.wifiNome || ''}"></div>
             <div class="input-group"><label>Wi-Fi Senha</label><input id="eWifiSenha" class="input-field" value="${c.wifiSenha || ''}"></div>
             <div class="input-group"><label>Google Maps Link</label><input id="eMaps" class="input-field" value="${c.maps || ''}"></div>
-            <div class="input-group"><label>URL Logotipo</label><input id="eLogo" class="input-field" value="${c.logo || ''}"></div>
           </div>
 
           <div class="section-title"><i class="fa-solid fa-palette"></i> Design & Identidade Visual</div>
@@ -359,8 +374,11 @@
         msg.style.color = 'var(--text-muted)';
         msg.textContent = 'A guardar...';
 
+        const novoSlug = document.getElementById('eSlug').value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '-');
+
         await supabase.from('sites').update({
           name: document.getElementById('eNome').value.trim(),
+          slug: novoSlug,
           content: {
             ...c,
             clientEmail: document.getElementById('eClientEmail').value.trim().toLowerCase(),
@@ -370,7 +388,6 @@
             wifiNome: document.getElementById('eWifiNome').value.trim(),
             wifiSenha: document.getElementById('eWifiSenha').value.trim(),
             maps: document.getElementById('eMaps').value.trim(),
-            logo: document.getElementById('eLogo').value.trim(),
             bgColor: document.getElementById('eBgColor').value,
             cardColor: document.getElementById('eCardColor').value,
             primaryColor: document.getElementById('ePrimaryColor').value,
@@ -381,7 +398,7 @@
         }).eq('id', site.id);
 
         msg.style.color = 'var(--success)';
-        msg.textContent = '✅ Gravado com sucesso!';
+        msg.textContent = '✅ Salvo com sucesso!';
         setTimeout(() => {
           container.innerHTML = '';
           carregarSites();
