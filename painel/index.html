@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IMPÉRIO DIGITAL | Painel de Gerenciamento</title>
+  <title>IMPÉRIO DIGITAL | Painel Master</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
@@ -12,7 +12,6 @@
       --bg-card: #14151c;
       --bg-input: #0d0e12;
       --primary: #e8b84a;
-      --primary-hover: #d4a338;
       --text: #ffffff;
       --text-muted: #8e8f9e;
       --border: #1e1f29;
@@ -23,10 +22,8 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
     body { background: var(--bg-dark); color: var(--text); min-height: 100vh; }
 
-    /* LAYOUT BASE (Desktop First com adaptação Mobile) */
     .app-layout { display: flex; flex-direction: column; width: 100%; min-height: 100vh; }
 
-    /* SIDEBAR / HEADER ADAPTÁVEL */
     aside {
       width: 100%; background: var(--bg-sidebar); border-bottom: 1px solid var(--border);
       padding: 16px 20px; display: flex; align-items: center; justify-content: space-between;
@@ -37,11 +34,10 @@
     .brand-name { font-size: 16px; font-weight: 800; color: var(--primary); letter-spacing: 0.5px; }
     .brand-sub { font-size: 9px; color: var(--text-muted); text-transform: uppercase; }
 
-    nav { display: none; } /* Oculto no celular para não poluir a tela */
+    nav { display: none; }
 
     main { flex: 1; padding: 16px; width: 100%; max-width: 1200px; margin: 0 auto; }
 
-    /* CARDS E FORMULÁRIOS */
     .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; margin-bottom: 16px; }
 
     .input-group { margin-bottom: 12px; }
@@ -52,7 +48,6 @@
     .btn-main { width: 100%; padding: 12px 20px; background: var(--primary); color: #101114; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 14px; }
     .btn-secondary { width: 100%; padding: 10px; background: #232430; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 13px; margin-top: 8px; }
 
-    /* CARDS DE CLIENTES (VERSÃO MOBILE) */
     .site-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 12px; }
     .site-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
     .badge { padding: 4px 8px; border-radius: 12px; font-size: 10px; font-weight: bold; }
@@ -67,28 +62,19 @@
 
     .login-wrapper { display: flex; min-height: 80vh; align-items: center; justify-content: center; }
 
-    /* ESTILOS EXCLUSIVOS PARA TELA GRANDE (COMPUTADOR / TABLET) */
+    .section-title { font-size: 14px; font-weight: bold; color: var(--primary); margin: 16px 0 10px 0; border-bottom: 1px dashed var(--border); padding-bottom: 6px; text-transform: uppercase; }
+
     @media (min-width: 768px) {
       .app-layout { flex-direction: row; }
-      
-      aside {
-        width: 260px; border-bottom: none; border-right: 1px solid var(--border);
-        flex-direction: column; justify-content: space-between; padding: 24px; align-items: flex-start;
-      }
-
+      aside { width: 260px; border-bottom: none; border-right: 1px solid var(--border); flex-direction: column; justify-content: space-between; padding: 24px; align-items: flex-start; }
       .brand-icon { font-size: 32px; }
       .brand-name { font-size: 18px; }
-      
       nav { display: flex; flex-direction: column; gap: 8px; width: 100%; margin-top: 30px; }
-      .nav-item {
-        display: flex; align-items: center; gap: 12px; padding: 12px 16px;
-        border-radius: 10px; color: var(--text-muted); text-decoration: none;
-        font-size: 14px; font-weight: 600; cursor: pointer; transition: 0.2s;
-      }
+      .nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 10px; color: var(--text-muted); text-decoration: none; font-size: 14px; font-weight: 600; cursor: pointer; transition: 0.2s; }
       .nav-item:hover, .nav-item.active { background: var(--primary); color: #101114; }
-
       main { padding: 32px; }
-      .grid-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+      .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+      .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
       .btn-main { width: auto; }
     }
   </style>
@@ -96,7 +82,6 @@
 <body>
 
   <div id="root">
-    <!-- TELA DE LOGIN -->
     <div class="login-wrapper">
       <div class="card" style="width: 100%; max-width: 380px;">
         <div class="brand-area" style="justify-content: center; margin-bottom: 20px;">
@@ -233,8 +218,8 @@
             </span>
           </div>
           <div class="action-row">
-            <button class="btn-act btn-act-edit btn-edit"><i class="fa-solid fa-pen"></i> Editar</button>
-            <a href="https://riquelmedasilvadiassilva010-prog.github.io/links-imperio/cliente.html?slug=${site.slug}" target="_blank" class="btn-act btn-act-view"><i class="fa-solid fa-eye"></i> Ver</a>
+            <button class="btn-act btn-act-edit btn-edit"><i class="fa-solid fa-pen"></i> Editar & Design</button>
+            <a href="https://riquelmedasilvadiassilva010-prog.github.io/links-imperio/cliente.html?slug=${site.slug}" target="_blank" class="btn-act btn-act-view"><i class="fa-solid fa-eye"></i> Ver Site</a>
             <button class="btn-act btn-act-toggle btn-toggle"><i class="fa-solid fa-power-off"></i></button>
           </div>
         `;
@@ -255,7 +240,7 @@
       container.innerHTML = `
         <div class="card" style="border-color: var(--primary);">
           <h3>+ Cadastrar Novo Cliente</h3>
-          <div class="grid-inputs" style="margin-top:12px;">
+          <div class="grid-2" style="margin-top:12px;">
             <div class="input-group">
               <label>Nome do Negócio</label>
               <input id="nNome" class="input-field" placeholder="Ex: Império Barber">
@@ -291,21 +276,63 @@
 
       container.innerHTML = `
         <div class="card" style="border-color: var(--primary);">
-          <h3>⚙️ Editar: ${site.name}</h3>
-          
-          <div class="grid-inputs" style="margin-top:12px;">
+          <h3 style="font-size:18px;">🛠️ Editor Visual & Dados: ${site.name}</h3>
+
+          <!-- DADOS DO CLIENTE -->
+          <div class="section-title"><i class="fa-solid fa-address-book"></i> Informações do Cliente</div>
+          <div class="grid-2">
             <div class="input-group"><label>Nome do Negócio</label><input id="eNome" class="input-field" value="${site.name}"></div>
-            <div class="input-group"><label>WhatsApp</label><input id="eWhats" class="input-field" value="${c.whatsapp || ''}"></div>
+            <div class="input-group"><label>WhatsApp (números)</label><input id="eWhats" class="input-field" value="${c.whatsapp || ''}"></div>
             <div class="input-group"><label>Instagram (@)</label><input id="eInsta" class="input-field" value="${c.instagram || ''}"></div>
             <div class="input-group"><label>Chave Pix</label><input id="ePix" class="input-field" value="${c.pix || ''}"></div>
             <div class="input-group"><label>Wi-Fi Nome</label><input id="eWifiNome" class="input-field" value="${c.wifiNome || ''}"></div>
             <div class="input-group"><label>Wi-Fi Senha</label><input id="eWifiSenha" class="input-field" value="${c.wifiSenha || ''}"></div>
             <div class="input-group"><label>Google Maps Link</label><input id="eMaps" class="input-field" value="${c.maps || ''}"></div>
-            <div class="input-group"><label>Logotipo URL</label><input id="eLogo" class="input-field" value="${c.logo || ''}"></div>
+            <div class="input-group"><label>URL Logotipo</label><input id="eLogo" class="input-field" value="${c.logo || ''}"></div>
           </div>
 
-          <div style="display:flex; gap:8px; margin-top:12px;">
-            <button type="button" id="salvarEdicao" class="btn-main">💾 Salvar Alterações</button>
+          <!-- PERSONALIZAÇÃO VISUAL -->
+          <div class="section-title"><i class="fa-solid fa-palette"></i> Design & Identidade Visual (Exclusivo Master)</div>
+          
+          <div class="grid-3">
+            <div class="input-group">
+              <label>Cor de Fundo da Página</label>
+              <input type="color" id="eBgColor" class="input-field" value="${c.bgColor || '#0a0b0e'}" style="height:44px; padding:4px;">
+            </div>
+            <div class="input-group">
+              <label>Cor dos Botões / Cartões</label>
+              <input type="color" id="eCardColor" class="input-field" value="${c.cardColor || '#14151c'}" style="height:44px; padding:4px;">
+            </div>
+            <div class="input-group">
+              <label>Cor de Destaque / Ícones</label>
+              <input type="color" id="ePrimaryColor" class="input-field" value="${c.primaryColor || '#e8b84a'}" style="height:44px; padding:4px;">
+            </div>
+            <div class="input-group">
+              <label>Cor do Texto</label>
+              <input type="color" id="eTextColor" class="input-field" value="${c.textColor || '#ffffff'}" style="height:44px; padding:4px;">
+            </div>
+            <div class="input-group">
+              <label>Fonte da Página</label>
+              <select id="eFont" class="input-field">
+                <option value="system-ui" ${c.font === 'system-ui' ? 'selected' : ''}>Padrão (System UI)</option>
+                <option value="'Poppins', sans-serif" ${c.font?.includes('Poppins') ? 'selected' : ''}>Poppins (Moderna)</option>
+                <option value="'Montserrat', sans-serif" ${c.font?.includes('Montserrat') ? 'selected' : ''}>Montserrat (Elegante)</option>
+                <option value="'Playfair Display', serif" ${c.font?.includes('Playfair') ? 'selected' : ''}>Playfair (Luxo)</option>
+                <option value="'Bebas Neue', cursive" ${c.font?.includes('Bebas') ? 'selected' : ''}>Bebas Neue (Forte / Barbearia)</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label>Formato dos Botões</label>
+              <select id="eBtnStyle" class="input-field">
+                <option value="12px" ${c.btnRadius === '12px' ? 'selected' : ''}>Suave (12px)</option>
+                <option value="30px" ${c.btnRadius === '30px' ? 'selected' : ''}>Pílula / Redondo (30px)</option>
+                <option value="0px" ${c.btnRadius === '0px' ? 'selected' : ''}>Reto / Quadrado (0px)</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:8px; margin-top:20px;">
+            <button type="button" id="salvarEdicao" class="btn-main">💾 Salvar Alterações & Design</button>
             <button type="button" id="fecharEdicao" class="btn-secondary" style="margin-top:0;">Fechar</button>
           </div>
           <p id="msgEdit" style="margin-top: 10px; font-size: 12px; font-weight: bold;"></p>
@@ -328,7 +355,14 @@
             wifiNome: document.getElementById('eWifiNome').value.trim(),
             wifiSenha: document.getElementById('eWifiSenha').value.trim(),
             maps: document.getElementById('eMaps').value.trim(),
-            logo: document.getElementById('eLogo').value.trim()
+            logo: document.getElementById('eLogo').value.trim(),
+            // Estilos visuais salvos
+            bgColor: document.getElementById('eBgColor').value,
+            cardColor: document.getElementById('eCardColor').value,
+            primaryColor: document.getElementById('ePrimaryColor').value,
+            textColor: document.getElementById('eTextColor').value,
+            font: document.getElementById('eFont').value,
+            btnRadius: document.getElementById('eBtnStyle').value
           }
         }).eq('id', site.id);
 
