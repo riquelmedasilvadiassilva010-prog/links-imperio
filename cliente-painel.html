@@ -2,115 +2,308 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal do Cliente - Painel</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.48.1/dist/umd/supabase.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Área do Cliente | JRB Digital</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body { background: #080b14; color: #e5e7eb; }
+    .panel { background: rgba(15, 23, 42, .88); border: 1px solid #263247; }
+    .field { width:100%; background:#080d19; border:1px solid #334155; border-radius:10px; padding:12px 13px; color:#f8fafc; outline:none; }
+    .field:focus { border-color:#d6ad55; box-shadow:0 0 0 2px rgba(214,173,85,.15); }
+    .label { display:block; color:#cbd5e1; font-size:.88rem; margin-bottom:7px; }
+    .gold { background:#d6ad55; color:#111827; }
+    .gold:hover { background:#e7c879; }
+  </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen font-sans antialiased flex flex-col justify-center items-center p-4">
+<body class="min-h-screen px-4 py-8">
+  <main class="max-w-2xl mx-auto">
+    <header class="text-center mb-8">
+      <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl border border-amber-400/40 text-amber-300 text-2xl font-bold mb-3">J</div>
+      <h1 class="text-2xl sm:text-3xl font-bold tracking-wide">ÁREA DO CLIENTE</h1>
+      <p class="text-slate-400 mt-2 text-sm">Acesse para personalizar as informações do seu site.</p>
+    </header>
 
-  <!-- TELA DE LOGIN / REGISTRO -->
-  <div id="auth-container" class="w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl">
-    <div class="text-center mb-6">
-      <div class="inline-flex items-center justify-center w-12 h-12 bg-amber-500/10 text-amber-500 rounded-xl mb-3">
-        <i class="fa-solid fa-store text-xl"></i>
-      </div>
-      <h1 class="text-2xl font-bold text-amber-500">Portal do Cliente</h1>
-      <p class="text-xs text-slate-400 mt-1">Gerencie os dados do seu estabelecimento</p>
-    </div>
-
-    <div id="auth-error" class="hidden mb-4 p-3 bg-red-500/10 border border-red-500/30 text-red-400 text-xs rounded-xl text-center"></div>
-    <div id="auth-msg" class="hidden mb-4 p-3 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs rounded-xl text-center"></div>
-
-    <form id="auth-form" class="space-y-4">
-      <div>
-        <label class="block text-xs font-medium text-slate-400 mb-1">E-mail</label>
-        <input type="email" id="auth-email" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500 transition-colors" placeholder="seuemail@exemplo.com">
-      </div>
-      <div>
-        <label class="block text-xs font-medium text-slate-400 mb-1">Senha</label>
-        <input type="password" id="auth-password" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500 transition-colors" placeholder="••••••••">
-      </div>
-
-      <button type="submit" id="btn-login" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3 rounded-xl transition-all shadow-lg shadow-amber-500/10 text-sm">
-        Entrar no Portal
-      </button>
-      <button type="button" id="btn-signup" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold py-3 rounded-xl transition-all text-sm">
-        Criar Nova Conta
-      </button>
-    </form>
-  </div>
-
-  <!-- PAINEL DO CLIENTE -->
-  <div id="app-container" class="hidden w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl">
-    <div class="text-center mb-6">
-      <div class="inline-flex items-center justify-center w-12 h-12 bg-amber-500/10 text-amber-500 rounded-xl mb-2">
-        <i class="fa-solid fa-store text-xl"></i>
-      </div>
-      <h1 class="text-xl font-bold text-amber-500">Minha Conta</h1>
-      <p id="user-display-email" class="text-xs text-slate-400 font-mono mt-1 uppercase"></p>
-    </div>
-
-    <div id="pending-notice" class="hidden mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-xl text-center">
-      <div class="flex items-center justify-center gap-2 text-red-400 font-bold text-sm mb-1">
-        <i class="fa-solid fa-clock"></i> Aguardando Liberação:
-      </div>
-      <p class="text-xs text-red-300">O seu e-mail ainda não foi vinculado a uma página pelo Administrador.</p>
-    </div>
-
-    <form id="client-data-form" class="space-y-5">
-      <div class="border-b border-slate-800 pb-2 mb-4">
-        <h2 class="text-xs font-bold text-amber-500 uppercase tracking-wider flex items-center gap-2">
-          <i class="fa-solid fa-pen-to-square"></i> Dados do Negócio
-        </h2>
-      </div>
-
-      <div>
-        <label class="block text-xs font-medium text-slate-400 mb-1 flex items-center gap-2">
-          <i class="fa-brands fa-whatsapp text-emerald-500"></i> WhatsApp
-        </label>
-        <input type="text" id="field-whatsapp" disabled class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500 disabled:opacity-50 disabled:cursor-not-allowed" placeholder="Ex: 5598988887777">
-      </div>
-
-      <div>
-        <label class="block text-xs font-medium text-slate-400 mb-1 flex items-center gap-2">
-          <i class="fa-brands fa-instagram text-pink-500"></i> Instagram (@)
-        </label>
-        <input type="text" id="field-instagram" disabled class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500 disabled:opacity-50 disabled:cursor-not-allowed" placeholder="Ex: minha.loja">
-      </div>
-
-      <div>
-        <label class="block text-xs font-medium text-slate-400 mb-1 flex items-center gap-2">
-          <i class="fa-solid fa-qrcode text-amber-500"></i> Chave PIX
-        </label>
-        <input type="text" id="field-pix" disabled class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500 disabled:opacity-50 disabled:cursor-not-allowed" placeholder="Chave Pix">
-      </div>
-
-      <div class="border-t border-slate-800 pt-4 mt-4">
-        <h3 class="text-xs font-bold text-amber-500 uppercase tracking-wider mb-3 flex items-center gap-2">
-          <i class="fa-solid fa-wifi"></i> Wi-Fi
-        </h3>
-        <div class="space-y-3">
-          <div>
-            <label class="block text-xs font-medium text-slate-400 mb-1 flex items-center gap-2">
-              <i class="fa-solid fa-network-wired text-slate-500"></i> Nome da Rede
-            </label>
-            <input type="text" id="field-wifi-ssid" disabled class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500 disabled:opacity-50 disabled:cursor-not-allowed" placeholder="Nome do Wi-Fi">
-          </div>
-          <div>
-            <label class="block text-xs font-medium text-slate-400 mb-1 flex items-center gap-2">
-              <i class="fa-solid fa-key text-amber-500"></i> Senha do Wi-Fi
-            </label>
-            <input type="text" id="field-wifi-pass" disabled class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500 disabled:opacity-50 disabled:cursor-not-allowed" placeholder="Senha do Wi-Fi">
-          </div>
+    <section id="auth-card" class="panel rounded-2xl p-5 sm:p-7 shadow-xl">
+      <h2 class="text-xl font-semibold mb-1">Entrar na sua conta</h2>
+      <p class="text-sm text-slate-400 mb-6">Use o e-mail vinculado ao seu site.</p>
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label class="label" for="email">E-mail</label>
+          <input class="field" id="email" type="email" autocomplete="email" required placeholder="voce@exemplo.com">
         </div>
+        <div>
+          <label class="label" for="password">Senha</label>
+          <input class="field" id="password" type="password" autocomplete="current-password" required minlength="6" placeholder="Sua senha">
+        </div>
+        <button id="login-btn" class="gold w-full rounded-xl py-3 font-bold" type="submit">Entrar</button>
+      </form>
+      <div class="grid sm:grid-cols-2 gap-3 mt-3">
+        <button id="signup-btn" type="button" class="w-full rounded-xl border border-slate-600 py-3 text-sm font-semibold hover:bg-slate-800">Criar conta</button>
+        <button id="reset-btn" type="button" class="w-full rounded-xl border border-slate-600 py-3 text-sm font-semibold hover:bg-slate-800">Esqueci a senha</button>
       </div>
+      <p id="auth-message" class="text-sm mt-4 hidden" role="status"></p>
+    </section>
 
-      <button type="submit" id="btn-save" disabled class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3 rounded-xl transition-all shadow-lg shadow-amber-500/10 text-sm disabled:opacity-50 disabled:cursor-not-allowed">
-        <i class="fa-solid fa-floppy-disk mr-1"></i> Salvar Alterações
-      </button>
-    </form>
+    <section id="editor-card" class="panel rounded-2xl p-5 sm:p-7 shadow-xl hidden">
+      <div class="flex items-start justify-between gap-3 mb-6">
+        <div>
+          <p class="text-xs uppercase tracking-widest text-amber-300 mb-1">Seu site</p>
+          <h2 id="site-title" class="text-xl font-semibold">Carregando...</h2>
+          <p id="site-slug" class="text-sm text-slate-400 mt-1"></p>
+        </div>
+        <button id="logout-btn" type="button" class="text-sm text-red-300 hover:text-red-200 underline">Sair</button>
+      </div>
+      <form id="site-form" class="space-y-4">
+        <div>
+          <label class="label" for="whatsapp">Link do WhatsApp</label>
+          <input class="field" id="whatsapp" type="url" placeholder="https://wa.me/55...">
+        </div>
+        <div>
+          <label class="label" for="instagram">Link do Instagram</label>
+          <input class="field" id="instagram" type="url" placeholder="https://instagram.com/seuperfil">
+        </div>
+        <div>
+          <label class="label" for="pix">Chave Pix ou informação de pagamento</label>
+          <input class="field" id="pix" type="text" placeholder="Informe a chave Pix">
+        </div>
+        <div>
+          <label class="label" for="wifiNome">Nome da rede Wi-Fi</label>
+          <input class="field" id="wifiNome" type="text" placeholder="Nome da rede">
+        </div>
+        <div>
+          <label class="label" for="wifiSenha">Senha do Wi-Fi</label>
+          <input class="field" id="wifiSenha" type="text" placeholder="Senha da rede">
+        </div>
+        <div>
+          <label class="label" for="maps">Link do Google Maps / avaliações</label>
+          <input class="field" id="maps" type="url" placeholder="https://maps.app.goo.gl/...">
+        </div>
+        <button id="save-btn" class="gold w-full rounded-xl py-3 font-bold" type="submit">Salvar alterações</button>
+      </form>
+      <p id="save-message" class="text-sm mt-4 hidden" role="status"></p>
+      <p class="text-xs text-slate-500 mt-5">As alterações são salvas no painel. A publicação no site depende da página pública estar conectada a esses dados.</p>
+    </section>
 
-    <div class="mt-6 text-center border-t border-slate-800 pt-4">
-      <button id="btn-logout" class="text-xs text-red-400 hover:text-red-300 transition-colors font-medium flex items
+    <footer class="text-center text-xs text-slate-600 mt-8">Painel de gerenciamento de sites</footer>
+  </main>
+
+  <script>
+    (() => {
+      const SUPABASE_URL = 'https://hqoqbjwjjmnhctjizvcs.supabase.co';
+      const SUPABASE_KEY = 'sb_publishable_QK2T4-OP6omrbgGmTwbmsw_VKfgeFuk';
+      const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+      const $ = (id) => document.getElementById(id);
+      let currentSite = null;
+      let currentUser = null;
+
+      function message(id, text, good = false) {
+        const el = $(id);
+        el.textContent = text;
+        el.classList.remove('hidden', 'text-red-300', 'text-emerald-300', 'text-amber-200');
+        el.classList.add(good ? 'text-emerald-300' : 'text-red-300');
+      }
+      function clearMessage(id) {
+        $(id).textContent = '';
+        $(id).classList.add('hidden');
+      }
+      function showEditor(show) {
+        $('auth-card').classList.toggle('hidden', show);
+        $('editor-card').classList.toggle('hidden', !show);
+      }
+      function normalizeEmail(value) {
+        return (value || '').trim().toLowerCase();
+      }
+
+      async function findClientSite(email, userId) {
+        // Primeiro procura pelo e-mail guardado pelo painel administrativo.
+        // Compatibilidade com os dois nomes de campo já encontrados nos dados.
+        let result = await db.from('sites')
+          .select('id, owner_id, name, slug, content, published')
+          .filter('content->>clientEmail', 'ilike', email)
+          .limit(1);
+        if (result.error) throw result.error;
+        if (result.data && result.data.length) return result.data[0];
+
+        result = await db.from('sites')
+          .select('id, owner_id, name, slug, content, published')
+          .filter('content->>client_email', 'ilike', email)
+          .limit(1);
+        if (result.error) throw result.error;
+        if (result.data && result.data.length) return result.data[0];
+
+        // Compatibilidade opcional para sites cujo owner_id seja o próprio usuário.
+        result = await db.from('sites')
+          .select('id, owner_id, name, slug, content, published')
+          .eq('owner_id', userId)
+          .limit(1);
+        if (result.error) throw result.error;
+        return result.data && result.data.length ? result.data[0] : null;
+      }
+
+      function fillEditor(site) {
+        const c = site.content || {};
+        $('site-title').textContent = site.name || 'Meu site';
+        $('site-slug').textContent = site.slug ? 'Identificador: ' + site.slug : '';
+        $('whatsapp').value = c.whatsapp || '';
+        $('instagram').value = c.instagram || '';
+        $('pix').value = c.pix || '';
+        $('wifiNome').value = c.wifiNome || c.wifi_ssid || '';
+        $('wifiSenha').value = c.wifiSenha || c.wifi_pass || '';
+        $('maps').value = c.maps || '';
+      }
+
+      async function loadSite(user) {
+        currentUser = user;
+        clearMessage('auth-message');
+        try {
+          const email = normalizeEmail(user.email);
+          const site = await findClientSite(email, user.id);
+          if (!site) {
+            showEditor(false);
+            message('auth-message', 'Sua conta entrou, mas não encontramos um site vinculado a este e-mail. Peça ao administrador para conferir o e-mail cadastrado no site.');
+            return;
+          }
+          currentSite = site;
+          fillEditor(site);
+          showEditor(true);
+        } catch (err) {
+          showEditor(false);
+          message('auth-message', 'Não foi possível carregar o site: ' + (err.message || 'erro desconhecido') + '. Verifique a conexão e as permissões do Supabase.');
+        }
+      }
+
+      $('login-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        clearMessage('auth-message');
+        const button = $('login-btn');
+        button.disabled = true;
+        button.textContent = 'Entrando...';
+        try {
+          const { data, error } = await db.auth.signInWithPassword({
+            email: normalizeEmail($('email').value),
+            password: $('password').value
+          });
+          if (error) throw error;
+          await loadSite(data.user);
+        } catch (err) {
+          message('auth-message', 'Não foi possível entrar: ' + (err.message || 'confira o e-mail e a senha.'));
+        } finally {
+          button.disabled = false;
+          button.textContent = 'Entrar';
+        }
+      });
+
+      $('signup-btn').addEventListener('click', async () => {
+        clearMessage('auth-message');
+        const email = normalizeEmail($('email').value);
+        const password = $('password').value;
+        if (!email || !password) {
+          message('auth-message', 'Preencha o e-mail e crie uma senha com pelo menos 6 caracteres.');
+          return;
+        }
+        if (password.length < 6) {
+          message('auth-message', 'A senha precisa ter pelo menos 6 caracteres.');
+          return;
+        }
+        const button = $('signup-btn');
+        button.disabled = true;
+        button.textContent = 'Criando...';
+        try {
+          const { data, error } = await db.auth.signUp({ email, password });
+          if (error) throw error;
+          if (data.session && data.user) {
+            message('auth-message', 'Conta criada. Conferindo o site vinculado...', true);
+            await loadSite(data.user);
+          } else {
+            message('auth-message', 'Conta solicitada. Confira seu e-mail para confirmar o cadastro e depois entre por aqui.', true);
+          }
+        } catch (err) {
+          message('auth-message', 'Não foi possível criar a conta: ' + (err.message || 'erro desconhecido'));
+        } finally {
+          button.disabled = false;
+          button.textContent = 'Criar conta';
+        }
+      });
+
+      $('reset-btn').addEventListener('click', async () => {
+        clearMessage('auth-message');
+        const email = normalizeEmail($('email').value);
+        if (!email) {
+          message('auth-message', 'Digite seu e-mail primeiro para receber o link de recuperação.');
+          return;
+        }
+        try {
+          const redirectTo = window.location.origin + window.location.pathname;
+          const { error } = await db.auth.resetPasswordForEmail(email, { redirectTo });
+          if (error) throw error;
+          message('auth-message', 'Se este e-mail estiver cadastrado, você receberá as instruções de recuperação.', true);
+        } catch (err) {
+          message('auth-message', 'Não foi possível enviar a recuperação: ' + (err.message || 'erro desconhecido'));
+        }
+      });
+
+      $('site-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        clearMessage('save-message');
+        if (!currentSite || !currentUser) {
+          message('save-message', 'Entre novamente para carregar seu site.');
+          return;
+        }
+        const button = $('save-btn');
+        button.disabled = true;
+        button.textContent = 'Salvando...';
+        try {
+          const old = currentSite.content || {};
+          const content = {
+            ...old,
+            clientEmail: old.clientEmail || currentUser.email,
+            client_email: old.client_email || currentUser.email,
+            whatsapp: $('whatsapp').value.trim(),
+            instagram: $('instagram').value.trim(),
+            pix: $('pix').value.trim(),
+            wifiNome: $('wifiNome').value.trim(),
+            wifiSenha: $('wifiSenha').value.trim(),
+            wifi_ssid: $('wifiNome').value.trim(),
+            wifi_pass: $('wifiSenha').value.trim(),
+            maps: $('maps').value.trim()
+          };
+          const { data, error } = await db.from('sites')
+            .update({ content, updated_at: new Date().toISOString() })
+            .eq('id', currentSite.id)
+            .select('id, owner_id, name, slug, content, published')
+            .single();
+          if (error) throw error;
+          currentSite = data;
+          message('save-message', 'Alterações salvas com sucesso!', true);
+        } catch (err) {
+          message('save-message', 'Erro ao salvar: ' + (err.message || 'erro desconhecido') + '. Confira as permissões do Supabase.');
+        } finally {
+          button.disabled = false;
+          button.textContent = 'Salvar alterações';
+        }
+      });
+
+      $('logout-btn').addEventListener('click', async () => {
+        await db.auth.signOut();
+        currentSite = null;
+        currentUser = null;
+        $('login-form').reset();
+        showEditor(false);
+        clearMessage('save-message');
+        message('auth-message', 'Você saiu da sua conta.', true);
+      });
+
+      (async () => {
+        const { data, error } = await db.auth.getSession();
+        if (error) {
+          message('auth-message', 'Não foi possível verificar a sessão: ' + error.message);
+          return;
+        }
+        if (data.session && data.session.user) await loadSite(data.session.user);
+      })();
+    })();
+  </script>
+</body>
+</html>
