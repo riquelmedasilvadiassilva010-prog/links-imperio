@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portal do Cliente - Painel</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- BILIOTECA DO SUPABASE ATUALIZADA PARA SUPORTAR SB_PUBLISHABLE -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.48.1/dist/umd/supabase.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -52,3 +53,253 @@
       <h1 class="text-xl font-bold text-amber-500">Minha Conta</h1>
       <p id="user-display-email" class="text-xs text-slate-400 font-mono mt-1 uppercase"></p>
     </div>
+
+    <!-- AVISO DE AGUARDANDO LIBERAÇÃO -->
+    <div id="pending-notice" class="hidden mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-xl text-center">
+      <div class="flex items-center justify-center gap-2 text-red-400 font-bold text-sm mb-1">
+        <i class="fa-solid fa-clock"></i> Aguardando Liberação:
+      </div>
+      <p class="text-xs text-red-300">O seu e-mail ainda não foi vinculado a uma página pelo Administrador.</p>
+    </div>
+
+    <!-- FORMULÁRIO DE DADOS DO NEGÓCIO -->
+    <form id="client-data-form" class="space-y-5">
+      <div class="border-b border-slate-800 pb-2 mb-4">
+        <h2 class="text-xs font-bold text-amber-500 uppercase tracking-wider flex items-center gap-2">
+          <i class="fa-solid fa-pen-to-square"></i> Dados do Negócio
+        </h2>
+      </div>
+
+      <!-- WHATSAPP -->
+      <div>
+        <label class="block text-xs font-medium text-slate-400 mb-1 flex items-center gap-2">
+          <i class="fa-brands fa-whatsapp text-emerald-500"></i> WhatsApp
+        </label>
+        <input type="text" id="field-whatsapp" disabled class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500 disabled:opacity-50 disabled:cursor-not-allowed" placeholder="Ex: 5598988887777">
+      </div>
+
+      <!-- INSTAGRAM -->
+      <div>
+        <label class="block text-xs font-medium text-slate-400 mb-1 flex items-center gap-2">
+          <i class="fa-brands fa-instagram text-pink-500"></i> Instagram (@)
+        </label>
+        <input type="text" id="field-instagram" disabled class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500 disabled:opacity-50 disabled:cursor-not-allowed" placeholder="Ex: minha.loja">
+      </div>
+
+      <!-- PIX -->
+      <div>
+        <label class="block text-xs font-medium text-slate-400 mb-1 flex items-center gap-2">
+          <i class="fa-solid fa-qrcode text-amber-500"></i> Chave PIX
+        </label>
+        <input type="text" id="field-pix" disabled class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500 disabled:opacity-50 disabled:cursor-not-allowed" placeholder="Chave Pix">
+      </div>
+
+      <!-- WI-FI -->
+      <div class="border-t border-slate-800 pt-4 mt-4">
+        <h3 class="text-xs font-bold text-amber-500 uppercase tracking-wider mb-3 flex items-center gap-2">
+          <i class="fa-solid fa-wifi"></i> Wi-Fi
+        </h3>
+        <div class="space-y-3">
+          <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1 flex items-center gap-2">
+              <i class="fa-solid fa-network-wired text-slate-500"></i> Nome da Rede
+            </label>
+            <input type="text" id="field-wifi-ssid" disabled class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500 disabled:opacity-50 disabled:cursor-not-allowed" placeholder="Nome do Wi-Fi">
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1 flex items-center gap-2">
+              <i class="fa-solid fa-key text-amber-500"></i> Senha do Wi-Fi
+            </label>
+            <input type="text" id="field-wifi-pass" disabled class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500 disabled:opacity-50 disabled:cursor-not-allowed" placeholder="Senha do Wi-Fi">
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" id="btn-save" disabled class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3 rounded-xl transition-all shadow-lg shadow-amber-500/10 text-sm disabled:opacity-50 disabled:cursor-not-allowed">
+        <i class="fa-solid fa-floppy-disk mr-1"></i> Salvar Alterações
+      </button>
+    </form>
+
+    <div class="mt-6 text-center border-t border-slate-800 pt-4">
+      <button id="btn-logout" class="text-xs text-red-400 hover:text-red-300 transition-colors font-medium flex items-center justify-center gap-2 w-full py-2">
+        <i class="fa-solid fa-right-from-bracket"></i> Sair da Conta
+      </button>
+    </div>
+  </div>
+
+  <!-- SCRIPT LÓGICA DO SUPABASE -->
+  <script>
+    const SUPABASE_URL = "https://hqoqbjwjjmnhctjizvcs.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_QK2T4-OP6omrbgGmTwbmsw_VKfgeFuk";
+
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    let currentSite = null;
+
+    // Elementos DOM
+    const authContainer = document.getElementById('auth-container');
+    const appContainer = document.getElementById('app-container');
+    const authForm = document.getElementById('auth-form');
+    const authEmail = document.getElementById('auth-email');
+    const authPassword = document.getElementById('auth-password');
+    const authError = document.getElementById('auth-error');
+    const authMsg = document.getElementById('auth-msg');
+    const pendingNotice = document.getElementById('pending-notice');
+    const userDisplayEmail = document.getElementById('user-display-email');
+
+    const fieldWhatsapp = document.getElementById('field-whatsapp');
+    const fieldInstagram = document.getElementById('field-instagram');
+    const fieldPix = document.getElementById('field-pix');
+    const fieldWifiSsid = document.getElementById('field-wifi-ssid');
+    const fieldWifiPass = document.getElementById('field-wifi-pass');
+    const btnSave = document.getElementById('btn-save');
+
+    // Inicialização
+    window.addEventListener('DOMContentLoaded', async () => {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (session) {
+        showApp(session.user);
+      } else {
+        showAuth();
+      }
+    });
+
+    // Login
+    authForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearMessages();
+      const email = authEmail.value.trim();
+      const password = authPassword.value;
+
+      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+      if (error) {
+        showError(error.message);
+      } else {
+        showApp(data.user);
+      }
+    });
+
+    // Cadastro
+    document.getElementById('btn-signup').addEventListener('click', async () => {
+      clearMessages();
+      const email = authEmail.value.trim();
+      const password = authPassword.value;
+
+      if (!email || !password) {
+        showError("Preencha o e-mail e a senha para cadastrar.");
+        return;
+      }
+
+      const { data, error } = await supabaseClient.auth.signUp({ email, password });
+      if (error) {
+        showError(error.message);
+      } else {
+        showMessage("Conta criada com sucesso! A entrar...");
+        if (data.session) {
+          showApp(data.user);
+        }
+      }
+    });
+
+    // Logout
+    document.getElementById('btn-logout').addEventListener('click', async () => {
+      await supabaseClient.auth.signOut();
+      showAuth();
+    });
+
+    // Função de Exibição do Painel
+    async function showApp(user) {
+      authContainer.classList.add('hidden');
+      appContainer.classList.remove('hidden');
+      userDisplayEmail.textContent = user.email;
+
+      // BUSCA O SITE USANDO ILIKE E TOLOWERCASE
+      const cleanEmail = user.email.trim().toLowerCase();
+
+      const { data: site, error } = await supabaseClient
+        .from('sites')
+        .select('*')
+        .ilike('client_email', cleanEmail)
+        .maybeSingle();
+
+      if (error) {
+        console.error("Erro ao buscar site:", error);
+      }
+
+      if (site) {
+        currentSite = site;
+        pendingNotice.classList.add('hidden');
+        enableForm(true);
+
+        // Preenche os campos com os dados existentes
+        fieldWhatsapp.value = site.whatsapp || '';
+        fieldInstagram.value = site.instagram || '';
+        fieldPix.value = site.pix || '';
+        fieldWifiSsid.value = site.wifi_ssid || '';
+        fieldWifiPass.value = site.wifi_pass || '';
+      } else {
+        pendingNotice.classList.remove('hidden');
+        enableForm(false);
+      }
+    }
+
+    function showAuth() {
+      appContainer.classList.add('hidden');
+      authContainer.classList.remove('hidden');
+    }
+
+    function enableForm(enable) {
+      fieldWhatsapp.disabled = !enable;
+      fieldInstagram.disabled = !enable;
+      fieldPix.disabled = !enable;
+      fieldWifiSsid.disabled = !enable;
+      fieldWifiPass.disabled = !enable;
+      btnSave.disabled = !enable;
+    }
+
+    // Salvar Dados
+    document.getElementById('client-data-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!currentSite) return;
+
+      btnSave.disabled = true;
+      btnSave.innerText = "A guardar...";
+
+      const { error } = await supabaseClient
+        .from('sites')
+        .update({
+          whatsapp: fieldWhatsapp.value.trim(),
+          instagram: fieldInstagram.value.trim(),
+          pix: fieldPix.value.trim(),
+          wifi_ssid: fieldWifiSsid.value.trim(),
+          wifi_pass: fieldWifiPass.value.trim()
+        })
+        .eq('id', currentSite.id);
+
+      btnSave.disabled = false;
+      btnSave.innerHTML = `<i class="fa-solid fa-floppy-disk mr-1"></i> Salvar Alterações`;
+
+      if (error) {
+        alert("Erro ao guardar dados: " + error.message);
+      } else {
+        alert("Dados guardados com sucesso!");
+      }
+    });
+
+    function showError(msg) {
+      authError.textContent = msg;
+      authError.classList.remove('hidden');
+    }
+
+    function showMessage(msg) {
+      authMsg.textContent = msg;
+      authMsg.classList.remove('hidden');
+    }
+
+    function clearMessages() {
+      authError.classList.add('hidden');
+      authMsg.classList.add('hidden');
+    }
+  </script>
+</body>
+</html>
