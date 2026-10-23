@@ -3,48 +3,112 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#111114">
 <title>Carregando site...</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=Lato:wght@400;700&family=Oswald:wght@400;500;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#111114;--card:#c9a34a;--primary:#f7f2e8;--text:#151515;--radius:18px;--font:'Montserrat',sans-serif;--muted:#aaa}
-*{box-sizing:border-box}body{margin:0;min-height:100vh;background:transparent!important;color:var(--primary);font-family:var(--font);padding:0 18px 42px;transition:color .25s;position:relative}.site-background{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}.site-background-layer{position:absolute;inset:0}.site-background-color{background:var(--bg);opacity:1}.site-background-image{background-position:center;background-size:cover;background-repeat:no-repeat;opacity:0}.site-background-gradient{background:linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0));opacity:1}.page{position:relative;z-index:1;width:100%;max-width:560px;margin:0 auto;padding-top:42px}.identity{text-align:center;margin:0 auto 28px}.logo{display:block;object-fit:contain;width:132px;height:132px;max-width:48vw;margin:0 auto 20px;border-radius:24px}.mark{font-size:52px;color:var(--card);margin:10px auto 22px}.business{font-size:clamp(27px,6vw,38px);font-weight:800;line-height:1.12;overflow-wrap:anywhere;letter-spacing:-.7px}.description{font-size:14px;line-height:1.6;opacity:.72;margin:11px auto 0;max-width:38ch;overflow-wrap:anywhere}.links{display:grid;gap:13px}.link{width:100%;min-height:70px;border:1px solid color-mix(in srgb,var(--primary) 14%,transparent);border-radius:var(--radius);background:var(--card);color:var(--text);display:flex;align-items:center;gap:14px;padding:16px 19px;text-decoration:none;font-weight:750;font-size:clamp(14px,3.7vw,17px);box-shadow:0 8px 24px #00000014;overflow-wrap:anywhere;transition:transform .18s,filter .18s,box-shadow .18s}.link:active{transform:scale(.985)}.link i:first-child{width:28px;text-align:center;font-size:23px;flex-shrink:0}.link .label{flex:1;text-align:center}.link .end{font-size:14px;opacity:.65}.notice{text-align:center;margin:40px auto;line-height:1.6}.footer{text-align:center;margin-top:30px;font-size:11px;opacity:.48;letter-spacing:.3px}.section-title{font-size:16px;text-align:center;margin:30px 0 14px}.gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.gallery img{width:100%;height:170px;object-fit:cover;border-radius:14px;background:#222}.gallery img:first-child:last-child{grid-column:1/-1}.overlay{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;padding:20px;z-index:50}.overlay.open{display:flex}.modal{width:min(100%,390px);max-height:90vh;overflow:auto;background:var(--bg);color:var(--primary);border:1px solid color-mix(in srgb,var(--card) 45%,transparent);border-radius:20px;padding:22px;text-align:center;box-shadow:0 20px 70px #0009}.modal h2{margin:0 0 8px;font-size:22px}.modal p{line-height:1.55;overflow-wrap:anywhere}.qr{display:flex;justify-content:center;align-items:center;background:#fff;padding:12px;border-radius:12px;width:max-content;max-width:100%;margin:16px auto}.qr img,.qr canvas{max-width:100%;height:auto}.key-box{background:#ffffff10;border:1px solid #ffffff20;padding:12px;border-radius:10px;overflow-wrap:anywhere;font-size:13px}.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}.action-btn{border:0;border-radius:10px;padding:12px 16px;background:var(--card);color:var(--text);font-weight:700;cursor:pointer}.action-btn.secondary{background:transparent;color:var(--primary);border:1px solid #ffffff40}.close-x{float:right;background:transparent;border:0;color:var(--primary);font-size:22px;cursor:pointer}.small{font-size:12px;opacity:.7}
-body.layout-elegante{background:radial-gradient(ellipse at top,color-mix(in srgb,var(--card) 13%,var(--bg)) 0,var(--bg) 54%)}body.layout-elegante .page{max-width:510px;padding-top:48px}body.layout-elegante .identity{padding:0 16px 26px;border-bottom:1px solid color-mix(in srgb,var(--card) 40%,transparent);margin-bottom:25px}body.layout-elegante .logo{border-radius:50%;padding:7px;border:1px solid color-mix(in srgb,var(--card) 65%,transparent);box-shadow:0 0 0 7px color-mix(in srgb,var(--card) 8%,transparent)}body.layout-elegante .business{font-family:'Playfair Display',serif;letter-spacing:.2px}body.layout-elegante .link{min-height:76px;border-radius:9px;box-shadow:0 9px 25px #00000028;letter-spacing:.1px}body.layout-elegante .link:hover{transform:translateY(-2px);filter:brightness(1.07)}
-body.layout-moderno{background:linear-gradient(145deg,color-mix(in srgb,var(--card) 11%,var(--bg)),var(--bg) 58%)}body.layout-moderno .page{max-width:760px;padding-top:30px}body.layout-moderno .identity{display:flex;flex-direction:column;align-items:center;margin-bottom:30px}body.layout-moderno .logo{width:116px;height:116px;border-radius:28px;margin-bottom:16px;box-shadow:0 12px 30px #00000020}body.layout-moderno .mark{margin:0 auto 16px}body.layout-moderno .business{font-family:'Poppins',sans-serif;font-size:clamp(26px,5vw,35px);letter-spacing:-1px}body.layout-moderno .description{padding:8px 16px;border-radius:30px;background:color-mix(in srgb,var(--primary) 7%,transparent)}body.layout-moderno .links{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}body.layout-moderno .link{min-height:138px;flex-direction:column;justify-content:center;gap:13px;padding:18px 12px;border:0;border-radius:20px;box-shadow:0 12px 28px #00000020}body.layout-moderno .link i:first-child{width:auto;font-size:30px}body.layout-moderno .link .label{flex:0;text-align:center;line-height:1.35}body.layout-moderno .link .end{display:none}body.layout-moderno .footer{padding-top:18px;border-top:1px solid color-mix(in srgb,var(--primary) 12%,transparent)}
-body.layout-minimalista{background:var(--bg)}body.layout-minimalista .page{max-width:500px;padding-top:26px}body.layout-minimalista .identity{margin-bottom:24px}body.layout-minimalista .logo{width:92px;height:92px;border-radius:50%;margin-bottom:15px}body.layout-minimalista .mark{font-size:36px;margin:0 auto 16px}body.layout-minimalista .business{font-family:'Montserrat',sans-serif;font-size:clamp(23px,5vw,30px);font-weight:700;letter-spacing:-.8px}body.layout-minimalista .description{font-size:13px}body.layout-minimalista .links{gap:9px}body.layout-minimalista .link{min-height:57px;border:1px solid color-mix(in srgb,var(--primary) 23%,transparent);border-radius:7px;box-shadow:none;background:transparent;color:var(--primary);padding:13px 15px;font-size:14px;font-weight:600}body.layout-minimalista .link i:first-child{font-size:18px}body.layout-minimalista .link .end{font-size:11px}body.layout-minimalista .link:hover{background:color-mix(in srgb,var(--primary) 5%,transparent)}
-@media(max-width:520px){body.layout-moderno .links{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}body.layout-moderno .link{min-height:125px;padding:15px 8px;font-size:13px}body.layout-moderno .link i:first-child{font-size:27px}.gallery img{height:135px}}@media(min-width:700px){.page{padding-top:52px}.logo{width:150px;height:150px}.link{min-height:76px;padding:18px 24px}}@media(prefers-reduced-motion:no-preference){.link:hover{filter:brightness(1.04)}}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--primary);font-family:var(--font);padding:0 18px 42px;transition:background .25s,color .25s}
+.page{width:100%;max-width:560px;margin:0 auto;padding-top:42px}
+.identity{text-align:center;margin:0 auto 28px}
+.logo{display:block;object-fit:contain;width:132px;height:132px;max-width:48vw;margin:0 auto 20px;border-radius:24px}
+.mark{font-size:52px;color:var(--card);margin:10px auto 22px}
+.business{font-size:clamp(27px,6vw,38px);font-weight:800;line-height:1.12;overflow-wrap:anywhere;letter-spacing:-.7px}
+.description{font-size:14px;line-height:1.6;opacity:.72;margin:11px auto 0;max-width:38ch;overflow-wrap:anywhere}
+.links{display:grid;gap:13px}
+.link{width:100%;min-height:70px;border:1px solid color-mix(in srgb,var(--primary) 14%,transparent);border-radius:var(--radius);background:var(--card);color:var(--text);display:flex;align-items:center;gap:14px;padding:16px 19px;text-decoration:none;font-weight:750;font-size:clamp(14px,3.7vw,17px);box-shadow:0 8px 24px #00000014;overflow-wrap:anywhere;transition:transform .18s,filter .18s,box-shadow .18s}
+.link:active{transform:scale(.985)}
+.link i:first-child{width:28px;text-align:center;font-size:23px;flex-shrink:0}
+.link .label{flex:1;text-align:center}
+.link .end{font-size:14px;opacity:.65}
+.notice{text-align:center;margin:40px auto;line-height:1.6}
+.footer{text-align:center;margin-top:30px;font-size:11px;opacity:.48;letter-spacing:.3px}
+/* ELEGANTE: identidade premium, moldura e botões alongados */
+body.layout-elegante{background:radial-gradient(ellipse at top, color-mix(in srgb,var(--card) 13%,var(--bg)) 0, var(--bg) 54%)}
+body.layout-elegante .page{max-width:510px;padding-top:48px}
+body.layout-elegante .identity{padding:0 16px 26px;border-bottom:1px solid color-mix(in srgb,var(--card) 40%,transparent);margin-bottom:25px}
+body.layout-elegante .logo{border-radius:50%;padding:7px;border:1px solid color-mix(in srgb,var(--card) 65%,transparent);box-shadow:0 0 0 7px color-mix(in srgb,var(--card) 8%,transparent)}
+body.layout-elegante .business{font-family:var(--font);letter-spacing:.2px}
+body.layout-elegante .link{min-height:76px;border-radius:9px;box-shadow:0 9px 25px #00000028;letter-spacing:.1px}
+body.layout-elegante .link:hover{transform:translateY(-2px);filter:brightness(1.07)}
+/* MODERNO: cartões em grade, com ícones e etiquetas */
+body.layout-moderno{background:linear-gradient(145deg,color-mix(in srgb,var(--card) 11%,var(--bg)),var(--bg) 58%)}
+body.layout-moderno .page{max-width:760px;padding-top:30px}
+body.layout-moderno .identity{display:flex;flex-direction:column;align-items:center;margin-bottom:30px}
+body.layout-moderno .logo{width:116px;height:116px;border-radius:28px;margin-bottom:16px;box-shadow:0 12px 30px #00000020}
+body.layout-moderno .mark{margin:0 auto 16px}
+body.layout-moderno .business{font-family:var(--font);font-size:clamp(26px,5vw,35px);letter-spacing:-1px}
+body.layout-moderno .description{padding:8px 16px;border-radius:30px;background:color-mix(in srgb,var(--primary) 7%,transparent)}
+body.layout-moderno .links{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+body.layout-moderno .link{min-height:138px;flex-direction:column;justify-content:center;gap:13px;padding:18px 12px;border:0;border-radius:20px;box-shadow:0 12px 28px #00000020}
+body.layout-moderno .link i:first-child{width:auto;font-size:30px}
+body.layout-moderno .link .label{flex:0;text-align:center;line-height:1.35}
+body.layout-moderno .link .end{display:none}
+body.layout-moderno .footer{padding-top:18px;border-top:1px solid color-mix(in srgb,var(--primary) 12%,transparent)}
+/* MINIMALISTA: leve, claro e com linhas discretas */
+body.layout-minimalista{background:var(--bg)}
+body.layout-minimalista .page{max-width:500px;padding-top:26px}
+body.layout-minimalista .identity{margin-bottom:24px}
+body.layout-minimalista .logo{width:92px;height:92px;border-radius:50%;margin-bottom:15px}
+body.layout-minimalista .mark{font-size:36px;margin:0 auto 16px}
+body.layout-minimalista .business{font-family:var(--font);font-size:clamp(23px,5vw,30px);font-weight:700;letter-spacing:-.8px}
+body.layout-minimalista .description{font-size:13px}
+body.layout-minimalista .links{gap:9px}
+body.layout-minimalista .link{min-height:57px;border:1px solid color-mix(in srgb,var(--primary) 23%,transparent);border-radius:7px;box-shadow:none;background:transparent;color:var(--primary);padding:13px 15px;font-size:14px;font-weight:600}
+body.layout-minimalista .link i:first-child{font-size:18px}
+body.layout-minimalista .link .end{font-size:11px}
+body.layout-minimalista .link:hover{background:color-mix(in srgb,var(--primary) 5%,transparent)}
+@media(max-width:520px){
+ body.layout-moderno .links{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ body.layout-moderno .link{min-height:125px;padding:15px 8px;font-size:13px}
+ body.layout-moderno .link i:first-child{font-size:27px}
+}
+@media(min-width:700px){.page{padding-top:52px}.logo{width:150px;height:150px}.link{min-height:76px;padding:18px 24px}}
+@media(prefers-reduced-motion:no-preference){.link:hover{filter:brightness(1.04)}}
 </style>
 </head>
-<body><div class="site-background" id="siteBackground" aria-hidden="true"><div class="site-background-layer site-background-color" id="siteBgColor"></div><div class="site-background-layer site-background-image" id="siteBgImage"></div><div class="site-background-layer site-background-gradient" id="siteBgGradient"></div></div><main class="page" id="app"><p class="notice">Carregando página...</p></main>
-<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><section class="modal"><button class="close-x" id="closeModal" aria-label="Fechar">&times;</button><div id="modalContent"></div></section></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<body><main class="page" id="app"><p class="notice">Carregando página...</p></main>
 <script type="module">
 import{createClient}from'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 const SUPABASE_URL='https://hqoqbjwjjmnhctjizvcs.supabase.co';
 const SUPABASE_KEY='sb_publishable_QK2T4-OP6omrbgGmTwbmsw_VKfgeFuk';
 const supabase=createClient(SUPABASE_URL,SUPABASE_KEY),app=document.getElementById('app');
 const esc=v=>String(v??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-const safeUrl=v=>{try{const u=new URL(String(v||''));return ['http:','https:'].includes(u.protocol)?u.href:''}catch{return''}};
 function fail(msg){app.innerHTML=`<section class="notice"><i class="fa-solid fa-circle-info" style="font-size:34px"></i><h2>${esc(msg)}</h2><p>Confira o endereço ou fale com o responsável pelo site.</p></section>`}
-function instagram(v){v=String(v||'').trim();if(!v)return'';if(/^https?:\/\//i.test(v))return safeUrl(v);return'https://instagram.com/'+v.replace(/^@/,'')}
-function tlv(id,value){const v=String(value);return id+String(v.length).padStart(2,'0')+v}
-function crc16(str){let crc=0xFFFF;for(const byte of new TextEncoder().encode(str)){crc^=byte<<8;for(let j=0;j<8;j++)crc=crc&0x8000?(crc<<1)^0x1021:crc<<1;crc&=0xFFFF}return crc.toString(16).toUpperCase().padStart(4,'0')}
-function pixPayload(key,merchant,city){const pixKey=String(key||'').trim();if(!pixKey)throw new Error('Cadastre a chave Pix no painel.');const clean=(v,max)=>String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9 ]/g,' ').replace(/\s+/g,' ').trim().slice(0,max);const nome=clean(merchant,25);const cidade=clean(city,15);if(!nome||!cidade)throw new Error('Para gerar o QR Code Pix, preencha o nome e a cidade do recebedor no painel e salve.');const gui=tlv('00','br.gov.bcb.pix')+tlv('01',pixKey);let payload='000201010211'+tlv('26',gui)+'52040000'+'5303986'+'5802BR'+tlv('59',nome)+tlv('60',cidade)+'62070503***'+'6304';return payload+crc16(payload)}
-function showModal(html){document.getElementById('modalContent').innerHTML=html;document.getElementById('overlay').classList.add('open')}
-function closeModal(){document.getElementById('overlay').classList.remove('open');document.getElementById('modalContent').innerHTML=''}
-document.getElementById('closeModal').addEventListener('click',closeModal);document.getElementById('overlay').addEventListener('click',e=>{if(e.target.id==='overlay')closeModal()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
-function qr(el,text){if(!text||typeof QRCode==='undefined'){el.textContent='Não foi possível gerar o QR Code. Verifique sua conexão.';return}new QRCode(el,{text,width:220,height:220,colorDark:'#000000',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M})}
-async function copyText(text,label){try{await navigator.clipboard.writeText(String(text));alert(label+' copiada!')}catch{const input=document.createElement('textarea');input.value=String(text);document.body.appendChild(input);input.select();try{document.execCommand('copy');alert(label+' copiada!')}catch{prompt('Copie o conteúdo:',String(text))}input.remove()}}
-async function load(){const slug=new URLSearchParams(location.search).get('slug');if(!slug){fail('Página não encontrada.');return}try{const{data,error}=await supabase.from('sites').select('name,slug,content,published').eq('slug',slug).maybeSingle();if(error)throw error;if(!data){fail('Página não encontrada.');return}if(!data.published){fail('Este site está temporariamente indisponível.');return}
-const c=data.content&&typeof data.content==='object'?data.content:{};const layout=['elegante','moderno','minimalista'].includes(c.layout)?c.layout:'elegante';document.body.classList.add('layout-'+layout);document.documentElement.style.setProperty('--bg',c.bgColor||'#111114');document.documentElement.style.setProperty('--card',c.cardColor||'#c9a34a');document.documentElement.style.setProperty('--primary',c.primaryColor||'#f7f2e8');document.documentElement.style.setProperty('--text',c.textColor||'#151515');document.documentElement.style.setProperty('--radius',c.btnRadius||'18px');document.documentElement.style.setProperty('--font',c.font||"'Montserrat',sans-serif");
-const bgColorLayer=document.getElementById('siteBgColor'),bgImageLayer=document.getElementById('siteBgImage'),bgGradientLayer=document.getElementById('siteBgGradient');const bgColorEnabled=c.bgColorEnabled!==false;const bgColorOpacity=bgColorEnabled?(Number.isFinite(Number(c.bgColorOpacity))?Math.max(0,Math.min(100,Number(c.bgColorOpacity))):100):0;const bgImageOpacity=Number.isFinite(Number(c.bgImageOpacity))?Math.max(0,Math.min(100,Number(c.bgImageOpacity))):0;const bgGradient=Math.max(0,Math.min(100,Number(c.bgGradient)||0));const bgImageUrl=safeUrl(c.bgImage);bgColorLayer.style.background=c.bgColor||'#111114';bgColorLayer.style.opacity=String(bgColorOpacity/100);if(bgImageUrl){bgImageLayer.style.backgroundImage=`url(\"${bgImageUrl.replace(/[\\\"()]/g,'')}\")`;bgImageLayer.style.opacity=String(bgImageOpacity/100)}else{bgImageLayer.style.backgroundImage='none';bgImageLayer.style.opacity='0'}bgGradientLayer.style.backgroundImage=`linear-gradient(rgba(0,0,0,${bgGradient/100}),rgba(0,0,0,${bgGradient/100}))`;document.title=data.name||'Links oficiais';
-const links=[];const add=(label,icon,url,action='link')=>{if(url)links.push({label,icon,url,action})};const phone=String(c.whatsapp||'').replace(/\D/g,'');add('Conversar no WhatsApp','fa-brands fa-whatsapp',phone?'https://wa.me/'+phone:'');add('Siga no Instagram','fa-brands fa-instagram',instagram(c.instagram));add('Avalie no Google','fa-brands fa-google',safeUrl(c.maps));if(c.pix)add('Pix para pagamento','fa-solid fa-money-bill-transfer','#pix','pix');if(c.wifiNome)add('Conectar ao Wi-Fi','fa-solid fa-wifi','#wifi','wifi');
-const logoUrl=safeUrl(c.logoUrl);const logo=logoUrl?`<img class="logo" src="${esc(logoUrl)}" alt="Logotipo" onerror="this.style.display='none'">`:`<div class="mark"><i class="fa-solid fa-crown"></i></div>`;const cards=links.map(x=>`<a class="link" href="${x.action==='pix'||x.action==='wifi'?'#'+x.action:esc(x.url)}" ${x.action==='link'?'target="_blank" rel="noopener noreferrer"':''} data-action="${x.action}"><i class="${x.icon}"></i><span class="label">${esc(x.label)}</span><i class="fa-solid fa-chevron-right end"></i></a>`).join('');
-const galleryRaw=Array.isArray(c.gallery)?c.gallery:(Array.isArray(c.galeria)?c.galeria:[]);const gallery=galleryRaw.map(x=>typeof x==='string'?x:(x&&x.url)||'').map(safeUrl).filter(Boolean).slice(0,12);const galleryHtml=gallery.length?`<h2 class="section-title">Galeria</h2><section class="gallery">${gallery.map((url,i)=>`<img src="${esc(url)}" alt="Imagem ${i+1}" loading="lazy" onerror="this.style.display='none'">`).join('')}</section>`:'';
-app.innerHTML=`<header class="identity">${logo}<div class="business">${esc(data.name)}</div><div class="description">${esc(c.description||'Links oficiais e atendimento')}</div></header><section class="links">${cards||'<p class="notice">Os links deste site ainda não foram configurados.</p>'}</section>${galleryHtml}<div class="footer">Links oficiais · ${esc(data.name)}</div>`;
-app.querySelectorAll('[data-action]').forEach(el=>el.addEventListener('click',ev=>{const action=el.dataset.action;if(action==='pix'){ev.preventDefault();try{const payload=pixPayload(c.pix,c.pixNome,c.pixCidade);showModal(`<h2 id="modalTitle">Pagamento via Pix</h2><p>Escaneie o QR Code e informe o valor no aplicativo do banco.</p><div class="qr" id="pixQr"></div><p class="small">Chave Pix</p><div class="key-box">${esc(c.pix)}</div><div class="actions"><button class="action-btn" id="copyPix">Copiar chave Pix</button></div><p class="small">Confira o nome do recebedor antes de confirmar o pagamento.</p>`);qr(document.getElementById('pixQr'),payload);document.getElementById('copyPix').onclick=()=>copyText(c.pix,'Chave Pix')}catch(err){alert(err.message||'Não foi possível gerar o QR Code Pix. Confira os dados no painel.')}}else if(action==='wifi'){ev.preventDefault();const ssid=String(c.wifiNome||'');const password=String(c.wifiSenha||'');const security=c.wifiTipo||'WPA';const wifiPayload=`WIFI:T:${security};S:${ssid.replace(/[\\;,:"]/g,'\\$&')};P:${password.replace(/[\\;,:"]/g,'\\$&')};;`;showModal(`<h2 id="modalTitle">Wi-Fi</h2><p>Escaneie o QR Code com a câmera do celular para conectar à rede, se o aparelho oferecer suporte.</p><div class="qr" id="wifiQr"></div><div class="key-box"><strong>Rede:</strong> ${esc(ssid)}<br><strong>Senha:</strong> ${esc(password||'Sem senha informada')}</div><div class="actions"><button class="action-btn" id="copyWifi">Copiar senha</button></div>`);qr(document.getElementById('wifiQr'),wifiPayload);document.getElementById('copyWifi').onclick=()=>copyText(password,'Senha do Wi-Fi')}}));
-}catch(e){console.error(e);fail('Não foi possível carregar esta página. Verifique a conexão e tente novamente.')}}load();
+function instagram(v){v=String(v||'').trim();if(!v)return'';if(/^https?:\/\//i.test(v))return v;return'https://instagram.com/'+v.replace(/^@/,'')}
+async function load(){const slug=new URLSearchParams(location.search).get('slug');if(!slug){fail('Página não encontrada.');return}try{
+const{data,error}=await supabase.from('sites').select('name,slug,content,published').eq('slug',slug).maybeSingle();
+if(error)throw error;if(!data){fail('Página não encontrada.');return}if(!data.published){fail('Este site está temporariamente indisponível.');return}
+const c=data.content&&typeof data.content==='object'?data.content:{};
+const layout=['elegante','moderno','minimalista'].includes(c.layout)?c.layout:'elegante';
+document.body.classList.add('layout-'+layout);
+document.documentElement.style.setProperty('--bg',c.bgColor||'#111114');
+document.documentElement.style.setProperty('--card',c.cardColor||'#c9a34a');
+document.documentElement.style.setProperty('--primary',c.primaryColor||'#f7f2e8');
+document.documentElement.style.setProperty('--text',c.textColor||'#151515');
+document.documentElement.style.setProperty('--radius',c.btnRadius||'18px');
+let chosenFont=c.font||"'Montserrat',sans-serif";
+if(c.font==='custom-font' && c.customFontUrl && /^https:\/\//i.test(c.customFontUrl)) {
+  const customStyle=document.createElement('style');
+  const fontUrl=c.customFontUrl.replace(/\\/g,'').replace(/['"<>]/g,'');
+  customStyle.textContent=`@font-face{font-family:'SiteCustomFont';src:url(\"${fontUrl}\");font-display:swap}`;
+  document.head.appendChild(customStyle);
+  chosenFont="'SiteCustomFont',sans-serif";
+}
+document.documentElement.style.setProperty('--font',chosenFont);
+document.title=data.name||'Links oficiais';
+const links=[];const add=(label,icon,url,action='link')=>{if(url)links.push({label,icon,url,action})};
+const phone=String(c.whatsapp||'').replace(/\D/g,'');add('Conversar no WhatsApp','fa-brands fa-whatsapp',phone?'https://wa.me/'+phone:'');
+add('Siga no Instagram','fa-brands fa-instagram',instagram(c.instagram));add('Avalie no Google','fa-brands fa-google',c.maps);
+if(c.pix)add('Chave Pix para Pagamento','fa-solid fa-money-bill-transfer','#pix','pix');
+if(c.wifiNome)add('Wi-Fi do Estabelecimento','fa-solid fa-wifi','#wifi','wifi');
+const logo=c.logoUrl?`<img class="logo" src="${esc(c.logoUrl)}" alt="Logotipo" onerror="this.style.display='none'">`:`<div class="mark"><i class="fa-solid fa-crown"></i></div>`;
+const cards=links.map(x=>`<a class="link" href="${x.action==='pix'||x.action==='wifi'?'#'+x.action:esc(x.url)}" ${x.action==='link'?'target="_blank" rel="noopener noreferrer"':''} data-action="${x.action}"><i class="${x.icon}"></i><span class="label">${esc(x.label)}</span><i class="fa-solid fa-chevron-right end"></i></a>`).join('');
+app.innerHTML=`<header class="identity">${logo}<div class="business">${esc(data.name)}</div><div class="description">${esc(c.subtitle||c.description||'Links oficiais e atendimento')}</div></header><section class="links">${cards||'<p class="notice">Os links deste site ainda não foram configurados.</p>'}</section><div class="footer">Links oficiais · ${esc(data.name)}</div>`;
+app.querySelectorAll('[data-action]').forEach(el=>el.addEventListener('click',async ev=>{if(el.dataset.action==='pix'){ev.preventDefault();try{await navigator.clipboard.writeText(String(c.pix||''));alert('Chave Pix copiada!')}catch{prompt('Copie a chave Pix:',c.pix||'')}}if(el.dataset.action==='wifi'){ev.preventDefault();alert('Rede Wi-Fi: '+(c.wifiNome||'')+'\nSenha: '+(c.wifiSenha||'Não informada'))}}));
+}catch(e){console.error(e);fail('Não foi possível carregar esta página. Verifique a conexão e tente novamente.')}}
+load();
 </script></body></html>
