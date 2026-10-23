@@ -120,6 +120,26 @@
       <p id="auth-message" class="status-line text-sm mt-4 hidden" role="status" aria-live="polite"></p>
     </section>
 
+    <section id="recovery-card" class="panel rounded-3xl p-5 sm:p-8 hidden">
+      <div class="mb-6">
+        <p class="eyebrow mb-2">Recuperação de acesso</p>
+        <h2 class="text-xl sm:text-2xl font-bold text-white">Criar nova senha</h2>
+        <p class="text-sm text-slate-400 mt-2">Digite uma nova senha para sua conta.</p>
+      </div>
+      <form id="recovery-form" class="space-y-4">
+        <div>
+          <label class="label" for="new-password">Nova senha</label>
+          <input class="field" id="new-password" type="password" autocomplete="new-password" minlength="6" required placeholder="Pelo menos 6 caracteres">
+        </div>
+        <div>
+          <label class="label" for="confirm-password">Confirmar nova senha</label>
+          <input class="field" id="confirm-password" type="password" autocomplete="new-password" minlength="6" required placeholder="Digite a senha novamente">
+        </div>
+        <button id="recovery-save-btn" class="gold w-full rounded-xl py-3.5 font-extrabold" type="submit">Salvar nova senha</button>
+      </form>
+      <p id="recovery-message" class="status-line text-sm mt-4 hidden" role="status" aria-live="polite"></p>
+    </section>
+
     <section id="editor-card" class="panel rounded-3xl p-5 sm:p-8 hidden">
       <div class="flex items-start justify-between gap-4 mb-7 pb-5 border-b border-slate-700/70">
         <div class="min-w-0">
@@ -206,6 +226,7 @@
       const $ = (id) => document.getElementById(id);
       let currentSite = null;
       let currentUser = null;
+      let recoveryMode = false;
 
       function message(id, text, good = false) {
         const el = $(id);
@@ -220,6 +241,12 @@
       function showEditor(show) {
         $('auth-card').classList.toggle('hidden', show);
         $('editor-card').classList.toggle('hidden', !show);
+        if (show) $('recovery-card').classList.add('hidden');
+      }
+      function showRecovery(show) {
+        $('auth-card').classList.toggle('hidden', show);
+        $('editor-card').classList.add('hidden');
+        $('recovery-card').classList.toggle('hidden', !show);
       }
       function normalizeEmail(value) {
         return (value || '').trim().toLowerCase();
@@ -338,13 +365,23 @@
         button.disabled = true;
         button.textContent = 'Criando...';
         try {
-          const { data, error } = await db.auth.signUp({ email, password });
+          // Mantém o cliente nesta mesma Área do Cliente após confirmar o e-mail.
+          // O endereço também precisa estar autorizado em Supabase > Authentication > URL Configuration.
+          const emailRedirectTo = window.location.origin + window.location.pathname;
+          const { data, error } = await db.auth.signUp({
+            email,
+            password,
+            options: { emailRedirectTo }
+          });
           if (error) throw error;
+
           if (data.session && data.user) {
-            message('auth-message', 'Conta criada. Conferindo o site vinculado...', true);
+            message('auth-message', 'Conta criada com sucesso. Conferindo se existe um site vinculado a este e-mail...', true);
             await loadSite(data.user);
+          } else if (data.user) {
+            message('auth-message', 'Cadastro iniciado! Abra o e-mail enviado pelo Supabase e confirme sua conta. Depois volte aqui e entre com o mesmo e-mail e senha.', true);
           } else {
-            message('auth-message', 'Conta solicitada. Confira seu e-mail para confirmar o cadastro e depois entre por aqui.', true);
+            message('auth-message', 'Não foi possível confirmar o cadastro. Confira o e-mail informado e tente novamente.');
           }
         } catch (err) {
           message('auth-message', 'Não foi possível criar a conta: ' + (err.message || 'erro desconhecido'));
@@ -361,13 +398,47 @@
           message('auth-message', 'Digite seu e-mail primeiro para receber o link de recuperação.');
           return;
         }
+        const button = $('reset-btn');
+        button.disabled = true;
         try {
           const redirectTo = window.location.origin + window.location.pathname;
           const { error } = await db.auth.resetPasswordForEmail(email, { redirectTo });
           if (error) throw error;
-          message('auth-message', 'Se este e-mail estiver cadastrado, você receberá as instruções de recuperação.', true);
+          message('auth-message', 'Se este e-mail estiver cadastrado, você receberá um link para criar uma nova senha. Confira também o spam.', true);
         } catch (err) {
           message('auth-message', 'Não foi possível enviar a recuperação: ' + (err.message || 'erro desconhecido'));
+        } finally {
+          button.disabled = false;
+        }
+      });
+
+      $('recovery-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        clearMessage('recovery-message');
+        const password = $('new-password').value;
+        const confirmation = $('confirm-password').value;
+        if (password.length < 6) {
+          message('recovery-message', 'A nova senha precisa ter pelo menos 6 caracteres.');
+          return;
+        }
+        if (password !== confirmation) {
+          message('recovery-message', 'As senhas não são iguais. Confira e tente novamente.');
+          return;
+        }
+        const button = $('recovery-save-btn');
+        button.disabled = true;
+        button.textContent = 'Salvando...';
+        try {
+          const { error } = await db.auth.updateUser({ password });
+          if (error) throw error;
+          $('recovery-form').reset();
+          message('recovery-message', 'Senha alterada com sucesso. Agora você já pode entrar com a nova senha.', true);
+          setTimeout(() => { showRecovery(false); showEditor(false); }, 1600);
+        } catch (err) {
+          message('recovery-message', 'Não foi possível alterar a senha: ' + (err.message || 'abra novamente o link recebido por e-mail.'));
+        } finally {
+          button.disabled = false;
+          button.textContent = 'Salvar nova senha';
         }
       });
 
@@ -435,13 +506,21 @@
         message('auth-message', 'Você saiu da sua conta.', true);
       });
 
+      db.auth.onAuthStateChange((event, session) => {
+        if (event === 'PASSWORD_RECOVERY') {
+          recoveryMode = true;
+          showRecovery(true);
+          message('recovery-message', 'Link validado. Agora escolha sua nova senha.', true);
+        }
+      });
+
       (async () => {
         const { data, error } = await db.auth.getSession();
         if (error) {
           message('auth-message', 'Não foi possível verificar a sessão: ' + error.message);
           return;
         }
-        if (data.session && data.session.user) await loadSite(data.session.user);
+        if (data.session && data.session.user && !recoveryMode) await loadSite(data.session.user);
       })();
     })();
   </script>
