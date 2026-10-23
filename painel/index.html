@@ -181,7 +181,7 @@ function abrirEditor(site){
  <div class="input-group"><label for="eBgGradient">Degradê escuro</label><select id="eBgGradient" class="input-field"><option value="0" ${String(c.bgGradient??'55')==='0'?'selected':''}>Sem degradê</option><option value="25" ${String(c.bgGradient??'55')==='25'?'selected':''}>Suave</option><option value="55" ${String(c.bgGradient??'55')==='55'?'selected':''}>Médio</option><option value="80" ${String(c.bgGradient??'55')==='80'?'selected':''}>Forte</option></select><p class="small-help">O degradê ajuda a manter os textos legíveis por cima da imagem.</p></div></div>
  <div id="eBgPreview" style="min-height:125px;border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center;padding:18px;background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),#11151e;color:white;margin:10px 0 20px"><span style="font-weight:800;text-shadow:0 2px 8px #000">Prévia do fundo no painel<br><small style="font-weight:500;opacity:.85">A imagem e o degradê são ajustados aqui</small></span></div>
  <div class="section-title"><i class="fa-solid fa-palette"></i> Design e identidade visual</div><div class="grid-3">
- <div class="input-group"><label for="eBgColor">Cor de fundo</label><input type="color" id="eBgColor" class="input-field" value="${escapeHtml(c.bgColor||'#0a0b0e')}" style="height:48px;padding:5px"></div>
+ <div class="input-group"><label for="eBgColor">Cor de fundo</label><input type="color" id="eBgColor" class="input-field" value="${escapeHtml(c.bgColor||'#0a0b0e')}" style="height:48px;padding:5px"><label style="display:flex;align-items:center;gap:8px;margin-top:9px;font-size:12px"><input type="checkbox" id="eBgColorEnabled" ${c.bgColorEnabled===false?'':'checked'} style="width:16px;height:16px"> Ativar cor de fundo</label><label for="eBgColorOpacity" style="display:block;margin-top:10px">Opacidade da cor: <strong id="eBgColorOpacityValue">${Number.isFinite(Number(c.bgColorOpacity))?Number(c.bgColorOpacity):100}%</strong></label><input type="range" id="eBgColorOpacity" class="input-field" min="0" max="100" step="5" value="${Number.isFinite(Number(c.bgColorOpacity))?Math.max(0,Math.min(100,Number(c.bgColorOpacity))):100}" style="padding:8px 2px"><p class="small-help">Desative a cor ou reduza a opacidade para deixar a imagem aparecer mais.</p></div>
  <div class="input-group"><label for="eCardColor">Cor dos cartões</label><input type="color" id="eCardColor" class="input-field" value="${escapeHtml(c.cardColor||'#14151c')}" style="height:48px;padding:5px"></div>
  <div class="input-group"><label for="ePrimaryColor">Cor de destaque</label><input type="color" id="ePrimaryColor" class="input-field" value="${escapeHtml(c.primaryColor||'#e8b84a')}" style="height:48px;padding:5px"></div>
  <div class="input-group"><label for="eTextColor">Cor do texto</label><input type="color" id="eTextColor" class="input-field" value="${escapeHtml(c.textColor||'#ffffff')}" style="height:48px;padding:5px"></div>
@@ -189,17 +189,31 @@ function abrirEditor(site){
  <div class="input-group"><label for="eBtnStyle">Formato dos botões</label><select id="eBtnStyle" class="input-field"><option value="12px" ${c.btnRadius==='12px'||!c.btnRadius?'selected':''}>Suave (12px)</option><option value="30px" ${c.btnRadius==='30px'?'selected':''}>Pílula (30px)</option><option value="0px" ${c.btnRadius==='0px'?'selected':''}>Quadrado (0px)</option></select></div></div>
  <div class="form-actions"><button type="button" id="salvarEdicao" class="btn-main"><i class="fa-solid fa-floppy-disk"></i> Salvar alterações</button><button type="button" id="fecharEdicao" class="btn-secondary">Fechar editor</button></div><p id="msgEdit" class="status" role="status"></p></section>`;
  container.scrollIntoView({behavior:'smooth',block:'start'});
- const bgImageInput=document.getElementById('eBgImage'),bgOpacityInput=document.getElementById('eBgOpacity'),bgGradientInput=document.getElementById('eBgGradient'),bgOpacityValue=document.getElementById('eBgOpacityValue'),bgPreview=document.getElementById('eBgPreview');
+ const bgImageInput=document.getElementById('eBgImage'),bgOpacityInput=document.getElementById('eBgOpacity'),bgGradientInput=document.getElementById('eBgGradient'),bgOpacityValue=document.getElementById('eBgOpacityValue'),bgColorInput=document.getElementById('eBgColor'),bgColorEnabledInput=document.getElementById('eBgColorEnabled'),bgColorOpacityInput=document.getElementById('eBgColorOpacity'),bgColorOpacityValue=document.getElementById('eBgColorOpacityValue'),bgPreview=document.getElementById('eBgPreview');
  function atualizarPreviaFundo(){
   const opacity=Math.max(0,Math.min(100,Number(bgOpacityInput.value)||0))/100;
   const gradient=Math.max(0,Math.min(100,Number(bgGradientInput.value)||0))/100;
+  const colorOpacity=bgColorEnabledInput.checked?Math.max(0,Math.min(100,Number(bgColorOpacityInput.value)||0))/100:0;
   bgOpacityValue.textContent=Math.round(opacity*100)+'%';
+  bgColorOpacityValue.textContent=Math.round(Number(bgColorOpacityInput.value)||0)+'%';
   const url=bgImageInput.value.trim();
   const safeUrl=/^https?:\/\//i.test(url)?url.replace(/[\\"'()]/g,''):'';
-  bgPreview.style.backgroundImage=(safeUrl?`linear-gradient(rgba(0,0,0,${gradient}),rgba(0,0,0,${gradient})),linear-gradient(rgba(0,0,0,${1-opacity}),rgba(0,0,0,${1-opacity})),url("${safeUrl}")`:`linear-gradient(rgba(0,0,0,${Math.min(1,gradient+(1-opacity)*.5)}),rgba(0,0,0,${Math.min(1,gradient+(1-opacity)*.5)})),#11151e`);
+  const hex=(bgColorInput.value||'#0a0b0e').replace('#','');
+  const rgb=[parseInt(hex.slice(0,2),16),parseInt(hex.slice(2,4),16),parseInt(hex.slice(4,6),16)].join(',');
+  bgPreview.style.backgroundColor='#11151e';
+  if(safeUrl){
+   const layers=[];
+   if(gradient>0) layers.push(`linear-gradient(rgba(0,0,0,${gradient}),rgba(0,0,0,${gradient}))`);
+   if(colorOpacity>0) layers.push(`linear-gradient(rgba(${rgb},${colorOpacity}),rgba(${rgb},${colorOpacity}))`);
+   if(opacity<1) layers.push(`linear-gradient(rgba(0,0,0,${1-opacity}),rgba(0,0,0,${1-opacity}))`);
+   layers.push(`url("${safeUrl}")`);
+   bgPreview.style.backgroundImage=layers.join(',');
+  } else {
+   bgPreview.style.backgroundImage=bgColorEnabledInput.checked?`linear-gradient(rgba(${rgb},${colorOpacity}),rgba(${rgb},${colorOpacity}))`:'none';
+  }
   bgPreview.style.backgroundSize='cover';bgPreview.style.backgroundPosition='center';
  }
- [bgImageInput,bgOpacityInput,bgGradientInput].forEach(el=>el.addEventListener('input',atualizarPreviaFundo));atualizarPreviaFundo();
+ [bgImageInput,bgOpacityInput,bgGradientInput,bgColorInput,bgColorOpacityInput,bgColorEnabledInput].forEach(el=>el.addEventListener('input',atualizarPreviaFundo));atualizarPreviaFundo();
  document.getElementById('fecharEdicao').onclick=()=>container.innerHTML='';
  document.getElementById('salvarEdicao').onclick=async()=>{
   const btn=document.getElementById('salvarEdicao'),msg=document.getElementById('msgEdit'),nome=document.getElementById('eNome').value.trim();
@@ -208,7 +222,7 @@ function abrirEditor(site){
   if(!nome||!slug){msg.style.color='var(--red)';msg.textContent='Preencha o nome e o identificador.';return;}
   if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){msg.style.color='var(--red)';msg.textContent='Confira o e-mail do cliente.';return;}
   btn.disabled=true;msg.style.color='var(--muted)';msg.textContent='Salvando alterações...';
-  const updatedContent={...c,layout:document.getElementById('eLayout').value,clientEmail:email,whatsapp:document.getElementById('eWhats').value.trim(),instagram:document.getElementById('eInsta').value.trim(),pix:document.getElementById('ePix').value.trim(),pixNome:document.getElementById('ePixNome').value.trim(),pixCidade:document.getElementById('ePixCidade').value.trim(),wifiNome:document.getElementById('eWifiNome').value.trim(),wifiSenha:document.getElementById('eWifiSenha').value.trim(),maps:document.getElementById('eMaps').value.trim(),bgColor:document.getElementById('eBgColor').value,cardColor:document.getElementById('eCardColor').value,primaryColor:document.getElementById('ePrimaryColor').value,textColor:document.getElementById('eTextColor').value,font:document.getElementById('eFont').value,btnRadius:document.getElementById('eBtnStyle').value,bgImage:document.getElementById('eBgImage').value.trim(),bgImageOpacity:Number(document.getElementById('eBgOpacity').value),bgGradient:Number(document.getElementById('eBgGradient').value)};
+  const updatedContent={...c,layout:document.getElementById('eLayout').value,clientEmail:email,whatsapp:document.getElementById('eWhats').value.trim(),instagram:document.getElementById('eInsta').value.trim(),pix:document.getElementById('ePix').value.trim(),pixNome:document.getElementById('ePixNome').value.trim(),pixCidade:document.getElementById('ePixCidade').value.trim(),wifiNome:document.getElementById('eWifiNome').value.trim(),wifiSenha:document.getElementById('eWifiSenha').value.trim(),maps:document.getElementById('eMaps').value.trim(),bgColor:document.getElementById('eBgColor').value,bgColorEnabled:document.getElementById('eBgColorEnabled').checked,bgColorOpacity:Number(document.getElementById('eBgColorOpacity').value),cardColor:document.getElementById('eCardColor').value,primaryColor:document.getElementById('ePrimaryColor').value,textColor:document.getElementById('eTextColor').value,font:document.getElementById('eFont').value,btnRadius:document.getElementById('eBtnStyle').value,bgImage:document.getElementById('eBgImage').value.trim(),bgImageOpacity:Number(document.getElementById('eBgOpacity').value),bgGradient:Number(document.getElementById('eBgGradient').value)};
   try{const {error}=await supabase.from('sites').update({name:nome,slug,content:updatedContent}).eq('id',site.id);if(error)throw error;msg.style.color='var(--green)';msg.textContent='Alterações salvas no banco de dados.';await carregarSites();setTimeout(()=>{if(container.isConnected)container.innerHTML='';},900);}
   catch(err){msg.style.color='var(--red)';msg.textContent='Erro ao salvar: '+(err.message||'erro desconhecido');btn.disabled=false;}
  };
