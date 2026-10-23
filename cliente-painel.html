@@ -3,30 +3,105 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080b14">
   <title>Área do Cliente | JRB Digital</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body { background: #080b14; color: #e5e7eb; }
-    .panel { background: rgba(15, 23, 42, .88); border: 1px solid #263247; }
-    .field { width:100%; background:#080d19; border:1px solid #334155; border-radius:10px; padding:12px 13px; color:#f8fafc; outline:none; }
-    .field:focus { border-color:#d6ad55; box-shadow:0 0 0 2px rgba(214,173,85,.15); }
-    .label { display:block; color:#cbd5e1; font-size:.88rem; margin-bottom:7px; }
-    .gold { background:#d6ad55; color:#111827; }
-    .gold:hover { background:#e7c879; }
+    :root {
+      color-scheme: dark;
+      --gold: #d6ad55;
+      --gold-light: #f0d58d;
+      --line: rgba(148,163,184,.19);
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: #e5e7eb;
+      background:
+        radial-gradient(ellipse at top, rgba(214,173,85,.10), transparent 38%),
+        radial-gradient(ellipse at bottom right, rgba(30,64,175,.10), transparent 35%),
+        #080b14;
+      min-height: 100vh;
+    }
+    .panel {
+      background: linear-gradient(145deg, rgba(17,24,39,.96), rgba(10,15,27,.96));
+      border: 1px solid var(--line);
+      box-shadow: 0 22px 65px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.025);
+      backdrop-filter: blur(14px);
+    }
+    .field {
+      width: 100%;
+      background: rgba(5,10,20,.78);
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 12px 14px;
+      color: #f8fafc;
+      outline: none;
+      transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+    .field:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(214,173,85,.12);
+      background: rgba(5,10,20,.98);
+    }
+    .label { display:block; color:#d5dbe5; font-size:.88rem; font-weight:600; margin-bottom:7px; }
+    .hint { color:#7f8da3; font-size:.75rem; line-height:1.45; margin-top:6px; }
+    .gold {
+      color: #15120b;
+      background: linear-gradient(135deg, #c99b3e, #f0d58d 55%, #c99b3e);
+      box-shadow: 0 8px 24px rgba(214,173,85,.13);
+      transition: transform .18s ease, filter .18s ease, box-shadow .18s ease;
+    }
+    .gold:hover { filter: brightness(1.07); box-shadow: 0 10px 28px rgba(214,173,85,.2); }
+    .gold:active { transform: translateY(1px); }
+    .gold:disabled { opacity:.6; cursor:wait; }
+    .secondary {
+      border: 1px solid #3b465a;
+      background: rgba(15,23,42,.52);
+      transition: background .18s ease, border-color .18s ease;
+    }
+    .secondary:hover { background: rgba(30,41,59,.8); border-color: #64748b; }
+    .section-heading {
+      display:flex; align-items:center; gap:10px; color:#f8fafc;
+      font-size:1rem; font-weight:700; margin-bottom:15px;
+    }
+    .section-icon {
+      display:inline-flex; align-items:center; justify-content:center;
+      width:32px; height:32px; border-radius:10px;
+      color:var(--gold-light); background:rgba(214,173,85,.10);
+      border:1px solid rgba(214,173,85,.22); flex:0 0 auto;
+    }
+    .eyebrow { color:var(--gold-light); letter-spacing:.19em; text-transform:uppercase; font-size:.68rem; font-weight:800; }
+    .brand-mark {
+      display:inline-flex; align-items:center; justify-content:center;
+      width:58px; height:58px; border-radius:18px;
+      border:1px solid rgba(214,173,85,.45);
+      background:linear-gradient(145deg, rgba(214,173,85,.16), rgba(214,173,85,.035));
+      color:var(--gold-light); font-size:1.8rem; font-weight:900;
+      box-shadow:0 12px 35px rgba(0,0,0,.24);
+    }
+    .status-line { min-height:1.25rem; }
+    input::placeholder { color:#64748b; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition:none !important; } }
   </style>
 </head>
-<body class="min-h-screen px-4 py-8">
-  <main class="max-w-2xl mx-auto">
-    <header class="text-center mb-8">
-      <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl border border-amber-400/40 text-amber-300 text-2xl font-bold mb-3">J</div>
-      <h1 class="text-2xl sm:text-3xl font-bold tracking-wide">ÁREA DO CLIENTE</h1>
-      <p class="text-slate-400 mt-2 text-sm">Acesse para personalizar as informações do seu site.</p>
+<body class="min-h-screen px-4 py-7 sm:py-10">
+  <main class="max-w-3xl mx-auto">
+    <header class="text-center mb-8 sm:mb-10">
+      <div class="brand-mark mb-4">J</div>
+      <p class="eyebrow mb-2">JRB Digital</p>
+      <h1 class="text-2xl sm:text-3xl font-extrabold tracking-wide text-white">ÁREA DO CLIENTE</h1>
+      <p class="text-slate-400 mt-3 text-sm sm:text-base max-w-lg mx-auto">Gerencie as informações do seu site de forma simples e segura.</p>
     </header>
 
-    <section id="auth-card" class="panel rounded-2xl p-5 sm:p-7 shadow-xl">
-      <h2 class="text-xl font-semibold mb-1">Entrar na sua conta</h2>
-      <p class="text-sm text-slate-400 mb-6">Use o e-mail vinculado ao seu site.</p>
+    <section id="auth-card" class="panel rounded-3xl p-5 sm:p-8">
+      <div class="mb-6">
+        <p class="eyebrow mb-2">Acesso seguro</p>
+        <h2 class="text-xl sm:text-2xl font-bold text-white">Entrar na sua conta</h2>
+        <p class="text-sm text-slate-400 mt-2">Use o e-mail vinculado ao seu site.</p>
+      </div>
       <form id="login-form" class="space-y-4">
         <div>
           <label class="label" for="email">E-mail</label>
@@ -36,56 +111,90 @@
           <label class="label" for="password">Senha</label>
           <input class="field" id="password" type="password" autocomplete="current-password" required minlength="6" placeholder="Sua senha">
         </div>
-        <button id="login-btn" class="gold w-full rounded-xl py-3 font-bold" type="submit">Entrar</button>
+        <button id="login-btn" class="gold w-full rounded-xl py-3.5 font-extrabold" type="submit">Entrar</button>
       </form>
       <div class="grid sm:grid-cols-2 gap-3 mt-3">
-        <button id="signup-btn" type="button" class="w-full rounded-xl border border-slate-600 py-3 text-sm font-semibold hover:bg-slate-800">Criar conta</button>
-        <button id="reset-btn" type="button" class="w-full rounded-xl border border-slate-600 py-3 text-sm font-semibold hover:bg-slate-800">Esqueci a senha</button>
+        <button id="signup-btn" type="button" class="secondary w-full rounded-xl py-3 text-sm font-semibold">Criar conta</button>
+        <button id="reset-btn" type="button" class="secondary w-full rounded-xl py-3 text-sm font-semibold">Esqueci a senha</button>
       </div>
-      <p id="auth-message" class="text-sm mt-4 hidden" role="status"></p>
+      <p id="auth-message" class="status-line text-sm mt-4 hidden" role="status" aria-live="polite"></p>
     </section>
 
-    <section id="editor-card" class="panel rounded-2xl p-5 sm:p-7 shadow-xl hidden">
-      <div class="flex items-start justify-between gap-3 mb-6">
-        <div>
-          <p class="text-xs uppercase tracking-widest text-amber-300 mb-1">Seu site</p>
-          <h2 id="site-title" class="text-xl font-semibold">Carregando...</h2>
-          <p id="site-slug" class="text-sm text-slate-400 mt-1"></p>
+    <section id="editor-card" class="panel rounded-3xl p-5 sm:p-8 hidden">
+      <div class="flex items-start justify-between gap-4 mb-7 pb-5 border-b border-slate-700/70">
+        <div class="min-w-0">
+          <p class="eyebrow mb-2">Seu espaço</p>
+          <h2 id="site-title" class="text-xl sm:text-2xl font-bold text-white break-words">Carregando...</h2>
+          <p id="site-slug" class="text-sm text-slate-400 mt-2 break-all"></p>
         </div>
-        <button id="logout-btn" type="button" class="text-sm text-red-300 hover:text-red-200 underline">Sair</button>
+        <button id="logout-btn" type="button" class="text-sm text-red-300 hover:text-red-200 underline underline-offset-4 shrink-0">Sair</button>
       </div>
-      <form id="site-form" class="space-y-4">
-        <div>
-          <label class="label" for="whatsapp">Link do WhatsApp</label>
-          <input class="field" id="whatsapp" type="url" placeholder="https://wa.me/55...">
-        </div>
-        <div>
-          <label class="label" for="instagram">Link do Instagram</label>
-          <input class="field" id="instagram" type="url" placeholder="https://instagram.com/seuperfil">
-        </div>
-        <div>
-          <label class="label" for="pix">Chave Pix ou informação de pagamento</label>
-          <input class="field" id="pix" type="text" placeholder="Informe a chave Pix">
-        </div>
-        <div>
-          <label class="label" for="wifiNome">Nome da rede Wi-Fi</label>
-          <input class="field" id="wifiNome" type="text" placeholder="Nome da rede">
-        </div>
-        <div>
-          <label class="label" for="wifiSenha">Senha do Wi-Fi</label>
-          <input class="field" id="wifiSenha" type="text" placeholder="Senha da rede">
-        </div>
-        <div>
-          <label class="label" for="maps">Link do Google Maps / avaliações</label>
-          <input class="field" id="maps" type="url" placeholder="https://maps.app.goo.gl/...">
-        </div>
-        <button id="save-btn" class="gold w-full rounded-xl py-3 font-bold" type="submit">Salvar alterações</button>
+
+      <form id="site-form" class="space-y-7">
+        <section>
+          <h3 class="section-heading"><span class="section-icon">↗</span> Contatos e redes sociais</h3>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="label" for="whatsapp">Número do WhatsApp</label>
+              <input class="field" id="whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="Ex.: (98) 99999-9999">
+              <p class="hint">Informe DDD e número. O sistema cria o link automaticamente.</p>
+            </div>
+            <div>
+              <label class="label" for="instagram">Usuário do Instagram</label>
+              <div class="relative">
+                <span class="absolute left-3 top-3 text-slate-500">@</span>
+                <input class="field pl-8" id="instagram" type="text" autocomplete="off" placeholder="seuperfil">
+              </div>
+              <p class="hint">Digite apenas o nome do perfil, sem precisar colar o link.</p>
+            </div>
+            <div class="sm:col-span-2">
+              <label class="label" for="maps">Link do Google Maps / avaliações</label>
+              <input class="field" id="maps" type="url" inputmode="url" placeholder="Cole aqui o link de avaliações do Google">
+              <p class="hint">Este campo continua aceitando o link fornecido pelo Google.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="pt-6 border-t border-slate-700/70">
+          <h3 class="section-heading"><span class="section-icon">▦</span> Dados do Pix</h3>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div class="sm:col-span-2">
+              <label class="label" for="pix">Chave Pix</label>
+              <input class="field" id="pix" type="text" autocomplete="off" placeholder="CPF, CNPJ, e-mail, telefone ou chave aleatória">
+            </div>
+            <div>
+              <label class="label" for="pixNome">Nome do titular</label>
+              <input class="field" id="pixNome" type="text" autocomplete="name" placeholder="Nome do titular da chave">
+            </div>
+            <div>
+              <label class="label" for="pixCidade">Cidade do titular</label>
+              <input class="field" id="pixCidade" type="text" autocomplete="address-level2" placeholder="Ex.: São Luís">
+            </div>
+            <p class="hint sm:col-span-2">O nome e a cidade ajudam a montar os dados do Pix. A exibição do QR Code depende também da página pública do site estar preparada para usar esses campos.</p>
+          </div>
+        </section>
+
+        <section class="pt-6 border-t border-slate-700/70">
+          <h3 class="section-heading"><span class="section-icon">⌁</span> Rede Wi-Fi</h3>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="label" for="wifiNome">Nome da rede</label>
+              <input class="field" id="wifiNome" type="text" autocomplete="off" placeholder="Nome da rede Wi-Fi">
+            </div>
+            <div>
+              <label class="label" for="wifiSenha">Senha da rede</label>
+              <input class="field" id="wifiSenha" type="text" autocomplete="off" placeholder="Senha do Wi-Fi">
+            </div>
+          </div>
+        </section>
+
+        <button id="save-btn" class="gold w-full rounded-xl py-3.5 font-extrabold" type="submit">Salvar alterações</button>
       </form>
-      <p id="save-message" class="text-sm mt-4 hidden" role="status"></p>
-      <p class="text-xs text-slate-500 mt-5">As alterações são salvas no painel. A publicação no site depende da página pública estar conectada a esses dados.</p>
+      <p id="save-message" class="status-line text-sm mt-4 hidden" role="status" aria-live="polite"></p>
+      <p class="text-xs text-slate-500 mt-5 leading-relaxed">As informações são salvas no cadastro deste site. A exibição no site público depende de ele estar conectado aos campos correspondentes.</p>
     </section>
 
-    <footer class="text-center text-xs text-slate-600 mt-8">Painel de gerenciamento de sites</footer>
+    <footer class="text-center text-xs text-slate-600 mt-8">JRB Digital · Painel de gerenciamento de sites</footer>
   </main>
 
   <script>
@@ -115,10 +224,26 @@
       function normalizeEmail(value) {
         return (value || '').trim().toLowerCase();
       }
+      function normalizePhone(value) {
+        let digits = (value || '').replace(/\D/g, '');
+        if (!digits) return '';
+        // Brasil: se o cliente informar DDD + número sem código do país, acrescenta 55.
+        if (digits.length === 10 || digits.length === 11) digits = '55' + digits;
+        return digits;
+      }
+      function makeWhatsAppLink(value) {
+        const phone = normalizePhone(value);
+        return phone ? 'https://wa.me/' + phone : '';
+      }
+      function normalizeInstagram(value) {
+        return (value || '').trim().replace(/^@+/, '').replace(/^https?:\/\/(www\.)?instagram\.com\//i, '').replace(/[/?#].*$/, '');
+      }
+      function makeInstagramLink(value) {
+        const username = normalizeInstagram(value);
+        return username ? 'https://www.instagram.com/' + encodeURIComponent(username) + '/' : '';
+      }
 
       async function findClientSite(email, userId) {
-        // Primeiro procura pelo e-mail guardado pelo painel administrativo.
-        // Compatibilidade com os dois nomes de campo já encontrados nos dados.
         let result = await db.from('sites')
           .select('id, owner_id, name, slug, content, published')
           .filter('content->>clientEmail', 'ilike', email)
@@ -133,7 +258,6 @@
         if (result.error) throw result.error;
         if (result.data && result.data.length) return result.data[0];
 
-        // Compatibilidade opcional para sites cujo owner_id seja o próprio usuário.
         result = await db.from('sites')
           .select('id, owner_id, name, slug, content, published')
           .eq('owner_id', userId)
@@ -146,9 +270,12 @@
         const c = site.content || {};
         $('site-title').textContent = site.name || 'Meu site';
         $('site-slug').textContent = site.slug ? 'Identificador: ' + site.slug : '';
-        $('whatsapp').value = c.whatsapp || '';
-        $('instagram').value = c.instagram || '';
+        // Lê os campos novos e mantém compatibilidade com links antigos.
+        $('whatsapp').value = c.whatsappNumero || c.whatsapp_numero || c.whatsapp || '';
+        $('instagram').value = c.instagramUsuario || c.instagram_usuario || c.instagram || '';
         $('pix').value = c.pix || '';
+        $('pixNome').value = c.pixNome || c.pix_nome || c.pixMerchantName || '';
+        $('pixCidade').value = c.pixCidade || c.pix_cidade || c.pixMerchantCity || '';
         $('wifiNome').value = c.wifiNome || c.wifi_ssid || '';
         $('wifiSenha').value = c.wifiSenha || c.wifi_pass || '';
         $('maps').value = c.maps || '';
@@ -256,13 +383,26 @@
         button.textContent = 'Salvando...';
         try {
           const old = currentSite.content || {};
+          const whatsappNumero = $('whatsapp').value.trim();
+          const instagramUsuario = normalizeInstagram($('instagram').value);
+          const whatsappLink = makeWhatsAppLink(whatsappNumero);
+          const instagramLink = makeInstagramLink(instagramUsuario);
           const content = {
             ...old,
             clientEmail: old.clientEmail || currentUser.email,
             client_email: old.client_email || currentUser.email,
-            whatsapp: $('whatsapp').value.trim(),
-            instagram: $('instagram').value.trim(),
+            // Links prontos para a página pública e valores originais para edição simples.
+            whatsapp: whatsappLink,
+            whatsappNumero,
+            whatsapp_numero: whatsappNumero,
+            instagram: instagramLink,
+            instagramUsuario,
+            instagram_usuario: instagramUsuario,
             pix: $('pix').value.trim(),
+            pixNome: $('pixNome').value.trim(),
+            pix_nome: $('pixNome').value.trim(),
+            pixCidade: $('pixCidade').value.trim(),
+            pix_cidade: $('pixCidade').value.trim(),
             wifiNome: $('wifiNome').value.trim(),
             wifiSenha: $('wifiSenha').value.trim(),
             wifi_ssid: $('wifiNome').value.trim(),
