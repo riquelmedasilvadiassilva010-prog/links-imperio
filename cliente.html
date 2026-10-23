@@ -11,6 +11,23 @@
 :root{--bg:#fff;--card:#f40000;--primary:#111;--text:#fff;--radius:12px;--font:system-ui,sans-serif}
 *{box-sizing:border-box}body{margin:0;min-height:100vh;background:var(--bg);color:var(--primary);font-family:var(--font);padding:0 16px 40px}
 .page{width:100%;max-width:650px;margin:0 auto;padding-top:32px}.identity{text-align:center;margin:0 auto 30px}.logo{display:block;object-fit:contain;width:140px;height:140px;max-width:48vw;margin:0 auto 18px;border-radius:16px}.mark{font-size:56px;color:var(--primary);margin:10px auto 26px}.business{font-size:clamp(25px,5vw,34px);font-weight:800;overflow-wrap:anywhere}.description{font-size:14px;opacity:.7;margin-top:10px;overflow-wrap:anywhere}.links{display:grid;gap:14px}.link{width:100%;min-height:76px;border:1px solid #0003;border-radius:var(--radius);background:var(--card);color:var(--text);display:flex;align-items:center;gap:14px;padding:16px 20px;text-decoration:none;font-weight:750;font-size:clamp(15px,3.7vw,19px);box-shadow:0 5px 16px #0000000d;overflow-wrap:anywhere}.link i:first-child{width:28px;text-align:center;font-size:23px;flex-shrink:0}.link .label{flex:1;text-align:center}.link .end{font-size:16px;opacity:.7}.notice{text-align:center;margin:40px auto;line-height:1.6}.footer{text-align:center;margin-top:32px;font-size:11px;opacity:.5}
+body.layout-elegante .page{max-width:560px;padding-top:44px}
+body.layout-elegante .identity{padding:22px 16px 28px;border-bottom:1px solid color-mix(in srgb,var(--primary) 16%,transparent);margin-bottom:26px}
+body.layout-elegante .logo{border-radius:50%;padding:8px;border:1px solid color-mix(in srgb,var(--primary) 30%,transparent)}
+body.layout-elegante .link{min-height:82px;box-shadow:0 10px 28px #00000018}
+body.layout-moderno .page{max-width:760px;padding-top:28px}
+body.layout-moderno .links{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+body.layout-moderno .link{min-height:104px;flex-direction:column;justify-content:center;gap:8px;padding:15px 12px}
+body.layout-moderno .link i:first-child{font-size:25px}
+body.layout-moderno .link .label{flex:0;text-align:center}
+body.layout-moderno .link .end{display:none}
+body.layout-minimalista .page{max-width:520px;padding-top:24px}
+body.layout-minimalista .identity{margin-bottom:22px}
+body.layout-minimalista .logo{width:100px;height:100px;margin-bottom:12px}
+body.layout-minimalista .links{gap:9px}
+body.layout-minimalista .link{min-height:58px;box-shadow:none;border-color:color-mix(in srgb,var(--text) 22%,transparent);padding:12px 15px;font-size:15px}
+body.layout-minimalista .link i:first-child{font-size:19px}
+@media(max-width:520px){body.layout-moderno .links{grid-template-columns:1fr 1fr}body.layout-moderno .link{min-height:100px;padding:12px 8px;font-size:14px}body.layout-moderno .link i:first-child{width:auto}}
 @media(min-width:700px){.page{padding-top:52px}.logo{width:160px;height:160px}.link{min-height:82px;padding:18px 24px}}@media(prefers-reduced-motion:no-preference){.link{transition:transform .15s,filter .15s}.link:hover{filter:brightness(1.04);transform:translateY(-1px)}}
 </style>
 </head>
@@ -27,6 +44,8 @@ async function load(){const slug=new URLSearchParams(location.search).get('slug'
 const{data,error}=await supabase.from('sites').select('name,slug,content,published').eq('slug',slug).maybeSingle();
 if(error)throw error;if(!data){fail('Página não encontrada.');return}if(!data.published){fail('Este site está temporariamente indisponível.');return}
 const c=data.content&&typeof data.content==='object'?data.content:{};
+const layout=['elegante','moderno','minimalista'].includes(c.layout)?c.layout:'elegante';
+document.body.classList.add('layout-'+layout);
 document.documentElement.style.setProperty('--bg',c.bgColor||'#ffffff');document.documentElement.style.setProperty('--card',c.cardColor||'#f40000');document.documentElement.style.setProperty('--primary',c.primaryColor||'#111111');document.documentElement.style.setProperty('--text',c.textColor||'#ffffff');document.documentElement.style.setProperty('--radius',c.btnRadius||'12px');document.documentElement.style.setProperty('--font',c.font||'system-ui,sans-serif');document.title=data.name||'Links oficiais';
 const links=[];const add=(label,icon,url,action='link')=>{if(url)links.push({label,icon,url,action})};
 const phone=String(c.whatsapp||'').replace(/\D/g,'');add('Conversar no WhatsApp','fa-brands fa-whatsapp',phone?'https://wa.me/'+phone:'');
