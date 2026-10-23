@@ -3,6 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090b10">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
 <title>IMPÉRIO DIGITAL | Painel Master</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
@@ -232,5 +239,22 @@ function abrirEditor(site){
 }
 init();
 </script>
+
+<style>
+#pwaInstallButton{position:fixed;right:16px;bottom:16px;z-index:9999;display:none;align-items:center;gap:9px;padding:12px 15px;border:1px solid #f6d47e;border-radius:13px;color:#17140d;background:linear-gradient(135deg,#f6d47e,#e8b84a);box-shadow:0 10px 30px #0008;font:800 13px/1.2 system-ui,sans-serif}
+#pwaInstallButton:focus-visible{outline:3px solid #fff;outline-offset:3px}
+#pwaInstallButton i{font-size:15px}
+@media(max-width:480px){#pwaInstallButton{right:12px;bottom:12px}}
+</style>
+<button id="pwaInstallButton" type="button" aria-label="Instalar aplicativo do painel"><i class="fa-solid fa-mobile-screen-button" aria-hidden="true"></i> Instalar painel</button>
+<script>
+(()=>{const b=document.getElementById('pwaInstallButton');let promptEvent=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();promptEvent=e;b.style.display='inline-flex';});
+b.addEventListener('click',async()=>{if(!promptEvent){alert('Para instalar: abra este painel no Chrome do Android, toque no menu ⋮ e escolha “Instalar app” ou “Adicionar à tela inicial”.');return;}promptEvent.prompt();try{await promptEvent.userChoice;}catch(_){}promptEvent=null;b.style.display='none';});
+window.addEventListener('appinstalled',()=>{b.style.display='none';promptEvent=null;});
+if('serviceWorker'in navigator&&location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(err=>console.warn('Não foi possível ativar o modo instalável:',err)));
+})();
+</script>
+
 </body>
 </html>
