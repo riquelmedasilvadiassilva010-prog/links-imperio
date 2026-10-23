@@ -140,7 +140,36 @@
       <p id="recovery-message" class="status-line text-sm mt-4 hidden" role="status" aria-live="polite"></p>
     </section>
 
-    <section id="editor-card" class="panel rounded-3xl p-5 sm:p-8 hidden">
+<section id="signup-card" class="panel rounded-3xl p-5 sm:p-8 hidden">
+      <div class="mb-6">
+        <p class="eyebrow mb-2">Novo cadastro</p>
+        <h2 class="text-xl sm:text-2xl font-bold text-white">Criar minha conta</h2>
+        <p class="text-sm text-slate-400 mt-2">Preencha os dados abaixo. O nome é opcional e serve apenas para identificação.</p>
+      </div>
+      <form id="signup-form" class="space-y-4">
+        <div>
+          <label class="label" for="signup-name">Nome (opcional)</label>
+          <input class="field" id="signup-name" type="text" autocomplete="name" maxlength="120" placeholder="Seu nome">
+        </div>
+        <div>
+          <label class="label" for="signup-email">E-mail</label>
+          <input class="field" id="signup-email" type="email" autocomplete="email" required placeholder="voce@exemplo.com">
+        </div>
+        <div>
+          <label class="label" for="signup-password">Criar senha</label>
+          <input class="field" id="signup-password" type="password" autocomplete="new-password" required minlength="6" placeholder="Pelo menos 6 caracteres">
+        </div>
+        <div>
+          <label class="label" for="signup-confirm-password">Confirmar senha</label>
+          <input class="field" id="signup-confirm-password" type="password" autocomplete="new-password" required minlength="6" placeholder="Digite a senha novamente">
+        </div>
+        <button id="signup-submit-btn" class="gold w-full rounded-xl py-3.5 font-extrabold" type="submit">Criar conta</button>
+      </form>
+      <button id="back-login-btn" type="button" class="secondary w-full rounded-xl py-3 mt-3 text-sm font-semibold">Voltar para entrar</button>
+      <p id="signup-message" class="status-line text-sm mt-4 hidden" role="status" aria-live="polite"></p>
+    </section>
+
+        <section id="editor-card" class="panel rounded-3xl p-5 sm:p-8 hidden">
       <div class="flex items-start justify-between gap-4 mb-7 pb-5 border-b border-slate-700/70">
         <div class="min-w-0">
           <p class="eyebrow mb-2">Seu espaço</p>
@@ -238,15 +267,27 @@
         $(id).textContent = '';
         $(id).classList.add('hidden');
       }
+      function hideAuthPanels() {
+        $('auth-card').classList.add('hidden');
+        $('signup-card').classList.add('hidden');
+        $('recovery-card').classList.add('hidden');
+      }
       function showEditor(show) {
-        $('auth-card').classList.toggle('hidden', show);
+        if (show) hideAuthPanels();
         $('editor-card').classList.toggle('hidden', !show);
-        if (show) $('recovery-card').classList.add('hidden');
+        if (!show) $('editor-card').classList.add('hidden');
       }
       function showRecovery(show) {
-        $('auth-card').classList.toggle('hidden', show);
+        hideAuthPanels();
         $('editor-card').classList.add('hidden');
         $('recovery-card').classList.toggle('hidden', !show);
+        if (!show) $('auth-card').classList.remove('hidden');
+      }
+      function showSignup(show) {
+        hideAuthPanels();
+        $('editor-card').classList.add('hidden');
+        $('signup-card').classList.toggle('hidden', !show);
+        if (!show) $('auth-card').classList.remove('hidden');
       }
       function normalizeEmail(value) {
         return (value || '').trim().toLowerCase();
@@ -349,42 +390,58 @@
         }
       });
 
-      $('signup-btn').addEventListener('click', async () => {
+      $('signup-btn').addEventListener('click', () => {
+        clearMessage('signup-message');
+        $('signup-email').value = normalizeEmail($('email').value);
+        $('signup-password').value = $('password').value;
+        $('signup-confirm-password').value = '';
+        showSignup(true);
+      });
+
+      $('back-login-btn').addEventListener('click', () => {
+        showSignup(false);
         clearMessage('auth-message');
-        const email = normalizeEmail($('email').value);
-        const password = $('password').value;
-        if (!email || !password) {
-          message('auth-message', 'Preencha o e-mail e crie uma senha com pelo menos 6 caracteres.');
-          return;
-        }
+      });
+
+      $('signup-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        clearMessage('signup-message');
+        const name = $('signup-name').value.trim();
+        const email = normalizeEmail($('signup-email').value);
+        const password = $('signup-password').value;
+        const confirmation = $('signup-confirm-password').value;
         if (password.length < 6) {
-          message('auth-message', 'A senha precisa ter pelo menos 6 caracteres.');
+          message('signup-message', 'A senha precisa ter pelo menos 6 caracteres.');
           return;
         }
-        const button = $('signup-btn');
+        if (password !== confirmation) {
+          message('signup-message', 'As senhas não são iguais. Confira e tente novamente.');
+          return;
+        }
+        const button = $('signup-submit-btn');
         button.disabled = true;
-        button.textContent = 'Criando...';
+        button.textContent = 'Criando conta...';
         try {
-          // Mantém o cliente nesta mesma Área do Cliente após confirmar o e-mail.
-          // O endereço também precisa estar autorizado em Supabase > Authentication > URL Configuration.
           const emailRedirectTo = window.location.origin + window.location.pathname;
           const { data, error } = await db.auth.signUp({
             email,
             password,
-            options: { emailRedirectTo }
+            options: {
+              emailRedirectTo,
+              data: { full_name: name || '' }
+            }
           });
           if (error) throw error;
-
           if (data.session && data.user) {
-            message('auth-message', 'Conta criada com sucesso. Conferindo se existe um site vinculado a este e-mail...', true);
+            message('signup-message', 'Conta criada. Conferindo se existe um site vinculado a este e-mail...', true);
             await loadSite(data.user);
           } else if (data.user) {
-            message('auth-message', 'Cadastro iniciado! Abra o e-mail enviado pelo Supabase e confirme sua conta. Depois volte aqui e entre com o mesmo e-mail e senha.', true);
+            message('signup-message', 'Cadastro iniciado! Enviamos uma mensagem de confirmação para seu e-mail. Confirme o endereço e depois volte à tela de entrada.', true);
           } else {
-            message('auth-message', 'Não foi possível confirmar o cadastro. Confira o e-mail informado e tente novamente.');
+            message('signup-message', 'Não foi possível confirmar o cadastro. Confira os dados e tente novamente.');
           }
         } catch (err) {
-          message('auth-message', 'Não foi possível criar a conta: ' + (err.message || 'erro desconhecido'));
+          message('signup-message', 'Não foi possível criar a conta: ' + (err.message || 'erro desconhecido'));
         } finally {
           button.disabled = false;
           button.textContent = 'Criar conta';
