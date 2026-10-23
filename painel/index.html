@@ -1,234 +1,432 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IMPÉRIO DIGITAL | Painel Master</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-:root{--bg:#090b10;--panel:#10131b;--card:#141925;--input:#0b0e15;--gold:#e8b84a;--gold2:#f6d47e;--text:#f5f6fa;--muted:#969daf;--line:#252b39;--green:#35d49a;--red:#ff6b78;--blue:#8ba9ff}
-*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,"Segoe UI",system-ui,sans-serif}
-body{min-height:100vh;background:radial-gradient(ellipse at 80% -10%,#29213b 0,transparent 34%),radial-gradient(ellipse at 0% 0%,#1b1b28 0,transparent 30%),var(--bg);color:var(--text)}
-button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;cursor:wait}
-.login-wrapper{min-height:100vh;display:grid;place-items:center;padding:20px}
-.card,.site-card{background:linear-gradient(145deg,rgba(22,27,39,.98),rgba(16,19,28,.98));border:1px solid var(--line);border-radius:18px;box-shadow:0 18px 55px #0003}
-.login-card{width:100%;max-width:420px;padding:30px}
-.brand-area{display:flex;align-items:center;gap:12px;min-width:0}.brand-icon{font-size:28px;color:var(--gold)}.brand-name{font-size:16px;font-weight:850;letter-spacing:1.1px;color:var(--gold2)}.brand-sub{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px;overflow-wrap:anywhere}
-.login-intro{margin:26px 0 22px}.login-intro h1{font-size:25px;letter-spacing:-.7px;margin-bottom:8px}.login-intro p{color:var(--muted);font-size:13px;line-height:1.6}
-.input-group{margin-bottom:15px;min-width:0}.input-group label{display:block;color:#b6bdcc;font-size:11px;font-weight:750;text-transform:uppercase;letter-spacing:.7px;margin-bottom:7px}
-.input-field{width:100%;min-width:0;min-height:46px;padding:12px 13px;background:var(--input);border:1px solid #2a3040;border-radius:10px;color:var(--text);outline:none;font-size:14px;transition:border .18s,box-shadow .18s}
-.input-field:focus{border-color:var(--gold);box-shadow:0 0 0 3px #e8b84a1c}.input-field::placeholder{color:#687084}
-.btn-main,.btn-secondary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:11px 17px;border:1px solid transparent;border-radius:10px;font-weight:800;font-size:13px;transition:transform .15s,filter .15s}
-.btn-main{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#17140d;box-shadow:0 5px 18px #e8b84a1a}.btn-main:hover{filter:brightness(1.06);transform:translateY(-1px)}
-.btn-secondary{background:#202636;color:#e9ecf5;border-color:#30384a}.btn-secondary:hover{background:#293144}
-.status{margin-top:12px;font-size:12px;line-height:1.55;overflow-wrap:anywhere;color:var(--muted)}
-.app-layout{display:flex;min-height:100vh}.sidebar{width:255px;flex-shrink:0;background:rgba(13,16,23,.92);border-right:1px solid var(--line);padding:25px 17px;display:flex;flex-direction:column;justify-content:space-between;gap:25px}
-.sidebar-brand{padding:3px 10px 25px;border-bottom:1px solid var(--line)}.sidebar .brand-icon{font-size:30px}.sidebar .brand-name{font-size:15px}.user-chip{display:flex;align-items:center;gap:9px;margin-top:18px;padding:10px;background:#171c28;border:1px solid var(--line);border-radius:11px;min-width:0}.user-avatar{width:32px;height:32px;display:grid;place-items:center;flex-shrink:0;border-radius:10px;background:#e8b84a1b;color:var(--gold)}.user-email{font-size:11px;color:#d7dbea;overflow-wrap:anywhere;line-height:1.4}
-.nav-label{font-size:9px;letter-spacing:1.8px;text-transform:uppercase;color:#687084;font-weight:800;padding:0 12px;margin:24px 0 8px}.nav-item{display:flex;align-items:center;gap:12px;padding:12px;border-radius:10px;color:var(--muted);text-decoration:none;font-size:13px;font-weight:700;margin-bottom:5px;cursor:pointer}.nav-item i{width:17px;text-align:center}.nav-item:hover,.nav-item.active{background:#e8b84a17;color:var(--gold2)}.sidebar-bottom .btn-secondary{width:100%}
-main{flex:1;min-width:0;width:100%;max-width:1500px;margin:0 auto;padding:32px clamp(16px,3vw,42px) 50px}
-.mobile-top{display:none}.page-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:25px}.eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:1.8px;font-weight:800;color:var(--gold);margin-bottom:8px}.page-heading h1{font-size:clamp(23px,3vw,31px);letter-spacing:-1px}.page-heading p{color:var(--muted);font-size:13px;margin-top:7px;line-height:1.5}
-.stats-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:25px}.stat-card{padding:18px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(135deg,#171c28,#11151e);min-width:0}.stat-top{display:flex;align-items:center;justify-content:space-between;gap:8px;color:var(--muted);font-size:11px;font-weight:700}.stat-icon{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;color:var(--gold);background:#e8b84a17}.stat-value{font-size:27px;font-weight:850;letter-spacing:-1px;margin-top:13px}.stat-note{font-size:10px;color:#7f879a;margin-top:3px}
-.list-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:24px 0 14px}.list-toolbar h2{font-size:16px}.list-toolbar p{font-size:11px;color:var(--muted);margin-top:4px}.toolbar-controls{display:flex;gap:9px;flex:1;justify-content:flex-end;min-width:230px}.search-wrap{position:relative;max-width:310px;width:100%}.search-wrap i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#747d92;font-size:12px}.search-wrap input{padding-left:35px;min-height:42px}.filter-select{max-width:145px;min-height:42px}
-.site-card{padding:19px;margin-bottom:12px;transition:border-color .2s,transform .2s}.site-card:hover{border-color:#e8b84a75;transform:translateY(-1px)}.site-header{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}.site-identity{display:flex;align-items:flex-start;gap:12px;min-width:0}.site-symbol{width:43px;height:43px;border-radius:12px;display:grid;place-items:center;flex-shrink:0;background:linear-gradient(135deg,#e8b84a26,#e8b84a0b);border:1px solid #e8b84a2e;color:var(--gold);font-size:17px}.site-details{min-width:0;overflow-wrap:anywhere}.site-name{font-size:15px;font-weight:800;line-height:1.4}.site-url{font-size:11px;color:#9ba4b8;margin-top:4px;overflow-wrap:anywhere}.site-client{font-size:11px;margin-top:8px;line-height:1.5;overflow-wrap:anywhere}.badge{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border-radius:20px;font-size:10px;font-weight:800;white-space:nowrap}.badge:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}.badge-active{background:#35d49a16;color:var(--green)}.badge-inactive{background:#ff6b7816;color:var(--red)}
-.action-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:17px;padding-top:15px;border-top:1px solid #252b39}.btn-act{display:flex;align-items:center;justify-content:center;gap:7px;min-width:0;min-height:42px;padding:9px 8px;border:1px solid transparent;border-radius:9px;font-size:11px;font-weight:800;text-decoration:none;text-align:center;overflow-wrap:anywhere}.btn-act-edit{background:#e8b84a;color:#19150c}.btn-act-view{background:#202636;color:#e4e9f4;border-color:#31394b}.btn-act-toggle{background:#35d49a14;color:var(--green);border-color:#35d49a22}.btn-act-delete{background:#ff6b7812;color:var(--red);border-color:#ff6b7825}.btn-act:hover{filter:brightness(1.12)}
-#formContainer{scroll-margin-top:18px}.form-card{padding:clamp(17px,2.4vw,26px);margin:22px 0;border-color:#8f702f}.form-heading{display:flex;align-items:flex-start;gap:12px;margin-bottom:18px}.form-heading .site-symbol{width:40px;height:40px}.form-heading h2{font-size:18px}.form-heading p{font-size:12px;color:var(--muted);line-height:1.6;margin-top:5px}.section-title{display:flex;align-items:center;gap:9px;font-size:11px;font-weight:850;color:var(--gold2);letter-spacing:1px;text-transform:uppercase;margin:24px 0 14px;padding-bottom:10px;border-bottom:1px solid var(--line)}.grid-2,.grid-3{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px}.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}.form-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}.empty-state,.loading-state{padding:32px 20px;text-align:center;border:1px dashed #30384a;border-radius:15px;background:#11151d;color:var(--muted);font-size:13px;line-height:1.7}.empty-state i{font-size:27px;color:#727c91;margin-bottom:12px}.empty-state h3{color:#e8ebf3;font-size:15px;margin-bottom:5px}.small-help{font-size:11px;color:var(--muted);line-height:1.6;margin-top:7px}
-@media(max-width:900px){.sidebar{width:220px;padding:22px 13px}main{padding:26px 20px}.action-row{grid-template-columns:repeat(2,minmax(0,1fr))}.btn-act-delete{grid-column:auto}}
-@media(max-width:680px){.app-layout{display:block}.sidebar{width:100%;padding:12px 15px;border-right:0;border-bottom:1px solid var(--line);display:flex;flex-direction:row;align-items:center;gap:10px}.sidebar-brand{border:0;padding:0;min-width:0;flex:1}.sidebar .brand-icon{font-size:25px}.sidebar .brand-name{font-size:13px}.sidebar .brand-sub{font-size:8px;letter-spacing:1px}.sidebar .user-chip,.sidebar nav,.nav-label{display:none}.sidebar-bottom{flex-shrink:0}.sidebar-bottom .btn-secondary{min-height:39px;padding:8px 11px;font-size:11px;width:auto}.sidebar-bottom .btn-secondary i{margin:0}main{padding:23px 14px 36px}.page-heading{margin-bottom:19px}.page-heading h1{font-size:24px}.page-heading>.btn-main{width:100%}.stats-grid{gap:8px;margin-bottom:23px}.stat-card{padding:12px 10px;border-radius:12px}.stat-top{font-size:9px;align-items:flex-start}.stat-icon{width:27px;height:27px;font-size:11px}.stat-value{font-size:23px;margin-top:11px}.stat-note{font-size:9px}.list-toolbar{align-items:flex-start}.toolbar-controls{min-width:100%;justify-content:stretch}.search-wrap{max-width:none;flex:1}.filter-select{width:125px}.site-card{padding:15px;border-radius:15px}.site-symbol{width:37px;height:37px}.site-name{font-size:14px}.site-header{gap:8px}.badge{font-size:9px;padding:5px 7px}.action-row{gap:7px}.btn-act{min-height:44px;font-size:11px;padding:8px 5px}.grid-2,.grid-3{grid-template-columns:1fr}.form-actions{display:grid;grid-template-columns:1fr}.form-actions button{width:100%}.login-card{padding:24px 20px}.login-intro h1{font-size:23px}}
-@media(max-width:370px){.stats-grid{grid-template-columns:1fr}.stat-card{display:flex;align-items:center;justify-content:space-between}.stat-value{margin:0}.stat-note{display:none}.site-header{flex-direction:column}.action-row{grid-template-columns:1fr 1fr}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IMPÉRIO DIGITAL | Painel Master</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-dark:#0a0b0e; --bg-sidebar:#0f1015; --bg-card:#14151c;
+      --bg-input:#0d0e12; --primary:#e8b84a; --text:#fff;
+      --text-muted:#8e8f9e; --border:#1e1f29; --success:#22c55e; --danger:#ef4444;
+    }
+    * { box-sizing:border-box; margin:0; padding:0; font-family:'Segoe UI',system-ui,sans-serif; }
+    body { background:var(--bg-dark); color:var(--text); min-height:100vh; }
+    .app-layout { display:flex; flex-direction:column; width:100%; min-height:100vh; }
+    aside { width:100%; background:var(--bg-sidebar); border-bottom:1px solid var(--border); padding:16px 20px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .brand-area { display:flex; align-items:center; gap:10px; min-width:0; }
+    .brand-icon { color:var(--primary); font-size:24px; }
+    .brand-name { font-size:16px; font-weight:800; color:var(--primary); letter-spacing:.5px; }
+    .brand-sub { font-size:9px; color:var(--text-muted); text-transform:uppercase; overflow-wrap:anywhere; }
+    nav { display:none; }
+    main { flex:1; padding:16px; width:100%; max-width:1200px; margin:0 auto; }
+    .card,.site-card { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:20px; margin-bottom:16px; }
+    .input-group { margin-bottom:12px; min-width:0; }
+    .input-group label { display:block; font-size:11px; color:var(--text-muted); margin-bottom:4px; text-transform:uppercase; }
+    .input-field { width:100%; padding:12px; background:var(--bg-input); border:1px solid var(--border); border-radius:8px; color:white; outline:none; font-size:14px; }
+    .input-field:focus { border-color:var(--primary); }
+    .btn-main,.btn-secondary { width:100%; padding:12px 20px; border:none; border-radius:8px; font-weight:700; cursor:pointer; font-size:14px; }
+    .btn-main { background:var(--primary); color:#101114; }
+    .btn-secondary { padding:10px; background:#232430; color:white; font-size:13px; margin-top:8px; }
+    button:disabled { opacity:.55; cursor:not-allowed; }
+    .site-card { padding:16px; margin-bottom:12px; }
+    .site-header { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:10px; }
+    .site-header > div { min-width:0; overflow-wrap:anywhere; }
+    .badge { padding:4px 8px; border-radius:12px; font-size:10px; font-weight:bold; white-space:nowrap; }
+    .badge-active { background:rgba(34,197,94,.15); color:var(--success); }
+    .badge-inactive { background:rgba(239,68,68,.15); color:var(--danger); }
+    .action-row { display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
+    .btn-act { flex:1; padding:10px; border:none; border-radius:6px; font-size:12px; font-weight:bold; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px; text-decoration:none; min-width:100px; }
+    .btn-act-edit { background:var(--primary); color:#101114; }
+    .btn-act-view { background:#232430; color:white; }
+    .btn-act-toggle { background:rgba(34,197,94,.2); color:var(--success); }
+    .btn-act-delete { background:rgba(239,68,68,.2); color:var(--danger); }
+    .login-wrapper { display:flex; min-height:80vh; align-items:center; justify-content:center; padding:16px; }
+    .section-title { font-size:14px; font-weight:bold; color:var(--primary); margin:16px 0 10px; border-bottom:1px dashed var(--border); padding-bottom:6px; text-transform:uppercase; }
+    .status { margin-top:12px; font-size:12px; line-height:1.5; overflow-wrap:anywhere; }
+    .grid-2,.grid-3 { display:grid; grid-template-columns:1fr; gap:12px; }
+    @media (min-width:768px) {
+      .app-layout { flex-direction:row; }
+      aside { width:260px; flex-shrink:0; border-bottom:none; border-right:1px solid var(--border); flex-direction:column; justify-content:space-between; padding:24px; align-items:flex-start; }
+      .brand-icon { font-size:32px; }
+      .brand-name { font-size:18px; }
+      nav { display:flex; flex-direction:column; gap:8px; width:100%; margin-top:30px; }
+      .nav-item { display:flex; align-items:center; gap:12px; padding:12px 16px; border-radius:10px; color:var(--text-muted); text-decoration:none; font-size:14px; font-weight:600; cursor:pointer; }
+      .nav-item:hover,.nav-item.active { background:var(--primary); color:#101114; }
+      main { padding:32px; }
+      .grid-2 { grid-template-columns:1fr 1fr; }
+      .grid-3 { grid-template-columns:1fr 1fr 1fr; }
+      .btn-main { width:auto; }
+    }
+
+    /* Ajustes da próxima etapa: interface mais clara e confortável no celular */
+    body { background: radial-gradient(ellipse at 15% 0%, #191827 0, transparent 38%), var(--bg-dark); }
+    .site-card, .card { box-shadow: 0 12px 32px rgba(0,0,0,.16); }
+    .site-card { transition: border-color .18s, transform .18s; }
+    .site-card:hover { border-color: rgba(232,184,74,.42); }
+    .btn-act { min-height: 44px; font-size: 13px; }
+    .input-field { min-height: 48px; border-radius: 11px; }
+    .section-title { margin-top: 22px; padding-bottom: 10px; }
+    .editor { scroll-margin-top: 14px; }
+    @media (max-width: 767px) {
+      body { padding: 0; }
+      .app-layout { display: block; }
+      aside { position: relative; padding: 14px 16px; gap: 10px; }
+      aside .btn-secondary { width: auto; min-width: 82px; margin-top: 0; }
+      .brand-name { font-size: 15px; }
+      .brand-sub { max-width: 58vw; font-size: 9px; }
+      main { padding: 20px 14px 34px; }
+      .action-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+      .btn-act { min-width: 0; width: 100%; padding: 11px 7px; min-height: 46px; font-size: 12px; text-align: center; overflow-wrap: anywhere; }
+      .action-row .btn-act-delete { grid-column: 1 / -1; }
+      .site-header { align-items: flex-start; }
+      .site-item, .site-card { padding: 16px; border-radius: 16px; }
+      .editor-grid, .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .editor-grid > div, .grid-2 > div, .grid-3 > div { min-width: 0; }
+      .editor .actions, .editor-actions { display: grid; grid-template-columns: 1fr; }
+      .editor .actions button, .editor-actions button { width: 100%; }
+      .input-field { font-size: 16px; }
+    }
+    @media (min-width: 768px) {
+      .action-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .btn-act { min-width: 0; }
+    }
+
+  </style>
 </head>
 <body>
-<div id="root">
-  <div class="login-wrapper"><div class="card login-card">
-    <div class="brand-area"><i class="fa-solid fa-crown brand-icon"></i><div><div class="brand-name">IMPÉRIO DIGITAL</div><div class="brand-sub">Painel do administrador</div></div></div>
-    <div class="login-intro"><h1>Bem-vindo de volta</h1><p>Entre na sua conta para gerenciar os sites dos seus clientes em um só lugar.</p></div>
-    <form id="loginForm">
-      <div class="input-group"><label for="email">E-mail de acesso</label><input type="email" id="email" class="input-field" placeholder="seuemail@exemplo.com" autocomplete="username" required></div>
-      <div class="input-group"><label for="password">Senha</label><input type="password" id="password" class="input-field" placeholder="Sua senha" autocomplete="current-password" required></div>
-      <button type="submit" id="loginBtn" class="btn-main" style="width:100%;margin-top:5px"><i class="fa-solid fa-right-to-bracket"></i> Entrar no painel</button>
-    </form><p id="statusMsg" class="status" role="status" aria-live="polite"></p>
-  </div></div>
-</div>
-<script type="module">
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-const SUPABASE_URL='https://hqoqbjwjjmnhctjizvcs.supabase.co';
-const SUPABASE_KEY='sb_publishable_QK2T4-OP6omrbgGmTwbmsw_VKfgeFuk';
-const supabase=createClient(SUPABASE_URL,SUPABASE_KEY);
-const root=document.getElementById('root');
-let todosSites=[];
-const escapeHtml=value=>String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-function mostrarStatus(message,tipo='erro'){const el=document.getElementById('statusMsg');if(!el)return;el.style.color=tipo==='sucesso'?'var(--green)':tipo==='aviso'?'var(--gold)':'var(--red)';el.textContent=message;}
-async function verificarAdministrador(user){
- const {data:perfil,error}=await supabase.from('profiles').select('role').eq('id',user.id).maybeSingle();
- if(error)throw new Error('Não foi possível verificar seu perfil. Confira a tabela profiles e suas políticas RLS.');
- if(perfil?.role!=='admin'){await supabase.auth.signOut();throw new Error('Esta conta não tem permissão de administrador.');}
-}
-async function init(){try{const {data,error}=await supabase.auth.getSession();if(error)throw error;if(data.session?.user){await verificarAdministrador(data.session.user);renderPainel(data.session.user);}}catch(err){mostrarStatus(err.message||'Não foi possível iniciar o painel.');}}
-document.getElementById('loginForm').addEventListener('submit',async event=>{
- event.preventDefault();const email=document.getElementById('email').value.trim();const password=document.getElementById('password').value;const btn=document.getElementById('loginBtn');
- if(!email||!password)return mostrarStatus('Preencha o e-mail e a senha.');
- btn.disabled=true;btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Autenticando...';mostrarStatus('Verificando acesso...','aviso');
- try{const {data,error}=await supabase.auth.signInWithPassword({email,password});if(error)throw error;await verificarAdministrador(data.user);renderPainel(data.user);}
- catch(err){mostrarStatus(err.message||'Erro ao entrar no painel.');btn.disabled=false;btn.innerHTML='<i class="fa-solid fa-right-to-bracket"></i> Entrar no painel';}
-});
-function renderPainel(user){
- root.innerHTML=`<div class="app-layout">
- <aside class="sidebar"><div>
-  <div class="sidebar-brand"><div class="brand-area"><i class="fa-solid fa-crown brand-icon"></i><div><div class="brand-name">IMPÉRIO DIGITAL</div><div class="brand-sub">Painel Master</div></div></div>
-  <div class="user-chip"><div class="user-avatar"><i class="fa-solid fa-user-shield"></i></div><div class="user-email">${escapeHtml(user.email)}</div></div></div>
-  <div class="nav-label">Menu principal</div><nav><a class="nav-item active" href="#" id="btnNavDashboard"><i class="fa-solid fa-chart-pie"></i> Visão geral</a><a class="nav-item" href="#" id="btnNavNovo"><i class="fa-solid fa-circle-plus"></i> Cadastrar site</a></nav>
- </div><div class="sidebar-bottom"><button type="button" id="sairBtn" class="btn-secondary"><i class="fa-solid fa-right-from-bracket"></i> Sair da conta</button></div></aside>
- <main><header class="page-heading"><div><div class="eyebrow">Área administrativa</div><h1>Gerenciador de sites</h1><p>Gerencie seus clientes, personalize páginas e controle a publicação.</p></div><button type="button" id="btnNovo" class="btn-main"><i class="fa-solid fa-plus"></i> Novo cliente</button></header>
- <section class="stats-grid" aria-label="Resumo dos sites">
-  <div class="stat-card"><div class="stat-top"><span>Total de sites</span><span class="stat-icon"><i class="fa-solid fa-layer-group"></i></span></div><div class="stat-value" id="statTotal">—</div><div class="stat-note">Sites cadastrados no painel</div></div>
-  <div class="stat-card"><div class="stat-top"><span>Publicados</span><span class="stat-icon" style="color:var(--green);background:#35d49a16"><i class="fa-solid fa-circle-check"></i></span></div><div class="stat-value" id="statActive">—</div><div class="stat-note">Visíveis para os visitantes</div></div>
-  <div class="stat-card"><div class="stat-top"><span>Não publicados</span><span class="stat-icon" style="color:var(--red);background:#ff6b7816"><i class="fa-solid fa-eye-slash"></i></span></div><div class="stat-value" id="statInactive">—</div><div class="stat-note">Ainda não estão disponíveis</div></div>
- </section>
- <div id="formContainer"></div>
- <div class="list-toolbar"><div><h2>Seus sites</h2><p id="siteCountLabel">Carregando sua lista...</p></div><div class="toolbar-controls"><div class="search-wrap"><i class="fa-solid fa-magnifying-glass"></i><input id="siteSearch" class="input-field" type="search" placeholder="Buscar por nome ou slug..." aria-label="Buscar sites"></div><select id="siteFilter" class="input-field filter-select" aria-label="Filtrar sites"><option value="todos">Todos</option><option value="ativos">Publicados</option><option value="inativos">Não publicados</option></select></div></div>
- <div id="sitesList" aria-live="polite"><div class="loading-state"><i class="fa-solid fa-spinner fa-spin"></i> Carregando sites...</div></div>
- </main></div>`;
- document.getElementById('sairBtn').onclick=async()=>{const {error}=await supabase.auth.signOut();if(error)alert('Não foi possível sair: '+error.message);else location.reload();};
- document.getElementById('btnNovo').onclick=mostrarFormNovo;
- document.getElementById('btnNavNovo').onclick=e=>{e.preventDefault();mostrarFormNovo();document.querySelectorAll('.nav-item').forEach(x=>x.classList.toggle('active',x.id==='btnNavNovo'));};
- document.getElementById('btnNavDashboard').onclick=e=>{e.preventDefault();document.getElementById('formContainer').innerHTML='';document.querySelectorAll('.nav-item').forEach(x=>x.classList.toggle('active',x.id==='btnNavDashboard'));carregarSites();};
- document.getElementById('siteSearch').addEventListener('input',renderListaFiltrada);
- document.getElementById('siteFilter').addEventListener('change',renderListaFiltrada);
- carregarSites();
-}
-async function carregarSites(){
- const list=document.getElementById('sitesList');if(!list)return;
- list.innerHTML='<div class="loading-state"><i class="fa-solid fa-spinner fa-spin"></i> Carregando sites...</div>';
- const {data,error}=await supabase.from('sites').select('*').order('created_at',{ascending:false});
- if(error){list.innerHTML=`<div class="empty-state"><i class="fa-solid fa-triangle-exclamation"></i><h3>Não foi possível carregar</h3><p>${escapeHtml(error.message)}</p></div>`;return;}
- todosSites=data||[];
- document.getElementById('statTotal').textContent=todosSites.length;
- document.getElementById('statActive').textContent=todosSites.filter(s=>s.published).length;
- document.getElementById('statInactive').textContent=todosSites.filter(s=>!s.published).length;
- renderListaFiltrada();
-}
-function renderListaFiltrada(){
- const list=document.getElementById('sitesList');if(!list)return;
- const search=(document.getElementById('siteSearch')?.value||'').trim().toLocaleLowerCase('pt-BR');
- const filter=document.getElementById('siteFilter')?.value||'todos';
- const sites=todosSites.filter(site=>{
-  const content=site.content&&typeof site.content==='object'?site.content:{};
-  const matchesText=[site.name,site.slug,content.clientEmail].some(v=>String(v||'').toLocaleLowerCase('pt-BR').includes(search));
-  const matchesStatus=filter==='todos'||(filter==='ativos'&&site.published)||(filter==='inativos'&&!site.published);
-  return matchesText&&matchesStatus;
- });
- const label=document.getElementById('siteCountLabel');if(label)label.textContent=`${sites.length} ${sites.length===1?'site encontrado':'sites encontrados'}`;
- if(!sites.length){list.innerHTML=`<div class="empty-state"><i class="fa-solid fa-folder-open"></i><h3>${todosSites.length?'Nenhum resultado encontrado':'Seu painel está pronto para começar'}</h3><p>${todosSites.length?'Tente mudar a busca ou o filtro.':'Cadastre seu primeiro cliente para começar a montar sua carteira de sites.'}</p>${todosSites.length?'':'<button type="button" class="btn-main" id="emptyNew" style="margin-top:15px"><i class="fa-solid fa-plus"></i> Cadastrar primeiro site</button>'}</div>`;document.getElementById('emptyNew')?.addEventListener('click',mostrarFormNovo);return;}
- list.innerHTML='';
- sites.forEach(site=>{
-  const content=site.content&&typeof site.content==='object'?site.content:{};
-  const div=document.createElement('article');div.className='site-card';
-  div.innerHTML=`<div class="site-header"><div class="site-identity"><div class="site-symbol"><i class="fa-solid fa-globe"></i></div><div class="site-details"><div class="site-name">${escapeHtml(site.name)}</div><div class="site-url"><i class="fa-solid fa-link"></i> /${escapeHtml(site.slug)}</div><div class="site-client">${content.clientEmail?`<span style="color:var(--green)"><i class="fa-solid fa-user-check"></i> ${escapeHtml(content.clientEmail)}</span>`:'<span style="color:var(--gold)"><i class="fa-solid fa-circle-exclamation"></i> E-mail do cliente não vinculado</span>'}</div></div></div><span class="badge ${site.published?'badge-active':'badge-inactive'}">${site.published?'Publicado':'Não publicado'}</span></div>
-  <div class="action-row"><button type="button" class="btn-act btn-act-edit btn-edit"><i class="fa-solid fa-sliders"></i> Editar site</button><a href="https://riquelmedasilvadiassilva010-prog.github.io/links-imperio/cliente.html?slug=${encodeURIComponent(site.slug||'')}" target="_blank" rel="noopener noreferrer" class="btn-act btn-act-view"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver site</a><button type="button" class="btn-act btn-act-toggle btn-toggle"><i class="fa-solid ${site.published?'fa-eye-slash':'fa-eye'}"></i> ${site.published?'Despublicar':'Publicar'}</button><button type="button" class="btn-act btn-act-delete btn-delete"><i class="fa-solid fa-trash-can"></i> Apagar</button></div>`;
-  div.querySelector('.btn-toggle').onclick=async()=>{if(!confirm(`${site.published?'Despublicar':'Publicar'} o site "${site.name}"?`))return;const {error}=await supabase.from('sites').update({published:!site.published}).eq('id',site.id);if(error)return alert('Não foi possível alterar a publicação: '+error.message);await carregarSites();};
-  div.querySelector('.btn-edit').onclick=()=>{abrirEditor(site);document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));};
-  div.querySelector('.btn-delete').onclick=async()=>{if(!confirm(`Tem certeza que deseja apagar definitivamente o site "${site.name}"? Esta ação não pode ser desfeita.`))return;const {error}=await supabase.from('sites').delete().eq('id',site.id);if(error)return alert('Não foi possível apagar o site: '+error.message);await carregarSites();};
-  list.appendChild(div);
- });
-}
-function mostrarFormNovo(){
- const container=document.getElementById('formContainer');
- container.innerHTML=`<section class="card form-card"><div class="form-heading"><div class="site-symbol"><i class="fa-solid fa-user-plus"></i></div><div><h2>Cadastrar novo cliente</h2><p>Crie a ficha do negócio. O site começa não publicado, para você conferir antes de liberar.</p></div></div>
- <div class="section-title"><i class="fa-solid fa-store"></i> Dados do negócio</div><div class="grid-2"><div class="input-group"><label for="nNome">Nome do negócio</label><input id="nNome" class="input-field" placeholder="Ex.: Império Barber" maxlength="120"></div><div class="input-group"><label for="nSlug">Identificador / URL</label><input id="nSlug" class="input-field" placeholder="Ex.: imperio-barber" maxlength="80"></div><div class="input-group" style="grid-column:1/-1"><label for="nClientEmail">E-mail da conta do cliente (opcional)</label><input id="nClientEmail" type="email" class="input-field" placeholder="cliente@exemplo.com"></div></div>
- <p class="small-help"><i class="fa-solid fa-shield-halved"></i> Vincular um e-mail aqui registra o contato no cadastro. A permissão real de acesso do cliente precisa ser configurada separadamente no Supabase.</p>
- <div class="form-actions"><button type="button" id="salvarNovo" class="btn-main"><i class="fa-solid fa-floppy-disk"></i> Salvar site</button><button type="button" id="cancelarNovo" class="btn-secondary">Cancelar</button></div><p id="msgNovo" class="status" role="status"></p></section>`;
- container.scrollIntoView({behavior:'smooth',block:'start'});
- document.getElementById('cancelarNovo').onclick=()=>container.innerHTML='';
- document.getElementById('salvarNovo').onclick=async()=>{
-  const btn=document.getElementById('salvarNovo'),msg=document.getElementById('msgNovo');
-  const nome=document.getElementById('nNome').value.trim();
-  const slug=document.getElementById('nSlug').value.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9-]+/g,'-').replace(/^-+|-+$/g,'');
-  const clientEmail=document.getElementById('nClientEmail').value.trim().toLowerCase();
-  if(!nome||!slug){msg.style.color='var(--red)';msg.textContent='Preencha o nome e o identificador.';return;}
-  if(clientEmail&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clientEmail)){msg.style.color='var(--red)';msg.textContent='Confira o e-mail do cliente.';return;}
-  btn.disabled=true;msg.style.color='var(--muted)';msg.textContent='Salvando...';
-  try{const {data:{user},error:userError}=await supabase.auth.getUser();if(userError||!user)throw new Error('Sua sessão expirou. Entre novamente.');
-   const {error}=await supabase.from('sites').insert({owner_id:user.id,name:nome,slug,content:{clientEmail},published:false});if(error)throw error;
-   msg.style.color='var(--green)';msg.textContent='Site cadastrado como não publicado.';await carregarSites();setTimeout(()=>{if(container.isConnected)container.innerHTML='';},900);
-  }catch(err){msg.style.color='var(--red)';msg.textContent='Erro ao cadastrar: '+(err.message||'erro desconhecido');btn.disabled=false;}
- };
-}
-function abrirEditor(site){
- const container=document.getElementById('formContainer'),c=site.content&&typeof site.content==='object'?site.content:{};
- container.innerHTML=`<section class="card form-card"><div class="form-heading"><div class="site-symbol"><i class="fa-solid fa-wand-magic-sparkles"></i></div><div><h2>Personalizar site</h2><p>Edite as informações, os links e o visual de <strong>${escapeHtml(site.name)}</strong>.</p></div></div>
- <div class="section-title"><i class="fa-solid fa-user-lock"></i> Vínculo do cliente</div><div class="input-group"><label for="eClientEmail">E-mail da conta do cliente</label><input id="eClientEmail" type="email" class="input-field" value="${escapeHtml(c.clientEmail||'')}" placeholder="cliente@exemplo.com"></div>
- <div class="section-title"><i class="fa-solid fa-address-card"></i> Informações do negócio</div><div class="grid-2">
- <div class="input-group"><label for="eNome">Nome do negócio</label><input id="eNome" class="input-field" maxlength="120" value="${escapeHtml(site.name)}"></div>
- <div class="input-group"><label for="eSlug">Identificador / URL</label><input id="eSlug" class="input-field" maxlength="80" value="${escapeHtml(site.slug)}"></div>
- <div class="input-group"><label for="eLogoUrl">Link direto da logo</label><input id="eLogoUrl" class="input-field" type="url" value="${escapeHtml(c.logoUrl||'')}" placeholder="https://.../logo.png"><p class="small-help">Use o link direto do arquivo da imagem, terminando normalmente em .png, .jpg ou .webp.</p></div>
- <div class="input-group"><label for="eWhats">WhatsApp (números com DDI)</label><input id="eWhats" class="input-field" value="${escapeHtml(c.whatsapp||'')}" placeholder="Ex.: 5598999999999"></div>
- <div class="input-group"><label for="eInsta">Instagram (usuário ou link)</label><input id="eInsta" class="input-field" value="${escapeHtml(c.instagram||'')}" placeholder="@seuperfil"></div>
- <div class="input-group"><label for="ePix">Chave Pix</label><input id="ePix" class="input-field" value="${escapeHtml(c.pix||'')}" placeholder="Chave Pix para copiar"></div>
- <div class="input-group"><label for="ePixNome">Nome do recebedor Pix</label><input id="ePixNome" class="input-field" maxlength="25" value="${escapeHtml(c.pixNome||'')}" placeholder="Nome do titular da conta"></div>
- <div class="input-group"><label for="ePixCidade">Cidade do recebedor Pix</label><input id="ePixCidade" class="input-field" maxlength="15" value="${escapeHtml(c.pixCidade||'')}" placeholder="Ex.: SAO LUIS"></div>
- <div class="input-group"><label for="eWifiNome">Nome do Wi-Fi</label><input id="eWifiNome" class="input-field" value="${escapeHtml(c.wifiNome||'')}"></div>
- <div class="input-group"><label for="eWifiSenha">Senha do Wi-Fi</label><input id="eWifiSenha" class="input-field" value="${escapeHtml(c.wifiSenha||'')}"></div>
- <div class="input-group"><label for="eMaps">Link do Google Maps / avaliações</label><input id="eMaps" class="input-field" value="${escapeHtml(c.maps||'')}" placeholder="https://..."></div></div>
- <div class="section-title"><i class="fa-solid fa-layer-group"></i> Modelo de layout</div>
- <div class="input-group"><label for="eLayout">Estilo visual deste cliente</label><select id="eLayout" class="input-field">
- <option value="elegante" ${(!c.layout||c.layout==='elegante')?'selected':''}>Elegante — destaque e espaçamento premium</option>
- <option value="moderno" ${c.layout==='moderno'?'selected':''}>Moderno — cartões compactos e dinâmicos</option>
- <option value="minimalista" ${c.layout==='minimalista'?'selected':''}>Minimalista — visual simples e limpo</option>
- </select><p class="small-help">O modelo muda a apresentação, não os links nem os dados deste cliente.</p></div>
- <div class="section-title"><i class="fa-solid fa-image"></i> Fundo com imagem (somente administrador)</div>
- <div class="input-group"><label for="eBgImage">Link direto da imagem de fundo</label><input id="eBgImage" class="input-field" type="url" value="${escapeHtml(c.bgImage||'')}" placeholder="https://.../imagem.jpg"><p class="small-help">Cole o link direto do arquivo da imagem (não a página de compartilhamento). Estes controles ficam apenas no painel administrativo; a página pública usa as configurações salvas neste site quando você atualizar o modelo cliente.html.</p></div>
- <div class="grid-2">
- <div class="input-group"><label for="eBgOpacity">Intensidade da imagem: <strong id="eBgOpacityValue">${Number.isFinite(Number(c.bgImageOpacity))?Number(c.bgImageOpacity):35}%</strong></label><input id="eBgOpacity" class="input-field" type="range" min="0" max="100" step="5" value="${Number.isFinite(Number(c.bgImageOpacity))?Math.max(0,Math.min(100,Number(c.bgImageOpacity))):35}" style="padding:8px 2px"><p class="small-help">0% quase invisível · 100% imagem bem forte.</p></div>
- <div class="input-group"><label for="eBgGradient">Degradê escuro</label><select id="eBgGradient" class="input-field"><option value="0" ${String(c.bgGradient??'55')==='0'?'selected':''}>Sem degradê</option><option value="25" ${String(c.bgGradient??'55')==='25'?'selected':''}>Suave</option><option value="55" ${String(c.bgGradient??'55')==='55'?'selected':''}>Médio</option><option value="80" ${String(c.bgGradient??'55')==='80'?'selected':''}>Forte</option></select><p class="small-help">O degradê ajuda a manter os textos legíveis por cima da imagem.</p></div></div>
- <div id="eBgPreview" style="min-height:125px;border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center;padding:18px;background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),#11151e;color:white;margin:10px 0 20px"><span style="font-weight:800;text-shadow:0 2px 8px #000">Prévia do fundo no painel<br><small style="font-weight:500;opacity:.85">A imagem e o degradê são ajustados aqui</small></span></div>
- <div class="section-title"><i class="fa-solid fa-palette"></i> Design e identidade visual</div><div class="grid-3">
- <div class="input-group"><label for="eBgColor">Cor de fundo</label><input type="color" id="eBgColor" class="input-field" value="${escapeHtml(c.bgColor||'#0a0b0e')}" style="height:48px;padding:5px"><label style="display:flex;align-items:center;gap:8px;margin-top:9px;font-size:12px"><input type="checkbox" id="eBgColorEnabled" ${c.bgColorEnabled===false?'':'checked'} style="width:16px;height:16px"> Ativar cor de fundo</label><label for="eBgColorOpacity" style="display:block;margin-top:10px">Opacidade da cor: <strong id="eBgColorOpacityValue">${Number.isFinite(Number(c.bgColorOpacity))?Number(c.bgColorOpacity):100}%</strong></label><input type="range" id="eBgColorOpacity" class="input-field" min="0" max="100" step="5" value="${Number.isFinite(Number(c.bgColorOpacity))?Math.max(0,Math.min(100,Number(c.bgColorOpacity))):100}" style="padding:8px 2px"><p class="small-help">Desative a cor ou reduza a opacidade para deixar a imagem aparecer mais.</p></div>
- <div class="input-group"><label for="eCardColor">Cor dos cartões</label><input type="color" id="eCardColor" class="input-field" value="${escapeHtml(c.cardColor||'#14151c')}" style="height:48px;padding:5px"></div>
- <div class="input-group"><label for="ePrimaryColor">Cor de destaque</label><input type="color" id="ePrimaryColor" class="input-field" value="${escapeHtml(c.primaryColor||'#e8b84a')}" style="height:48px;padding:5px"></div>
- <div class="input-group"><label for="eTextColor">Cor do texto</label><input type="color" id="eTextColor" class="input-field" value="${escapeHtml(c.textColor||'#ffffff')}" style="height:48px;padding:5px"></div>
- <div class="input-group"><label for="eFont">Fonte</label><select id="eFont" class="input-field"><option value="system-ui" ${c.font==='system-ui'?'selected':''}>Padrão (System UI)</option><option value="'Poppins', sans-serif" ${String(c.font||'').includes('Poppins')?'selected':''}>Poppins</option><option value="'Montserrat', sans-serif" ${String(c.font||'').includes('Montserrat')?'selected':''}>Montserrat</option><option value="'Playfair Display', serif" ${String(c.font||'').includes('Playfair')?'selected':''}>Playfair Display</option><option value="'Bebas Neue', cursive" ${String(c.font||'').includes('Bebas')?'selected':''}>Bebas Neue</option></select></div>
- <div class="input-group"><label for="eBtnStyle">Formato dos botões</label><select id="eBtnStyle" class="input-field"><option value="12px" ${c.btnRadius==='12px'||!c.btnRadius?'selected':''}>Suave (12px)</option><option value="30px" ${c.btnRadius==='30px'?'selected':''}>Pílula (30px)</option><option value="0px" ${c.btnRadius==='0px'?'selected':''}>Quadrado (0px)</option></select></div></div>
- <div class="form-actions"><button type="button" id="salvarEdicao" class="btn-main"><i class="fa-solid fa-floppy-disk"></i> Salvar alterações</button><button type="button" id="fecharEdicao" class="btn-secondary">Fechar editor</button></div><p id="msgEdit" class="status" role="status"></p></section>`;
- container.scrollIntoView({behavior:'smooth',block:'start'});
- const bgImageInput=document.getElementById('eBgImage'),bgOpacityInput=document.getElementById('eBgOpacity'),bgGradientInput=document.getElementById('eBgGradient'),bgOpacityValue=document.getElementById('eBgOpacityValue'),bgColorInput=document.getElementById('eBgColor'),bgColorEnabledInput=document.getElementById('eBgColorEnabled'),bgColorOpacityInput=document.getElementById('eBgColorOpacity'),bgColorOpacityValue=document.getElementById('eBgColorOpacityValue'),bgPreview=document.getElementById('eBgPreview');
- function atualizarPreviaFundo(){
-  const opacity=Math.max(0,Math.min(100,Number(bgOpacityInput.value)||0))/100;
-  const gradient=Math.max(0,Math.min(100,Number(bgGradientInput.value)||0))/100;
-  const colorOpacity=bgColorEnabledInput.checked?Math.max(0,Math.min(100,Number(bgColorOpacityInput.value)||0))/100:0;
-  bgOpacityValue.textContent=Math.round(opacity*100)+'%';
-  bgColorOpacityValue.textContent=Math.round(Number(bgColorOpacityInput.value)||0)+'%';
-  const url=bgImageInput.value.trim();
-  const safeUrl=/^https?:\/\//i.test(url)?url.replace(/[\\"'()]/g,''):'';
-  const hex=(bgColorInput.value||'#0a0b0e').replace('#','');
-  const rgb=[parseInt(hex.slice(0,2),16),parseInt(hex.slice(2,4),16),parseInt(hex.slice(4,6),16)].join(',');
-  bgPreview.style.backgroundColor='#11151e';
-  if(safeUrl){
-   const layers=[];
-   if(gradient>0) layers.push(`linear-gradient(rgba(0,0,0,${gradient}),rgba(0,0,0,${gradient}))`);
-   if(colorOpacity>0) layers.push(`linear-gradient(rgba(${rgb},${colorOpacity}),rgba(${rgb},${colorOpacity}))`);
-   if(opacity<1) layers.push(`linear-gradient(rgba(0,0,0,${1-opacity}),rgba(0,0,0,${1-opacity}))`);
-   layers.push(`url("${safeUrl}")`);
-   bgPreview.style.backgroundImage=layers.join(',');
-  } else {
-   bgPreview.style.backgroundImage=bgColorEnabledInput.checked?`linear-gradient(rgba(${rgb},${colorOpacity}),rgba(${rgb},${colorOpacity}))`:'none';
-  }
-  bgPreview.style.backgroundSize='cover';bgPreview.style.backgroundPosition='center';
- }
- [bgImageInput,bgOpacityInput,bgGradientInput,bgColorInput,bgColorOpacityInput,bgColorEnabledInput].forEach(el=>el.addEventListener('input',atualizarPreviaFundo));atualizarPreviaFundo();
- document.getElementById('fecharEdicao').onclick=()=>container.innerHTML='';
- document.getElementById('salvarEdicao').onclick=async()=>{
-  const btn=document.getElementById('salvarEdicao'),msg=document.getElementById('msgEdit'),nome=document.getElementById('eNome').value.trim();
-  const slug=document.getElementById('eSlug').value.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9-]+/g,'-').replace(/^-+|-+$/g,'');
-  const email=document.getElementById('eClientEmail').value.trim().toLowerCase();
-  if(!nome||!slug){msg.style.color='var(--red)';msg.textContent='Preencha o nome e o identificador.';return;}
-  if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){msg.style.color='var(--red)';msg.textContent='Confira o e-mail do cliente.';return;}
-  btn.disabled=true;msg.style.color='var(--muted)';msg.textContent='Salvando alterações...';
-  const updatedContent={...c,layout:document.getElementById('eLayout').value,clientEmail:email,logoUrl:document.getElementById('eLogoUrl').value.trim(),whatsapp:document.getElementById('eWhats').value.trim(),instagram:document.getElementById('eInsta').value.trim(),pix:document.getElementById('ePix').value.trim(),pixNome:document.getElementById('ePixNome').value.trim(),pixCidade:document.getElementById('ePixCidade').value.trim(),wifiNome:document.getElementById('eWifiNome').value.trim(),wifiSenha:document.getElementById('eWifiSenha').value.trim(),maps:document.getElementById('eMaps').value.trim(),bgColor:document.getElementById('eBgColor').value,bgColorEnabled:document.getElementById('eBgColorEnabled').checked,bgColorOpacity:Number(document.getElementById('eBgColorOpacity').value),cardColor:document.getElementById('eCardColor').value,primaryColor:document.getElementById('ePrimaryColor').value,textColor:document.getElementById('eTextColor').value,font:document.getElementById('eFont').value,btnRadius:document.getElementById('eBtnStyle').value,bgImage:document.getElementById('eBgImage').value.trim(),bgImageOpacity:Number(document.getElementById('eBgOpacity').value),bgGradient:Number(document.getElementById('eBgGradient').value)};
-  try{const {error}=await supabase.from('sites').update({name:nome,slug,content:updatedContent}).eq('id',site.id);if(error)throw error;msg.style.color='var(--green)';msg.textContent='Alterações salvas no banco de dados.';await carregarSites();setTimeout(()=>{if(container.isConnected)container.innerHTML='';},900);}
-  catch(err){msg.style.color='var(--red)';msg.textContent='Erro ao salvar: '+(err.message||'erro desconhecido');btn.disabled=false;}
- };
-}
-init();
-</script>
+  <div id="root">
+    <div class="login-wrapper">
+      <div class="card" style="width:100%;max-width:380px;">
+        <div class="brand-area" style="justify-content:center;margin-bottom:20px;">
+          <i class="fa-solid fa-crown brand-icon"></i>
+          <div><div class="brand-name">IMPÉRIO DIGITAL</div><div class="brand-sub">Painel do Administrador</div></div>
+        </div>
+        <form id="loginForm">
+          <div class="input-group"><label for="email">E-mail</label><input type="email" id="email" class="input-field" placeholder="seuemail@exemplo.com" autocomplete="username" required></div>
+          <div class="input-group"><label for="password">Senha</label><input type="password" id="password" class="input-field" placeholder="Sua senha" autocomplete="current-password" required></div>
+          <button type="submit" id="loginBtn" class="btn-main" style="width:100%;margin-top:8px;">Entrar no Painel</button>
+        </form>
+        <p id="statusMsg" class="status" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+    const SUPABASE_URL = 'https://hqoqbjwjjmnhctjizvcs.supabase.co';
+    // Chave publishable destinada ao navegador. Nunca coloque service_role/secret key neste arquivo.
+    const SUPABASE_KEY = 'sb_publishable_QK2T4-OP6omrbgGmTwbmsw_VKfgeFuk';
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+    const root = document.getElementById('root');
+
+    const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, ch => ({
+      '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
+    }[ch]));
+
+    function mostrarStatus(message, tipo = 'erro') {
+      const el = document.getElementById('statusMsg');
+      if (!el) return;
+      el.style.color = tipo === 'sucesso' ? 'var(--success)' : tipo === 'aviso' ? 'var(--primary)' : 'var(--danger)';
+      el.textContent = message;
+    }
+
+    async function verificarAdministrador(user) {
+      // Supõe profiles.id = auth.users.id e profiles.role = 'admin'.
+      const { data: perfil, error } = await supabase
+        .from('profiles').select('role').eq('id', user.id).maybeSingle();
+
+      if (error) {
+        throw new Error('Não foi possível verificar seu perfil. Confira a tabela profiles e suas políticas RLS.');
+      }
+      if (perfil?.role !== 'admin') {
+        await supabase.auth.signOut();
+        throw new Error('Esta conta não tem permissão de administrador.');
+      }
+    }
+
+    async function init() {
+      try {
+        const { data, error } = await supabase.auth.getSession();
+        if (error) throw error;
+        if (data.session?.user) {
+          await verificarAdministrador(data.session.user);
+          renderPainel(data.session.user);
+        }
+      } catch (err) {
+        mostrarStatus(err.message || 'Não foi possível iniciar o painel.');
+      }
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const btn = document.getElementById('loginBtn');
+
+      if (!email || !password) return mostrarStatus('Preencha o e-mail e a senha.');
+      btn.disabled = true;
+      btn.textContent = 'Autenticando...';
+      mostrarStatus('Verificando acesso...', 'aviso');
+
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        await verificarAdministrador(data.user);
+        renderPainel(data.user);
+      } catch (err) {
+        mostrarStatus(err.message || 'Erro ao entrar no painel.');
+        btn.disabled = false;
+        btn.textContent = 'Entrar no Painel';
+      }
+    });
+
+    function renderPainel(user) {
+      root.innerHTML = `
+        <div class="app-layout">
+          <aside>
+            <div style="width:100%">
+              <div class="brand-area">
+                <i class="fa-solid fa-crown brand-icon"></i>
+                <div><div class="brand-name">IMPÉRIO DIGITAL</div><div class="brand-sub">${escapeHtml(user.email)}</div></div>
+              </div>
+              <nav>
+                <a class="nav-item active" href="#" id="btnNavDashboard"><i class="fa-solid fa-house"></i> Dashboard</a>
+                <a class="nav-item" href="#" id="btnNavNovo"><i class="fa-solid fa-plus"></i> Cadastrar Site</a>
+              </nav>
+            </div>
+            <button type="button" id="sairBtn" class="btn-secondary"><i class="fa-solid fa-right-from-bracket"></i> Sair</button>
+          </aside>
+          <main>
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px;">
+              <h2>Gerenciador de Sites</h2>
+              <button type="button" id="btnNovo" class="btn-main">+ Novo Cliente</button>
+            </div>
+            <div id="formContainer"></div>
+            <div id="sitesList" aria-live="polite">Carregando sites...</div>
+          </main>
+        </div>`;
+
+      document.getElementById('sairBtn').onclick = async () => {
+        const { error } = await supabase.auth.signOut();
+        if (error) alert('Não foi possível sair: ' + error.message);
+        else location.reload();
+      };
+      document.getElementById('btnNovo').onclick = mostrarFormNovo;
+      document.getElementById('btnNavNovo').onclick = (e) => { e.preventDefault(); mostrarFormNovo(); };
+      document.getElementById('btnNavDashboard').onclick = (e) => { e.preventDefault(); document.getElementById('formContainer').innerHTML = ''; carregarSites(); };
+      carregarSites();
+    }
+
+    async function carregarSites() {
+      const sitesList = document.getElementById('sitesList');
+      if (!sitesList) return;
+      sitesList.textContent = 'Carregando sites...';
+      const { data, error } = await supabase.from('sites').select('*').order('created_at', { ascending: false });
+      if (error) {
+        sitesList.innerHTML = `<p style="color:var(--danger)">Erro ao carregar sites: ${escapeHtml(error.message)}</p>`;
+        return;
+      }
+      if (!data?.length) {
+        sitesList.innerHTML = '<div class="card">Nenhum site cadastrado ainda.</div>';
+        return;
+      }
+
+      sitesList.innerHTML = '';
+      data.forEach(site => {
+        const content = site.content && typeof site.content === 'object' ? site.content : {};
+        const div = document.createElement('div');
+        div.className = 'site-card';
+        div.innerHTML = `
+          <div class="site-header">
+            <div>
+              <strong style="font-size:16px;">${escapeHtml(site.name)}</strong>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:2px;"><strong>URL Slug:</strong> /${escapeHtml(site.slug)}</div>
+              <div style="font-size:12px;margin-top:4px;">
+                ${content.clientEmail ? `<span style="color:var(--success);font-weight:bold;">👤 Cliente vinculado: ${escapeHtml(content.clientEmail)}</span>` : '<span style="color:var(--danger);font-weight:bold;">⚠️ Nenhum e-mail de cliente vinculado</span>'}
+              </div>
+            </div>
+            <span class="badge ${site.published ? 'badge-active' : 'badge-inactive'}">${site.published ? 'Ativo' : 'Inativo'}</span>
+          </div>
+          <div class="action-row">
+            <button type="button" class="btn-act btn-act-edit btn-edit"><i class="fa-solid fa-pen"></i> Editar & Vínculo</button>
+            <a href="https://riquelmedasilvadiassilva010-prog.github.io/links-imperio/cliente.html?slug=${encodeURIComponent(site.slug || '')}" target="_blank" rel="noopener noreferrer" class="btn-act btn-act-view"><i class="fa-solid fa-eye"></i> Ver Site</a>
+            <button type="button" class="btn-act btn-act-toggle btn-toggle">${site.published ? 'Desativar' : 'Ativar'}</button>
+            <button type="button" class="btn-act btn-act-delete btn-delete"><i class="fa-solid fa-trash"></i> Apagar</button>
+          </div>`;
+
+        div.querySelector('.btn-toggle').onclick = async () => {
+          if (!confirm(`${site.published ? 'Desativar' : 'Ativar'} o site "${site.name}"?`)) return;
+          const { error } = await supabase.from('sites').update({ published: !site.published }).eq('id', site.id);
+          if (error) return alert('Não foi possível alterar a publicação: ' + error.message);
+          await carregarSites();
+        };
+        div.querySelector('.btn-edit').onclick = () => abrirEditor(site);
+        div.querySelector('.btn-delete').onclick = async () => {
+          if (!confirm(`Tem certeza que deseja apagar definitivamente o site "${site.name}"? Esta ação não pode ser desfeita.`)) return;
+          const { error } = await supabase.from('sites').delete().eq('id', site.id);
+          if (error) return alert('Não foi possível apagar o site: ' + error.message);
+          await carregarSites();
+        };
+        sitesList.appendChild(div);
+      });
+    }
+
+    function mostrarFormNovo() {
+      const container = document.getElementById('formContainer');
+      container.innerHTML = `
+        <div class="card" style="border-color:var(--primary);">
+          <h3>+ Cadastrar Novo Cliente/Site</h3>
+          <p style="font-size:12px;color:var(--text-muted);margin-top:6px;">Este formulário vincula o e-mail ao conteúdo do site. A autorização real do cliente também precisa ser validada no Supabase e no portal do cliente.</p>
+          <div class="grid-2" style="margin-top:12px;">
+            <div class="input-group"><label for="nNome">Nome do negócio</label><input id="nNome" class="input-field" placeholder="Ex.: Império Barber" maxlength="120"></div>
+            <div class="input-group"><label for="nSlug">Identificador / URL</label><input id="nSlug" class="input-field" placeholder="Ex.: imperio-barber" maxlength="80"></div>
+            <div class="input-group" style="grid-column:1/-1"><label for="nClientEmail">E-mail do cliente</label><input id="nClientEmail" type="email" class="input-field" placeholder="cliente@exemplo.com"></div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+            <button type="button" id="salvarNovo" class="btn-main">Salvar site</button>
+            <button type="button" id="cancelarNovo" class="btn-secondary" style="margin-top:0;">Cancelar</button>
+          </div>
+          <p id="msgNovo" class="status" role="status"></p>
+        </div>`;
+      document.getElementById('cancelarNovo').onclick = () => container.innerHTML = '';
+      document.getElementById('salvarNovo').onclick = async () => {
+        const btn = document.getElementById('salvarNovo');
+        const msg = document.getElementById('msgNovo');
+        const nome = document.getElementById('nNome').value.trim();
+        const slug = document.getElementById('nSlug').value.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '');
+        const clientEmail = document.getElementById('nClientEmail').value.trim().toLowerCase();
+        if (!nome || !slug) { msg.style.color = 'var(--danger)'; msg.textContent = 'Preencha o nome e o identificador.'; return; }
+        if (clientEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clientEmail)) { msg.style.color = 'var(--danger)'; msg.textContent = 'Confira o e-mail do cliente.'; return; }
+        btn.disabled = true; msg.style.color = 'var(--text-muted)'; msg.textContent = 'Salvando...';
+        try {
+          const { data: { user }, error: userError } = await supabase.auth.getUser();
+          if (userError || !user) throw new Error('Sua sessão expirou. Entre novamente.');
+          const { error } = await supabase.from('sites').insert({
+            owner_id:user.id, name:nome, slug, content:{ clientEmail }, published:false
+          });
+          if (error) throw error;
+          msg.style.color = 'var(--success)'; msg.textContent = 'Site cadastrado como não publicado.';
+          await carregarSites();
+          setTimeout(() => { if (container.isConnected) container.innerHTML = ''; }, 700);
+        } catch (err) {
+          msg.style.color = 'var(--danger)'; msg.textContent = 'Erro ao cadastrar: ' + (err.message || 'erro desconhecido');
+          btn.disabled = false;
+        }
+      };
+    }
+
+    function abrirEditor(site) {
+      const container = document.getElementById('formContainer');
+      const c = site.content && typeof site.content === 'object' ? site.content : {};
+      container.innerHTML = `
+        <div class="card" style="border-color:var(--primary);">
+          <h3 style="font-size:18px;">🛠️ Editar site: ${escapeHtml(site.name)}</h3>
+          <div class="section-title"><i class="fa-solid fa-user-lock"></i> Vínculo do cliente</div>
+          <div class="input-group"><label for="eClientEmail">E-mail da conta do cliente</label><input id="eClientEmail" type="email" class="input-field" value="${escapeHtml(c.clientEmail || '')}" placeholder="cliente@exemplo.com"></div>
+          <div class="section-title"><i class="fa-solid fa-address-book"></i> Informações do negócio</div>
+          <div class="grid-2">
+            <div class="input-group"><label for="eNome">Nome do negócio</label><input id="eNome" class="input-field" maxlength="120" value="${escapeHtml(site.name)}"></div>
+            <div class="input-group"><label for="eSlug">Identificador / URL</label><input id="eSlug" class="input-field" maxlength="80" value="${escapeHtml(site.slug)}"></div>
+            <div class="input-group"><label for="eLogoUrl">Link direto da logo (imagem)</label><input id="eLogoUrl" class="input-field" type="url" value="${escapeHtml(c.logoUrl || '')}" placeholder="https://.../logo.png"><small style="color:var(--text-muted)">Use o link direto da imagem, não o link da página do Imgbb.</small></div>
+            <div class="input-group"><label for="eSubtitle">Frase abaixo da logo</label><input id="eSubtitle" class="input-field" maxlength="180" value="${escapeHtml(c.subtitle || c.description || '')}" placeholder="Ex.: Qualidade • Respeito • Estilo"></div>
+            <div class="input-group"><label for="eWhats">WhatsApp (números)</label><input id="eWhats" class="input-field" value="${escapeHtml(c.whatsapp || '')}"></div>
+            <div class="input-group"><label for="eInsta">Instagram (@)</label><input id="eInsta" class="input-field" value="${escapeHtml(c.instagram || '')}"></div>
+            <div class="input-group"><label for="ePix">Chave Pix</label><input id="ePix" class="input-field" value="${escapeHtml(c.pix || '')}"></div>
+            <div class="input-group"><label for="eWifiNome">Nome do Wi-Fi</label><input id="eWifiNome" class="input-field" value="${escapeHtml(c.wifiNome || '')}"></div>
+            <div class="input-group"><label for="eWifiSenha">Senha do Wi-Fi</label><input id="eWifiSenha" class="input-field" value="${escapeHtml(c.wifiSenha || '')}"></div>
+            <div class="input-group"><label for="eMaps">Link do Google Maps/avaliação</label><input id="eMaps" class="input-field" value="${escapeHtml(c.maps || '')}"></div>
+          </div>
+          <div class="section-title"><i class="fa-solid fa-palette"></i> Design e identidade visual</div>
+          <div class="grid-3">
+            <div class="input-group"><label for="eBgColor">Cor de fundo</label><input type="color" id="eBgColor" class="input-field" value="${escapeHtml(c.bgColor || '#0a0b0e')}" style="height:44px;padding:4px;"></div>
+            <div class="input-group"><label for="eCardColor">Cor dos cartões</label><input type="color" id="eCardColor" class="input-field" value="${escapeHtml(c.cardColor || '#14151c')}" style="height:44px;padding:4px;"></div>
+            <div class="input-group"><label for="ePrimaryColor">Cor de destaque</label><input type="color" id="ePrimaryColor" class="input-field" value="${escapeHtml(c.primaryColor || '#e8b84a')}" style="height:44px;padding:4px;"></div>
+            <div class="input-group"><label for="eTextColor">Cor do texto</label><input type="color" id="eTextColor" class="input-field" value="${escapeHtml(c.textColor || '#ffffff')}" style="height:44px;padding:4px;"></div>
+            <div class="input-group"><label for="eFont">Fonte</label><select id="eFont" class="input-field">
+              <option value="system-ui" ${c.font === 'system-ui' ? 'selected' : ''}>Padrão (System UI)</option>
+              <option value="'Poppins', sans-serif" ${String(c.font || '').includes('Poppins') ? 'selected' : ''}>Poppins</option>
+              <option value="'Montserrat', sans-serif" ${String(c.font || '').includes('Montserrat') ? 'selected' : ''}>Montserrat</option>
+              <option value="'Playfair Display', serif" ${String(c.font || '').includes('Playfair') ? 'selected' : ''}>Playfair Display</option>
+              <option value="'Bebas Neue', cursive" ${String(c.font || '').includes('Bebas') ? 'selected' : ''}>Bebas Neue</option>
+              <option value="'Roboto', sans-serif" ${String(c.font || '').includes('Roboto') ? 'selected' : ''}>Roboto</option>
+              <option value="'Lato', sans-serif" ${String(c.font || '').includes('Lato') ? 'selected' : ''}>Lato</option>
+              <option value="'Oswald', sans-serif" ${String(c.font || '').includes('Oswald') ? 'selected' : ''}>Oswald</option>
+              <option value="'Nunito', sans-serif" ${String(c.font || '').includes('Nunito') ? 'selected' : ''}>Nunito</option>
+              <option value="custom-font" ${c.font === 'custom-font' ? 'selected' : ''}>Minha fonte enviada</option>
+            </select></div>
+            <div class="input-group"><label for="eCustomFont">Enviar arquivo de fonte (.woff2, .woff, .ttf)</label><input id="eCustomFont" class="input-field" type="file" accept=".woff2,.woff,.ttf,font/woff,font/woff2,font/ttf"><small style="color:var(--text-muted)">${c.customFontName ? 'Fonte salva: ' + escapeHtml(c.customFontName) : 'Escolha um arquivo no celular ou computador. O envio substitui a fonte personalizada deste site.'}</small></div>
+            <div class="input-group"><label for="eBtnStyle">Formato dos botões</label><select id="eBtnStyle" class="input-field">
+              <option value="12px" ${c.btnRadius === '12px' || !c.btnRadius ? 'selected' : ''}>Suave (12px)</option>
+              <option value="30px" ${c.btnRadius === '30px' ? 'selected' : ''}>Pílula (30px)</option>
+              <option value="0px" ${c.btnRadius === '0px' ? 'selected' : ''}>Quadrado (0px)</option>
+            </select></div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:20px;">
+            <button type="button" id="salvarEdicao" class="btn-main">💾 Salvar alterações</button>
+            <button type="button" id="fecharEdicao" class="btn-secondary" style="margin-top:0;">Fechar</button>
+          </div>
+          <p id="msgEdit" class="status" role="status"></p>
+        </div>`;
+
+      document.getElementById('fecharEdicao').onclick = () => container.innerHTML = '';
+      document.getElementById('salvarEdicao').onclick = async () => {
+        const btn = document.getElementById('salvarEdicao');
+        const msg = document.getElementById('msgEdit');
+        const nome = document.getElementById('eNome').value.trim();
+        const slug = document.getElementById('eSlug').value.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '');
+        const email = document.getElementById('eClientEmail').value.trim().toLowerCase();
+        if (!nome || !slug) { msg.style.color = 'var(--danger)'; msg.textContent = 'Preencha o nome e o identificador.'; return; }
+        if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.style.color = 'var(--danger)'; msg.textContent = 'Confira o e-mail do cliente.'; return; }
+        btn.disabled = true; msg.style.color = 'var(--text-muted)'; msg.textContent = 'Salvando alterações...';
+        const updatedContent = {
+          ...c,
+          clientEmail:email,
+          logoUrl:document.getElementById('eLogoUrl').value.trim(),
+          subtitle:document.getElementById('eSubtitle').value.trim(),
+          description:document.getElementById('eSubtitle').value.trim() || c.description || '',
+          whatsapp:document.getElementById('eWhats').value.trim(),
+          instagram:document.getElementById('eInsta').value.trim(),
+          pix:document.getElementById('ePix').value.trim(),
+          wifiNome:document.getElementById('eWifiNome').value.trim(),
+          wifiSenha:document.getElementById('eWifiSenha').value.trim(),
+          maps:document.getElementById('eMaps').value.trim(),
+          bgColor:document.getElementById('eBgColor').value,
+          cardColor:document.getElementById('eCardColor').value,
+          primaryColor:document.getElementById('ePrimaryColor').value,
+          textColor:document.getElementById('eTextColor').value,
+          font:document.getElementById('eFont').value,
+          btnRadius:document.getElementById('eBtnStyle').value
+        };
+        try {
+          const fontFile = document.getElementById('eCustomFont').files[0];
+          if (fontFile) {
+            if (!/\.(woff2?|ttf)$/i.test(fontFile.name)) throw new Error('Use somente arquivos .woff2, .woff ou .ttf.');
+            if (fontFile.size > 5 * 1024 * 1024) throw new Error('A fonte deve ter no máximo 5 MB.');
+            const safeName = fontFile.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9._-]/g, '-');
+            const path = `${site.id}/${Date.now()}-${safeName}`;
+            const { error: uploadError } = await supabase.storage.from('site-fonts').upload(path, fontFile, { upsert: false, contentType: fontFile.type || 'font/ttf' });
+            if (uploadError) throw new Error('Falha ao enviar fonte: ' + uploadError.message);
+            const { data: publicData } = supabase.storage.from('site-fonts').getPublicUrl(path);
+            updatedContent.customFontUrl = publicData.publicUrl;
+            updatedContent.customFontName = fontFile.name;
+            updatedContent.font = 'custom-font';
+          }
+          const { error } = await supabase.from('sites').update({ name:nome, slug, content:updatedContent }).eq('id', site.id);
+          if (error) throw error;
+          msg.style.color = 'var(--success)'; msg.textContent = 'Alterações salvas no banco de dados.';
+          await carregarSites();
+          setTimeout(() => { if (container.isConnected) container.innerHTML = ''; }, 900);
+        } catch (err) {
+          msg.style.color = 'var(--danger)'; msg.textContent = 'Erro ao salvar: ' + (err.message || 'erro desconhecido');
+          btn.disabled = false;
+        }
+      };
+    }
+
+    init();
+  </script>
 </body>
 </html>
