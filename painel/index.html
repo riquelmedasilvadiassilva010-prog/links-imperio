@@ -166,6 +166,12 @@ function abrirEditor(site){
  <div class="input-group"><label for="eWifiNome">Nome do Wi-Fi</label><input id="eWifiNome" class="input-field" value="${escapeHtml(c.wifiNome||'')}"></div>
  <div class="input-group"><label for="eWifiSenha">Senha do Wi-Fi</label><input id="eWifiSenha" class="input-field" value="${escapeHtml(c.wifiSenha||'')}"></div>
  <div class="input-group"><label for="eMaps">Link do Google Maps / avaliações</label><input id="eMaps" class="input-field" value="${escapeHtml(c.maps||'')}" placeholder="https://..."></div></div>
+ <div class="section-title"><i class="fa-solid fa-layer-group"></i> Modelo de layout</div>
+ <div class="input-group"><label for="eLayout">Estilo visual deste cliente</label><select id="eLayout" class="input-field">
+ <option value="elegante" ${(!c.layout||c.layout==='elegante')?'selected':''}>Elegante — destaque e espaçamento premium</option>
+ <option value="moderno" ${c.layout==='moderno'?'selected':''}>Moderno — cartões compactos e dinâmicos</option>
+ <option value="minimalista" ${c.layout==='minimalista'?'selected':''}>Minimalista — visual simples e limpo</option>
+ </select><p class="small-help">O modelo muda a apresentação, não os links nem os dados deste cliente.</p></div>
  <div class="section-title"><i class="fa-solid fa-palette"></i> Design e identidade visual</div><div class="grid-3">
  <div class="input-group"><label for="eBgColor">Cor de fundo</label><input type="color" id="eBgColor" class="input-field" value="${escapeHtml(c.bgColor||'#0a0b0e')}" style="height:48px;padding:5px"></div>
  <div class="input-group"><label for="eCardColor">Cor dos cartões</label><input type="color" id="eCardColor" class="input-field" value="${escapeHtml(c.cardColor||'#14151c')}" style="height:48px;padding:5px"></div>
@@ -183,7 +189,7 @@ function abrirEditor(site){
   if(!nome||!slug){msg.style.color='var(--red)';msg.textContent='Preencha o nome e o identificador.';return;}
   if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){msg.style.color='var(--red)';msg.textContent='Confira o e-mail do cliente.';return;}
   btn.disabled=true;msg.style.color='var(--muted)';msg.textContent='Salvando alterações...';
-  const updatedContent={...c,clientEmail:email,whatsapp:document.getElementById('eWhats').value.trim(),instagram:document.getElementById('eInsta').value.trim(),pix:document.getElementById('ePix').value.trim(),wifiNome:document.getElementById('eWifiNome').value.trim(),wifiSenha:document.getElementById('eWifiSenha').value.trim(),maps:document.getElementById('eMaps').value.trim(),bgColor:document.getElementById('eBgColor').value,cardColor:document.getElementById('eCardColor').value,primaryColor:document.getElementById('ePrimaryColor').value,textColor:document.getElementById('eTextColor').value,font:document.getElementById('eFont').value,btnRadius:document.getElementById('eBtnStyle').value};
+  const updatedContent={...c,layout:document.getElementById('eLayout').value,clientEmail:email,whatsapp:document.getElementById('eWhats').value.trim(),instagram:document.getElementById('eInsta').value.trim(),pix:document.getElementById('ePix').value.trim(),wifiNome:document.getElementById('eWifiNome').value.trim(),wifiSenha:document.getElementById('eWifiSenha').value.trim(),maps:document.getElementById('eMaps').value.trim(),bgColor:document.getElementById('eBgColor').value,cardColor:document.getElementById('eCardColor').value,primaryColor:document.getElementById('ePrimaryColor').value,textColor:document.getElementById('eTextColor').value,font:document.getElementById('eFont').value,btnRadius:document.getElementById('eBtnStyle').value};
   try{const {error}=await supabase.from('sites').update({name:nome,slug,content:updatedContent}).eq('id',site.id);if(error)throw error;msg.style.color='var(--green)';msg.textContent='Alterações salvas no banco de dados.';await carregarSites();setTimeout(()=>{if(container.isConnected)container.innerHTML='';},900);}
   catch(err){msg.style.color='var(--red)';msg.textContent='Erro ao salvar: '+(err.message||'erro desconhecido');btn.disabled=false;}
  };
