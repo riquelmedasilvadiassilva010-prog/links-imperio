@@ -1,67 +1,648 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#080808">
-<title>Império Barber Shop | Links oficiais</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<style>
-:root{--white:#f8f8f8;--black:#050505;--pill:linear-gradient(100deg,#050505 0%,#292929 34%,#f5f5f5 100%)}
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html{min-height:100%;background:#050505}
-body{min-height:100vh;color:var(--white);font-family:Montserrat,Arial,sans-serif;overflow-x:hidden;position:relative;background:#050505}
-body:before{content:"";position:fixed;inset:0;z-index:-2;background:linear-gradient(rgba(0,0,0,.20),rgba(0,0,0,.28)),url('./fundo-barbearia.jpg') center center/cover no-repeat;transform:scale(1.03)}
-body:after{content:"";position:fixed;inset:0;z-index:-1;background:rgba(0,0,0,.13);pointer-events:none}
-.page{width:min(100%,540px);min-height:100vh;margin:auto;padding:22px 8.8% 28px;display:flex;flex-direction:column;align-items:center;text-align:center}
-.brand{width:100%;display:flex;flex-direction:column;align-items:center;animation:brandIn 1.25s cubic-bezier(.2,.8,.2,1) both}
-.logo{display:block;width:min(100%,390px);height:auto;object-fit:contain;filter:drop-shadow(0 4px 9px #000);animation:logoPulse 1.5s .15s both}
-.slogan{font-size:clamp(17px,4.7vw,26px);line-height:1.2;font-weight:800;letter-spacing:-.6px;text-shadow:0 2px 5px #000;margin-top:-2px;white-space:nowrap;animation:rise .8s .65s both}
-.rule{width:100%;height:5px;background:#f8f8f8;border-radius:4px;margin-top:7px;position:relative;box-shadow:0 1px 5px #000;animation:lineIn .7s .85s both;transform-origin:center}
-.rule:before,.rule:after{content:"";position:absolute;width:5px;height:17px;background:#f8f8f8;top:50%;transform:translateY(-50%);border-radius:2px}.rule:before{left:0}.rule:after{right:0}
-.socials{width:100%;display:flex;align-items:center;justify-content:space-around;margin:27px 0 24px;animation:rise .75s 1s both}
-.socials a{color:#f7f7f7;font-size:clamp(42px,11vw,58px);line-height:1;text-decoration:none;filter:drop-shadow(0 2px 4px #000);transition:transform .22s ease,color .22s ease}
-.socials a:active{transform:scale(.88)}
-.links{width:100%;display:flex;flex-direction:column;gap:15px}
-.link{position:relative;display:flex;align-items:center;justify-content:center;min-height:55px;padding:10px 16px;border:0;border-radius:999px;background:var(--pill);color:#fff;text-decoration:none;font-size:clamp(16px,4.3vw,22px);font-weight:800;letter-spacing:-.45px;text-shadow:0 1px 2px rgba(0,0,0,.15);box-shadow:0 4px 12px rgba(0,0,0,.26);overflow:hidden;isolation:isolate;opacity:0;transform:translateY(23px) scale(.97);animation:buttonIn .65s cubic-bezier(.2,.8,.2,1) forwards;transition:transform .2s ease,filter .2s ease}
-.link:nth-child(1){animation-delay:1.18s}.link:nth-child(2){animation-delay:1.34s}.link:nth-child(3){animation-delay:1.50s}.link:nth-child(4){animation-delay:1.66s}.link:nth-child(5){animation-delay:1.82s}.link:nth-child(6){animation-delay:1.98s}
-.link i{position:absolute;left:50%;transform:translateX(-50%);font-size:1.2em;font-weight:400;transition:left .25s ease,transform .25s ease}
-.link span{transition:transform .25s ease}
-.link:before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.23) 45%,transparent 70%);transform:translateX(-130%);transition:transform .65s ease;z-index:-1}
-.link:hover:before{transform:translateX(130%)}.link:hover{filter:brightness(1.08)}.link:active{transform:scale(.97)}
-.link:focus-visible,.socials a:focus-visible{outline:3px solid white;outline-offset:4px}
-.footer{margin-top:auto;padding-top:40px;font-size:11px;letter-spacing:2px;color:#ddd;opacity:.8}
-@keyframes brandIn{0%{opacity:0;filter:blur(8px)}100%{opacity:1;filter:blur(0)}}
-@keyframes logoPulse{0%{opacity:0;transform:scale(.25) rotateY(75deg);filter:drop-shadow(0 0 22px #fff) blur(3px)}55%{opacity:1;transform:scale(1.04) rotateY(-5deg);filter:drop-shadow(0 0 8px #fff) blur(0)}100%{transform:scale(1);filter:drop-shadow(0 4px 9px #000)}}
-@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-@keyframes lineIn{from{transform:scaleX(0);opacity:0}to{transform:scaleX(1);opacity:1}}
-@keyframes buttonIn{to{opacity:1;transform:translateY(0) scale(1)}}
-@media(min-width:600px){.page{padding-top:30px;padding-bottom:35px}.logo{width:390px}.slogan{font-size:25px}.links{gap:17px}.link{min-height:60px;font-size:21px}.socials{margin-top:28px;margin-bottom:28px}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Império Barber Shop - Links Oficiais</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --glass-bg: rgba(20, 20, 20, 0.75);
+            --glass-border: rgba(212, 175, 55, 0.35);
+            --gold-light: #fceca4;
+            --gold-main: #d4af37;
+            --gold-dark: #aa8c2c;
+            --text-main: #ffffff;
+            --text-muted: #b3b3b3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px 16px;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(10, 10, 10, 0.8) 0%, rgba(10, 10, 10, 0.96) 100%), 
+                        url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80') center/cover no-repeat;
+            z-index: -1;
+        }
+
+        
+.container {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+ 
+/* Ajustes para telas de computador */
+@media (min-width: 768px) {
+    body {
+        padding: 40px 24px;
+        align-items: flex-start;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 1000px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        column-gap: 40px;
+        row-gap: 24px;
+        align-items: start;
+        text-align: center;
+    }
+
+    .header {
+        grid-column: 1 / -1;
+        margin-bottom: 0;
+    }
+
+    .links-container {
+        grid-column: 1;
+        margin-bottom: 0;
+    }
+
+    .wifi-card {
+        grid-column: 1;
+        margin-bottom: 0;
+    }
+
+    .gallery-section {
+        grid-column: 2;
+        grid-row: 2 / span 2;
+        margin-bottom: 0;
+    }
+
+    .footer {
+        grid-column: 1 / -1;
+        width: 100%;
+        margin-top: 8px;
+    }
+}
+
+        
+        /* Topo e Logo */
+        .header {
+            margin-bottom: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+.logo-box {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    margin: 0 auto 16px;
+}
+
+.logo-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+        
+
+        .brand-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+        }
+
+        .brand-title span {
+            color: var(--gold-main);
+        }
+
+        .slogan {
+            font-size: 0.72rem;
+            letter-spacing: 2.5px;
+            color: var(--gold-light);
+            font-weight: 600;
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
+
+        /* Botões de Ação */
+        .links-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+
+        .link-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            padding: 14px 20px;
+            text-decoration: none;
+            color: var(--text-main);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            cursor: pointer;
+        }
+
+        .link-card:hover {
+            background: rgba(35, 33, 25, 0.95);
+            border-color: var(--gold-main);
+            transform: translateY(-2px);
+        }
+
+        .link-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-align: left;
+        }
+
+        .icon-box {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .whatsapp-bg { background: #25D366; color: white; }
+        .instagram-bg { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: white; }
+        .google-bg { background: #ffffff; color: #4285F4; }
+        .pix-bg { background: #32BCAD; color: white; }
+        .wifi-bg { background: #d4af37; color: black; }
+
+        .link-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .link-title {
+            font-size: 0.88rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .link-subtitle {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .arrow-icon {
+            color: var(--gold-main);
+            font-size: 0.9rem;
+        }
+
+        /* Bloco de Wi-Fi */
+           .wifi-card {
+            width: 100%;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            padding: 18px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            margin-bottom: 22px;
+        }
+
+        .wifi-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .wifi-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        .wifi-item > i {
+            color: var(--gold-main);
+            font-size: 1.1rem;
+            width: 22px;
+            text-align: center;
+        }
+
+        .wifi-details {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .wifi-label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .wifi-value-input {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 8px;
+            color: var(--text-main);
+            padding: 6px 10px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 3px;
+            outline: none;
+        }
+
+        .copy-btn {
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid var(--glass-border);
+            color: var(--gold-main);
+            padding: 8px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+     .copy-btn:hover {
+            background: var(--gold-main);
+            color: #000;
+        }
+
+        
+/* Galeria de Cortes - Carrossel */
+.gallery-section {
+    width: 100%;
+    margin-bottom: 22px;
+    text-align: left;
+    min-width: 0;
+}
+
+.gallery-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--gold-light);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 14px;
+}
+
+.gallery-grid {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+.gallery-grid::-webkit-scrollbar {
+    display: none;
+}
+
+.gallery-item {
+    flex: 0 0 100%;
+    min-width: 0;
+    aspect-ratio: 4 / 3;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    scroll-snap-align: start;
+}
+
+.gallery-item img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--gold-main);
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.75);
+    color: var(--gold-light);
+    cursor: pointer;
+    z-index: 2;
+}
+
+.carousel-prev {
+    left: 8px;
+}
+
+.carousel-next {
+    right: 8px;
+}
+
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.carousel-dot {
+    width: 8px;
+    height: 8px;
+    border: none;
+    border-radius: 50%;
+    background: #666;
+    cursor: pointer;
+    padding: 0;
+}
+
+.carousel-dot.active {
+    background: var(--gold-main);
+    transform: scale(1.2);
+}
+
+
+        /* Rodapé */
+        .footer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            opacity: 0.8;
+        }
+
+        .footer-brand {
+            font-family: 'Cinzel', serif;
+            color: var(--gold-main);
+            font-size: 0.78rem;
+            letter-spacing: 2px;
+        }
+
+        .footer-tagline {
+            font-size: 0.62rem;
+            color: var(--text-muted);
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 25px;
+            background: #d4af37;
+            color: #000;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.82rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.35s ease;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
 <body>
-<main class="page">
-  <header class="brand">
-    <img class="logo" src="./logo-imperio.png" alt="Império Barber Shop">
-    <p class="slogan">Sua melhor versão começa aqui!!</p>
-    <div class="rule" aria-hidden="true"></div>
-  </header>
-  <nav class="socials" aria-label="Redes sociais">
-    <a href="https://api.whatsapp.com/send?phone=5598985819586" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-    <a href="https://www.instagram.com/imperio_barbershop10/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-    <a href="https://search.google.com/local/writereview?placeid=ChIJm3xCfaiR9gcRKegAm2XkBEI" target="_blank" rel="noopener noreferrer" aria-label="Avaliação do Google"><i class="fa-solid fa-globe"></i></a>
-  </nav>
-  <section class="links" aria-label="Links oficiais">
-    <a class="link" href="https://api.whatsapp.com/send?phone=5598985819586" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i><span>WhatsApp</span></a>
-    <a class="link" href="https://www.instagram.com/imperio_barbershop10/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i><span>Instagram</span></a>
-    <a class="link" href="https://search.google.com/local/writereview?placeid=ChIJm3xCfaiR9gcRKegAm2XkBEI" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-globe"></i><span>Avaliação do Google</span></a>
-    <a class="link" href="https://www.google.com/maps/search/?api=1&query=Imp%C3%A9rio+Barber+Shop" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-location-dot"></i><span>Localização</span></a>
-    <a class="link" href="./wifi.html" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-wifi"></i><span>Wi-Fi Grátis</span></a>
-    <a class="link" href="./pix.html" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-diamond"></i><span>Chave pix</span></a>
-  </section>
-  <footer class="footer">IMPÉRIO BARBER SHOP</footer>
-</main>
+
+    <div class="container">
+           
+<!-- Cabeçalho -->
+<header class="header">
+    <div class="logo-box">
+        <img src="./logo.png"
+             alt="Logo Império Barber Shop"
+             class="logo-image">
+    </div>
+
+    <div class="slogan">Mais que um corte, é o seu estilo</div>
+</header>
+
+
+        <!-- Links Principais -->
+        <div class="links-container">
+            <a href="https://api.whatsapp.com/send?phone=5598985819586" target="_blank" class="link-card">
+                <div class="link-left">
+                    <div class="icon-box whatsapp-bg"><i class="fa-brands fa-whatsapp"></i></div>
+                    <div class="link-info">
+                        <span class="link-title">CHAMA NO WHATSAPP</span>
+                        <span class="link-subtitle">Agende seu horário</span>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right arrow-icon"></i>
+            </a>
+
+            <a href="https://www.instagram.com/imperio_barbershop10/" target="_blank" class="link-card">
+                <div class="link-left">
+                    <div class="icon-box instagram-bg"><i class="fa-brands fa-instagram"></i></div>
+                    <div class="link-info">
+                        <span class="link-title">NOSSO INSTAGRAM</span>
+                        <span class="link-subtitle">@imperio_barbershop10</span>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right arrow-icon"></i>
+            </a>
+
+            <a href="https://search.google.com/local/writereview?placeid=ChIJm3xCfaiR9gcRKegAm2XkBEI" target="_blank" class="link-card">
+                <div class="link-left">
+                    <div class="icon-box google-bg"><i class="fa-brands fa-google"></i></div>
+                    <div class="link-info">
+                        <span class="link-title">AVALIE NO GOOGLE</span>
+                        <span class="link-subtitle">Sua opinião é importante</span>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right arrow-icon"></i>
+            </a>
+
+            
+<div class="link-card" onclick="window.open('./pix.html', '_blank')">
+
+                <div class="link-left">
+                    <div class="icon-box pix-bg"><i class="fa-solid fa-qrcode"></i></div>
+                    <div class="link-info">
+                        <span class="link-title">PAGUE COM PIX</span>
+                        <span class="link-subtitle">Toque para copiar a chave Pix</span>
+                    </div>
+                </div>
+                <i class="fa-regular fa-copy arrow-icon"></i>
+            </div>
+
+            <a href="./wifi.html" target="_blank" class="link-card">
+                <div class="link-left">
+                    <div class="icon-box wifi-bg"><i class="fa-solid fa-wifi"></i></div>
+                    <div class="link-info">
+                        <span class="link-title">WI-FI GRÁTIS</span>
+                        <span class="link-subtitle">Conecte-se enquanto espera</span>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right arrow-icon"></i>
+            </a>
+        </div>
+
+        
+<!-- Galeria de Cortes -->
+<div class="gallery-section">
+    <div class="gallery-title">Nossos Trabalhos</div>
+
+    <div class="carousel">
+        <button class="carousel-btn carousel-prev"
+                onclick="moveGallery(-1)"
+                aria-label="Foto anterior">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+
+        <div class="gallery-grid" id="gallery-track">
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&q=80"
+                     alt="Corte de cabelo 1">
+            </div>
+
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&q=80"
+                     alt="Corte de cabelo 2">
+            </div>
+
+            <div class="gallery-item">
+                <img src="./corte3.jpg" alt="Corte de cabelo 3">
+            </div>
+
+            <div class="gallery-item">
+                <img src="./corte4.jpg" alt="Corte de cabelo 4">
+            </div>
+
+            <div class="gallery-item">
+                <img src="./corte5.jpg" alt="Corte de cabelo 5">
+            </div>
+        </div>
+
+        <button class="carousel-btn carousel-next"
+                onclick="moveGallery(1)"
+                aria-label="Próxima foto">
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <div class="carousel-dots" id="gallery-dots">
+        <button class="carousel-dot active" onclick="goToGallery(0)" aria-label="Foto 1"></button>
+        <button class="carousel-dot" onclick="goToGallery(1)" aria-label="Foto 2"></button>
+        <button class="carousel-dot" onclick="goToGallery(2)" aria-label="Foto 3"></button>
+        <button class="carousel-dot" onclick="goToGallery(3)" aria-label="Foto 4"></button>
+        <button class="carousel-dot" onclick="goToGallery(4)" aria-label="Foto 5"></button>
+    </div>
+</div>
+
+
+        <!-- Rodapé -->
+        <footer class="footer">
+            <div class="footer-brand">IMPÉRIO BARBER SHOP</div>
+            <div class="footer-tagline">Qualidade • Respeito • Estilo</div>
+        </footer>
+    </div>
+
+    <div id="toast" class="toast">Copiado com sucesso!</div>
+
+    <script>
+        
+const galleryTrack = document.getElementById('gallery-track');
+const galleryDots = document.querySelectorAll('.carousel-dot');
+
+function goToGallery(index) {
+    const slides = galleryTrack.querySelectorAll('.gallery-item');
+    if (index < 0 || index >= slides.length) return;
+
+    galleryTrack.scrollTo({
+        left: slides[index].offsetLeft - slides[0].offsetLeft,
+        behavior: 'smooth'
+    });
+
+    galleryDots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+    });
+}
+
+function moveGallery(direction) {
+    const slides = galleryTrack.querySelectorAll('.gallery-item');
+    const current = Math.round(
+        galleryTrack.scrollLeft / slides[0].offsetWidth
+    );
+
+    goToGallery(Math.max(
+        0,
+        Math.min(slides.length - 1, current + direction)
+    ));
+}
+
+galleryTrack.addEventListener('scroll', () => {
+    const slides = galleryTrack.querySelectorAll('.gallery-item');
+    const current = Math.round(
+        galleryTrack.scrollLeft / slides[0].offsetWidth
+    );
+
+    galleryDots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === current);
+    });
+});
+
+    </script>
 </body>
 </html>
