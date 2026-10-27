@@ -103,10 +103,26 @@ function renderPainel(user){
 async function carregarSites(){
  const list=document.getElementById('sitesList');if(!list)return;
  list.innerHTML='<div class="loading-state"><i class="fa-solid fa-spinner fa-spin"></i> Carregando sites...</div>';
- const {data,error}=await supabase.functions.invoke('admin-clientes',{body:{action:'listar_sites'}});
- if(error){list.innerHTML=`<div class="empty-state"><i class="fa-solid fa-triangle-exclamation"></i><h3>Não foi possível carregar</h3><p>${escapeHtml(error.message||'Falha ao chamar a função admin-clientes.')}</p><p class="small-help">Confira se a Edge Function <strong>admin-clientes</strong> está publicada no Supabase.</p></div>`;return;}
- if(data?.error){list.innerHTML=`<div class="empty-state"><i class="fa-solid fa-triangle-exclamation"></i><h3>Não foi possível carregar</h3><p>${escapeHtml(data.error)}</p></div>`;return;}
- todosSites=Array.isArray(data?.sites)?data.sites:[];
+ let sitesCarregados=null;
+ let erroFuncao=null;
+ try{
+  const {data,error}=await supabase.functions.invoke('admin-clientes',{body:{action:'listar_sites'}});
+  if(error)erroFuncao=error;
+  else if(data?.error)erroFuncao=new Error(data.error);
+  else if(Array.isArray(data?.sites))sitesCarregados=data.sites;
+ }catch(err){erroFuncao=err;}
+ // Plano alternativo: tenta a consulta direta já usada anteriormente pelo painel.
+ // Isso permite carregar a lista se a Edge Function estiver temporariamente inacessível,
+ // desde que as políticas RLS do Supabase autorizem o administrador.
+ if(!sitesCarregados){
+  const {data,error}=await supabase.from('sites').select('*').order('created_at',{ascending:false});
+  if(error){
+   const detalhe=erroFuncao?.message?`Falha na Edge Function: ${erroFuncao.message}. `:'';
+   list.innerHTML=`<div class="empty-state"><i class="fa-solid fa-triangle-exclamation"></i><h3>Não foi possível carregar</h3><p>${escapeHtml(detalhe+error.message)}</p><p class="small-help">Confira a publicação da Edge Function <strong>admin-clientes</strong> e as políticas de acesso (RLS) da tabela <strong>sites</strong> no Supabase.</p></div>`;return;
+  }
+  sitesCarregados=data||[];
+ }
+ todosSites=sitesCarregados;
  document.getElementById('statTotal').textContent=todosSites.length;
  document.getElementById('statActive').textContent=todosSites.filter(s=>s.published).length;
  document.getElementById('statInactive').textContent=todosSites.filter(s=>!s.published).length;
