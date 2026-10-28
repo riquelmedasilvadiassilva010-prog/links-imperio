@@ -84,7 +84,7 @@ async function load(){
  const slug=new URLSearchParams(location.search).get('slug');
  if(!slug){showState('Página não encontrada','Este endereço não informa qual site deve ser exibido. Confira o link recebido.');return}
  try{
-   const {data,error}=await supabase.from('sites').select('name,slug,content,published').eq('slug',slug).maybeSingle();
+   const {data,error}=await supabase.from('public_sites').select('name,slug,content,published').eq('slug',slug).maybeSingle();
    if(error)throw error;
    if(!data){showState('Página não encontrada','Não encontramos um site com este endereço. Confira se o link está correto.');return}
    if(!data.published){showState('Página temporariamente indisponível','O responsável por este site ainda não o publicou ou o deixou temporariamente inativo.');return}
