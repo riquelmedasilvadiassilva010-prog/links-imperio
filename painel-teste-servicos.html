@@ -1,123 +1,268 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#090a0b">
-<title>Bella Vita | Salão de Beleza</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=DM+Sans:wght@400;500;700&family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IMPÉRIO DIGITAL | Painel Master</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-:root{--bg:#090a0b;--pink:#f5a6b5;--pink2:#ffd1d9;--ink:#21171a;--cream:#fff6f6;--line:#383034}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:78px}body{margin:0;background:var(--bg);color:#fff;font-family:"DM Sans",sans-serif}a{color:inherit;text-decoration:none}button,input,select{font:inherit}.wrap{width:min(1200px,calc(100% - 36px));margin:auto}.top{position:sticky;top:0;z-index:5;background:#090a0bf2;border-bottom:1px solid #302a2e;backdrop-filter:blur(10px)}nav{height:72px;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{display:flex;align-items:center;gap:10px}.flower{font-size:32px;color:var(--pink)}.brandname{font:20px Cinzel,serif;border-left:1px solid #61545a;padding-left:12px}.brandname small{display:block;font:8px "DM Sans";letter-spacing:3px;text-align:center}.navlinks{display:flex;gap:18px;font-size:12px}.navlinks a:hover{color:var(--pink)}.btn{border:0;border-radius:30px;background:linear-gradient(100deg,var(--pink),var(--pink2));color:#241519;font-weight:700;padding:12px 18px;display:inline-flex;justify-content:center;align-items:center;gap:7px;cursor:pointer}.outline{background:transparent;color:var(--pink);border:1px solid var(--pink)}.hero{display:grid;grid-template-columns:1fr 1.15fr .8fr;gap:18px;align-items:center;padding:32px 0}.eyebrow{font-size:10px;letter-spacing:3px;color:var(--pink2);text-transform:uppercase}.hero h1{font:clamp(38px,4vw,57px)/1.05 "Playfair Display",serif;margin:16px 0}.hero h1 em{display:block;color:var(--pink)}.hero p{font-size:13px;line-height:1.7;color:#e1d7da}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}.portrait{height:350px;width:100%;object-fit:cover;mask-image:linear-gradient(90deg,transparent,#000 18%,#000 80%,transparent)}.quick{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:9px;border:1px solid var(--line);border-radius:14px}.quick a,.quick button{border:1px solid var(--line);border-radius:11px;background:transparent;color:white;min-height:78px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer}.quick a:hover,.quick button:hover{border-color:var(--pink)}.ico{font-size:22px;color:var(--pink)}.quick b{font-size:11px}.quick small{font-size:9px;color:#c9bec2}.strip{border-block:1px solid var(--line);background:#101112}.stripgrid{display:grid;grid-template-columns:repeat(4,1fr);padding:18px 0}.stripitem{padding:0 16px;border-right:1px solid var(--line);display:flex;gap:12px;align-items:center}.stripitem:first-child{padding-left:0}.stripitem:last-child{border:0}.stripitem span{font-size:26px;color:var(--pink)}.stripitem b{font-size:12px}.stripitem small{display:block;font-size:10px;color:#d0c5c9;margin-top:4px}.light{background:linear-gradient(130deg,#fff8f8,#f5e6e9);color:#21171a;padding:28px 0}.section{margin-bottom:30px}.head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:15px}.head h2{font-size:22px;margin:0 0 5px}.head p{font-size:12px;color:#66595e;margin:0}.head a{font-size:11px;font-weight:700;white-space:nowrap}.cards{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}.card{background:white;border-radius:11px;overflow:hidden;box-shadow:0 5px 15px #6e4c5510}.card img{width:100%;height:120px;object-fit:cover;display:block}.body{padding:11px}.body h3{font-size:12px;margin:0 0 7px}.body p{font-size:10px;color:#655a5e;margin:0 0 10px}.price{font-weight:700;font-size:11px;margin-bottom:10px}.mini{width:100%;border:0;border-radius:30px;background:var(--pink);padding:8px;font-size:10px;font-weight:700;cursor:pointer}.gallery{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:11px}.gallery img{width:100%;height:130px;object-fit:cover;border-radius:10px}.booking{padding:38px 0;background:#0d0e0f}.bookinggrid{display:grid;grid-template-columns:.7fr .9fr 1.35fr;gap:25px;align-items:center}.salon{width:100%;height:340px;object-fit:cover}.booking h2{font:32px/1.1 "Playfair Display",serif;margin:12px 0}.booking p{font-size:12px;line-height:1.7;color:#d6cdd0}.formbox{border:1px solid var(--line);border-radius:14px;padding:18px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{display:flex;flex-direction:column;gap:6px;margin-bottom:11px}.field label{font-size:10px;color:#ddd}.field input,.field select{background:#171719;border:1px solid #51464b;border-radius:8px;padding:11px;color:white;width:100%;font-size:12px}.formbox .btn{width:100%}.note{font-size:10px!important;color:#c7bbc0!important}.footer{border-top:1px solid var(--line)}.footgrid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:15px;align-items:center;padding:22px 0}.footitem{font-size:11px}.footitem span{color:var(--pink);font-size:20px;margin-right:7px}.footitem small{display:block;color:#c7bdc1;font-size:9px;margin-top:3px}.slogan{text-align:right;color:var(--pink);font:italic 18px "Playfair Display",serif}.copy{text-align:center;border-top:1px solid #302a2e;padding:14px;font-size:10px;color:#bdb2b6}.toast{position:fixed;bottom:18px;left:50%;transform:translate(-50%,20px);opacity:0;transition:.2s;background:#fff1f4;color:#241519;padding:12px 17px;border-radius:12px;z-index:9;font-size:12px;max-width:90%;pointer-events:none}.toast.show{opacity:1;transform:translate(-50%,0)}
-@media(max-width:1000px){.navlinks{gap:10px}.navlinks a{font-size:10px}.hero{grid-template-columns:1fr 1fr}.portrait{position:absolute;right:24%;width:42%;opacity:.5;z-index:0}.hero>div:first-child,.quick{z-index:1}.quick{grid-column:2}.cards,.gallery{grid-template-columns:repeat(3,minmax(0,1fr))}.bookinggrid{grid-template-columns:1fr 1fr}.formbox{grid-column:1/-1}}
-@media(max-width:650px){.wrap{width:calc(100% - 28px)}nav{height:64px}.brandname{font-size:16px}.navlinks{display:none}nav>.btn{font-size:10px;padding:10px 12px}.hero{display:flex;flex-direction:column;align-items:stretch;gap:18px;padding:27px 0}.hero h1{font-size:43px}.portrait{position:static;width:100%;height:250px;opacity:1;mask-image:linear-gradient(180deg,transparent,#000 12%,#000 88%,transparent);order:2}.hero>div:first-child{order:1}.quick{order:3;grid-template-columns:repeat(3,1fr)}.quick a,.quick button{min-height:72px}.stripgrid{grid-template-columns:1fr 1fr;gap:15px 0}.stripitem{padding:0 8px;border:0}.stripitem:nth-child(odd){padding-left:0;border-right:1px solid var(--line)}.stripitem:nth-child(even){padding-left:12px}.stripitem b{font-size:11px}.stripitem small{font-size:9px}.light{padding:24px 0}.head h2{font-size:20px}.head p{font-size:10px}.head a{font-size:9px}.cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.card img{height:140px}.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}.gallery img{height:145px}.booking{padding:28px 0}.bookinggrid{grid-template-columns:1fr;gap:18px}.salon{height:220px}.formbox{grid-column:auto;padding:14px}.fields{grid-template-columns:1fr}.footgrid{grid-template-columns:1fr 1fr}.slogan{text-align:left;font-size:16px}}
+:root{--bg:#090b10;--panel:#10131b;--card:#141925;--input:#0b0e15;--gold:#e8b84a;--gold2:#f6d47e;--text:#f5f6fa;--muted:#969daf;--line:#252b39;--green:#35d49a;--red:#ff6b78;--blue:#8ba9ff}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,"Segoe UI",system-ui,sans-serif}
+body{min-height:100vh;background:radial-gradient(ellipse at 80% -10%,#29213b 0,transparent 34%),radial-gradient(ellipse at 0% 0%,#1b1b28 0,transparent 30%),var(--bg);color:var(--text)}
+button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;cursor:wait}
+.login-wrapper{min-height:100vh;display:grid;place-items:center;padding:20px}
+.card,.site-card{background:linear-gradient(145deg,rgba(22,27,39,.98),rgba(16,19,28,.98));border:1px solid var(--line);border-radius:18px;box-shadow:0 18px 55px #0003}
+.login-card{width:100%;max-width:420px;padding:30px}
+.brand-area{display:flex;align-items:center;gap:12px;min-width:0}.brand-icon{font-size:28px;color:var(--gold)}.brand-name{font-size:16px;font-weight:850;letter-spacing:1.1px;color:var(--gold2)}.brand-sub{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px;overflow-wrap:anywhere}
+.login-intro{margin:26px 0 22px}.login-intro h1{font-size:25px;letter-spacing:-.7px;margin-bottom:8px}.login-intro p{color:var(--muted);font-size:13px;line-height:1.6}
+.input-group{margin-bottom:15px;min-width:0}.input-group label{display:block;color:#b6bdcc;font-size:11px;font-weight:750;text-transform:uppercase;letter-spacing:.7px;margin-bottom:7px}
+.input-field{width:100%;min-width:0;min-height:46px;padding:12px 13px;background:var(--input);border:1px solid #2a3040;border-radius:10px;color:var(--text);outline:none;font-size:14px;transition:border .18s,box-shadow .18s}
+.input-field:focus{border-color:var(--gold);box-shadow:0 0 0 3px #e8b84a1c}.input-field::placeholder{color:#687084}
+.btn-main,.btn-secondary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:11px 17px;border:1px solid transparent;border-radius:10px;font-weight:800;font-size:13px;transition:transform .15s,filter .15s}
+.btn-main{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#17140d;box-shadow:0 5px 18px #e8b84a1a}.btn-main:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.btn-secondary{background:#202636;color:#e9ecf5;border-color:#30384a}.btn-secondary:hover{background:#293144}
+.status{margin-top:12px;font-size:12px;line-height:1.55;overflow-wrap:anywhere;color:var(--muted)}
+.app-layout{display:flex;min-height:100vh}.sidebar{width:255px;flex-shrink:0;background:rgba(13,16,23,.92);border-right:1px solid var(--line);padding:25px 17px;display:flex;flex-direction:column;justify-content:space-between;gap:25px}
+.sidebar-brand{padding:3px 10px 25px;border-bottom:1px solid var(--line)}.sidebar .brand-icon{font-size:30px}.sidebar .brand-name{font-size:15px}.user-chip{display:flex;align-items:center;gap:9px;margin-top:18px;padding:10px;background:#171c28;border:1px solid var(--line);border-radius:11px;min-width:0}.user-avatar{width:32px;height:32px;display:grid;place-items:center;flex-shrink:0;border-radius:10px;background:#e8b84a1b;color:var(--gold)}.user-email{font-size:11px;color:#d7dbea;overflow-wrap:anywhere;line-height:1.4}
+.nav-label{font-size:9px;letter-spacing:1.8px;text-transform:uppercase;color:#687084;font-weight:800;padding:0 12px;margin:24px 0 8px}.nav-item{display:flex;align-items:center;gap:12px;padding:12px;border-radius:10px;color:var(--muted);text-decoration:none;font-size:13px;font-weight:700;margin-bottom:5px;cursor:pointer}.nav-item i{width:17px;text-align:center}.nav-item:hover,.nav-item.active{background:#e8b84a17;color:var(--gold2)}.sidebar-bottom .btn-secondary{width:100%}
+main{flex:1;min-width:0;width:100%;max-width:1500px;margin:0 auto;padding:32px clamp(16px,3vw,42px) 50px}
+.mobile-top{display:none}.page-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:25px}.eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:1.8px;font-weight:800;color:var(--gold);margin-bottom:8px}.page-heading h1{font-size:clamp(23px,3vw,31px);letter-spacing:-1px}.page-heading p{color:var(--muted);font-size:13px;margin-top:7px;line-height:1.5}
+.stats-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:25px}.stat-card{padding:18px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(135deg,#171c28,#11151e);min-width:0}.stat-top{display:flex;align-items:center;justify-content:space-between;gap:8px;color:var(--muted);font-size:11px;font-weight:700}.stat-icon{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;color:var(--gold);background:#e8b84a17}.stat-value{font-size:27px;font-weight:850;letter-spacing:-1px;margin-top:13px}.stat-note{font-size:10px;color:#7f879a;margin-top:3px}
+.list-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:24px 0 14px}.list-toolbar h2{font-size:16px}.list-toolbar p{font-size:11px;color:var(--muted);margin-top:4px}.toolbar-controls{display:flex;gap:9px;flex:1;justify-content:flex-end;min-width:230px}.search-wrap{position:relative;max-width:310px;width:100%}.search-wrap i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#747d92;font-size:12px}.search-wrap input{padding-left:35px;min-height:42px}.filter-select{max-width:145px;min-height:42px}
+.site-card{padding:19px;margin-bottom:12px;transition:border-color .2s,transform .2s}.site-card:hover{border-color:#e8b84a75;transform:translateY(-1px)}.site-header{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}.site-identity{display:flex;align-items:flex-start;gap:12px;min-width:0}.site-symbol{width:43px;height:43px;border-radius:12px;display:grid;place-items:center;flex-shrink:0;background:linear-gradient(135deg,#e8b84a26,#e8b84a0b);border:1px solid #e8b84a2e;color:var(--gold);font-size:17px}.site-details{min-width:0;overflow-wrap:anywhere}.site-name{font-size:15px;font-weight:800;line-height:1.4}.site-url{font-size:11px;color:#9ba4b8;margin-top:4px;overflow-wrap:anywhere}.site-client{font-size:11px;margin-top:8px;line-height:1.5;overflow-wrap:anywhere}.badge{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border-radius:20px;font-size:10px;font-weight:800;white-space:nowrap}.badge:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}.badge-active{background:#35d49a16;color:var(--green)}.badge-inactive{background:#ff6b7816;color:var(--red)}
+.action-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:17px;padding-top:15px;border-top:1px solid #252b39}.btn-act{display:flex;align-items:center;justify-content:center;gap:7px;min-width:0;min-height:42px;padding:9px 8px;border:1px solid transparent;border-radius:9px;font-size:11px;font-weight:800;text-decoration:none;text-align:center;overflow-wrap:anywhere}.btn-act-edit{background:#e8b84a;color:#19150c}.btn-act-view{background:#202636;color:#e4e9f4;border-color:#31394b}.btn-act-toggle{background:#35d49a14;color:var(--green);border-color:#35d49a22}.btn-act-delete{background:#ff6b7812;color:var(--red);border-color:#ff6b7825}.btn-act:hover{filter:brightness(1.12)}.btn-act:disabled{opacity:.38;cursor:not-allowed;filter:none}.btn-act-copy{background:#dbeafe12;color:#bfdbfe;border-color:#bfdbfe22}.btn-act-share{background:#25d36618;color:#6ee7a0;border-color:#25d36630}
+#formContainer{scroll-margin-top:18px}.form-card{padding:clamp(17px,2.4vw,26px);margin:22px 0;border-color:#8f702f}.form-heading{display:flex;align-items:flex-start;gap:12px;margin-bottom:18px}.form-heading .site-symbol{width:40px;height:40px}.form-heading h2{font-size:18px}.form-heading p{font-size:12px;color:var(--muted);line-height:1.6;margin-top:5px}.section-title{display:flex;align-items:center;gap:9px;font-size:11px;font-weight:850;color:var(--gold2);letter-spacing:1px;text-transform:uppercase;margin:24px 0 14px;padding-bottom:10px;border-bottom:1px solid var(--line)}.grid-2,.grid-3{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px}.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}.form-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}.empty-state,.loading-state{padding:32px 20px;text-align:center;border:1px dashed #30384a;border-radius:15px;background:#11151d;color:var(--muted);font-size:13px;line-height:1.7}.empty-state i{font-size:27px;color:#727c91;margin-bottom:12px}.empty-state h3{color:#e8ebf3;font-size:15px;margin-bottom:5px}.small-help{font-size:11px;color:var(--muted);line-height:1.6;margin-top:7px}
+@media(max-width:900px){.sidebar{width:220px;padding:22px 13px}main{padding:26px 20px}.action-row{grid-template-columns:repeat(2,minmax(0,1fr))}.btn-act-delete{grid-column:auto}}
+@media(max-width:680px){.app-layout{display:block}.sidebar{width:100%;padding:12px 15px;border-right:0;border-bottom:1px solid var(--line);display:flex;flex-direction:row;align-items:center;gap:10px}.sidebar-brand{border:0;padding:0;min-width:0;flex:1}.sidebar .brand-icon{font-size:25px}.sidebar .brand-name{font-size:13px}.sidebar .brand-sub{font-size:8px;letter-spacing:1px}.sidebar .user-chip,.sidebar nav,.nav-label{display:none}.sidebar-bottom{flex-shrink:0}.sidebar-bottom .btn-secondary{min-height:39px;padding:8px 11px;font-size:11px;width:auto}.sidebar-bottom .btn-secondary i{margin:0}main{padding:23px 14px 36px}.page-heading{margin-bottom:19px}.page-heading h1{font-size:24px}.page-heading>.btn-main{width:100%}.stats-grid{gap:8px;margin-bottom:23px}.stat-card{padding:12px 10px;border-radius:12px}.stat-top{font-size:9px;align-items:flex-start}.stat-icon{width:27px;height:27px;font-size:11px}.stat-value{font-size:23px;margin-top:11px}.stat-note{font-size:9px}.list-toolbar{align-items:flex-start}.toolbar-controls{min-width:100%;justify-content:stretch}.search-wrap{max-width:none;flex:1}.filter-select{width:125px}.site-card{padding:15px;border-radius:15px}.site-symbol{width:37px;height:37px}.site-name{font-size:14px}.site-header{gap:8px}.badge{font-size:9px;padding:5px 7px}.action-row{gap:7px}.btn-act{min-height:44px;font-size:11px;padding:8px 5px}.grid-2,.grid-3{grid-template-columns:1fr}.form-actions{display:grid;grid-template-columns:1fr}.form-actions button{width:100%}.login-card{padding:24px 20px}.login-intro h1{font-size:23px}}
+@media(max-width:370px){.stats-grid{grid-template-columns:1fr}.stat-card{display:flex;align-items:center;justify-content:space-between}.stat-value{margin:0}.stat-note{display:none}.site-header{flex-direction:column}.action-row{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
-<header class="top"><nav class="wrap">
-<a class="brand" href="#inicio"><span class="flower">♧</span><span class="brandname">BELLA VITA<small>SALÃO DE BELEZA</small></span></a>
-<div class="navlinks"><a href="#inicio">Início</a><a href="#servicos">Serviços</a><a href="#catalogo">Catálogo</a><a href="#portfolio">Portfólio</a><a href="#agendamento">Agendamento</a><a href="#sobre">Sobre</a><a href="#contato">Contato</a></div>
-<a class="btn" href="#agendamento">▦ Agendar agora</a></nav></header>
-<main>
-<section class="wrap hero" id="inicio"><div><div class="eyebrow">Beleza · autoestima · você</div><h1>Realce o que te faz <em>única!</em></h1><p>No Bella Vita, cada detalhe é pensado para você se sentir ainda mais linda, confiante e especial.</p><div class="actions"><a class="btn" href="#agendamento">▦ Agendar horário</a><a class="btn outline" href="#servicos">Conhecer serviços</a></div></div>
-<img class="portrait" src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1000&q=85" alt="Retrato de beleza feminino">
-<div class="quick" id="contato">
-<a href="https://wa.me/5500000000000" target="_blank" rel="noopener"><span class="ico">◉</span><b>WhatsApp</b><small>Fale conosco</small></a>
-<a href="https://instagram.com/" target="_blank" rel="noopener"><span class="ico">◎</span><b>Instagram</b><small>Siga nosso perfil</small></a>
-<a href="https://maps.google.com/" target="_blank" rel="noopener"><span class="ico">⌖</span><b>Localização</b><small>Como chegar</small></a>
-<button type="button" data-toast="Cadastre o nome e a senha reais do Wi-Fi."><span class="ico">⌁</span><b>Wi-Fi</b><small>Acesso gratuito</small></button>
-<button type="button" data-toast="Cadastre a chave Pix oficial do salão."><span class="ico">◈</span><b>Pix</b><small>Pagamento via Pix</small></button>
-<a href="https://www.google.com/search?q=avaliar+sal%C3%A3o+de+beleza+no+Google" target="_blank" rel="noopener"><span class="ico">G</span><b>Avalie no Google</b><small>Sua opinião importa</small></a>
-</div></section>
-<section class="strip" id="sobre"><div class="wrap stripgrid">
-<div class="stripitem"><span>✂</span><div><b>Cabelos</b><small>Corte, coloração, escova e mais</small></div></div>
-<div class="stripitem"><span>♧</span><div><b>Estética</b><small>Cuidados com a pele e sobrancelhas</small></div></div>
-<div class="stripitem"><span>♧</span><div><b>Unhas</b><small>Manicure, pedicure e alongamento</small></div></div>
-<div class="stripitem"><span>♡</span><div><b>Maquiagem</b><small>Para todas as ocasiões</small></div></div>
-</div></section>
-<div class="light"><div class="wrap">
-<section class="section" id="servicos"><div class="head"><div><h2>Nossos Serviços</h2><p>Aqui você encontra tudo para se sentir bem e ainda mais bonita.</p></div><a href="#agendamento">Ver serviços →</a></div><div class="cards">
-<article class="card"><img src="https://images.unsplash.com/photo-1560869713-7d0a29430803?auto=format&fit=crop&w=500&q=80" alt="Corte feminino"><div class="body"><h3>Corte feminino</h3><p>A partir de R$ 60,00</p><button class="mini book" data-service="Corte feminino">Agendar</button></div></article>
-<article class="card"><img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=500&q=80" alt="Coloração"><div class="body"><h3>Coloração</h3><p>A partir de R$ 120,00</p><button class="mini book" data-service="Coloração">Agendar</button></div></article>
-<article class="card"><img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=500&q=80" alt="Escova"><div class="body"><h3>Escova</h3><p>A partir de R$ 80,00</p><button class="mini book" data-service="Escova">Agendar</button></div></article>
-<article class="card"><img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=500&q=80" alt="Manicure"><div class="body"><h3>Manicure</h3><p>A partir de R$ 40,00</p><button class="mini book" data-service="Manicure">Agendar</button></div></article>
-<article class="card"><img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=500&q=80" alt="Limpeza de pele"><div class="body"><h3>Limpeza de pele</h3><p>A partir de R$ 100,00</p><button class="mini book" data-service="Limpeza de pele">Agendar</button></div></article>
-<article class="card"><img src="https://images.unsplash.com/photo-1583001931096-959e9a1a6223?auto=format&fit=crop&w=500&q=80" alt="Sobrancelhas"><div class="body"><h3>Design de sobrancelhas</h3><p>A partir de R$ 40,00</p><button class="mini book" data-service="Design de sobrancelhas">Agendar</button></div></article>
-</div></section>
-<section class="section" id="portfolio"><div class="head"><div><h2>Nosso Portfólio</h2><p>Confira alguns trabalhos e inspire-se!</p></div><a href="#portfolio" data-toast="Nesta demonstração, o portfólio mostra uma seleção de imagens.">Ver trabalhos →</a></div><div class="gallery">
-<img src="https://images.unsplash.com/photo-1560869713-7d0a29430803?auto=format&fit=crop&w=500&q=80" alt="Cabelo com ondas">
-<img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=500&q=80" alt="Cabelo com luzes">
-<img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=500&q=80" alt="Unhas decoradas">
-<img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=500&q=80" alt="Penteado">
-<img src="https://images.unsplash.com/photo-1583001931096-959e9a1a6223?auto=format&fit=crop&w=500&q=80" alt="Detalhe de beleza">
-<img src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=500&q=80" alt="Cabelo finalizado"></div></section>
-<section class="section" id="catalogo"><div class="head"><div><h2>Nosso Catálogo</h2><p>Produtos selecionados para cuidar de você todos os dias.</p></div><a href="#catalogo" data-toast="Adicione aqui os produtos reais do salão.">Ver produtos →</a></div><div class="cards">
-<article class="card"><img src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=500&q=80" alt="Shampoo"><div class="body"><h3>Shampoo hidratante</h3><div class="price">R$ 39,90</div><button class="mini product" data-product="Shampoo hidratante">Consultar produto</button></div></article>
-<article class="card"><img src="https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&w=500&q=80" alt="Máscara capilar"><div class="body"><h3>Máscara capilar</h3><div class="price">R$ 49,90</div><button class="mini product" data-product="Máscara capilar">Consultar produto</button></div></article>
-<article class="card"><img src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=500&q=80" alt="Óleo finalizador"><div class="body"><h3>Óleo finalizador</h3><div class="price">R$ 59,90</div><button class="mini product" data-product="Óleo finalizador">Consultar produto</button></div></article>
-<article class="card"><img src="https://images.unsplash.com/photo-1556229010-6c3f2c9ca5f8?auto=format&fit=crop&w=500&q=80" alt="Kit skincare"><div class="body"><h3>Kit skincare</h3><div class="price">R$ 129,90</div><button class="mini product" data-product="Kit skincare">Consultar produto</button></div></article>
-<article class="card"><img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=500&q=80" alt="Esmalte"><div class="body"><h3>Esmalte</h3><div class="price">R$ 12,90</div><button class="mini product" data-product="Esmalte">Consultar produto</button></div></article>
-<article class="card"><img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=500&q=80" alt="Protetor facial"><div class="body"><h3>Protetor solar facial</h3><div class="price">R$ 69,90</div><button class="mini product" data-product="Protetor solar facial">Consultar produto</button></div></article>
-</div></section>
-</div></div>
-<section class="booking" id="agendamento"><div class="wrap bookinggrid">
-<img class="salon" src="https://images.unsplash.com/photo-1600948836101-f9ffda59d250?auto=format&fit=crop&w=700&q=85" alt="Interior do salão">
-<div><div class="eyebrow">Agende seu horário</div><h2>Seu momento<br>é agora!</h2><p>Escolha o serviço, o profissional e o melhor horário para você. É rápido, fácil e seguro.</p><p>♡ Atendimento personalizado<br>♙ Profissionais qualificados<br>♧ Ambiente aconchegante</p></div>
-<form class="formbox" id="bookingForm"><div class="fields">
-<div class="field"><label for="service">Serviço</label><select id="service" required><option value="">Escolha um serviço</option><option>Corte feminino</option><option>Coloração</option><option>Escova</option><option>Manicure</option><option>Limpeza de pele</option><option>Design de sobrancelhas</option><option>Maquiagem</option></select></div>
-<div class="field"><label for="professional">Profissional</label><select id="professional"><option>Qualquer profissional</option><option>Ana</option><option>Camila</option><option>Juliana</option></select></div>
-<div class="field"><label for="date">Data desejada</label><input id="date" type="date" required></div>
-<div class="field"><label for="time">Horário desejado (exemplo)</label><select id="time" required><option value="">Escolha um horário</option><option>09:00</option><option>10:00</option><option>11:00</option><option>13:00</option><option>14:00</option><option>15:00</option><option>16:00</option><option>17:00</option></select></div></div>
-<div class="field"><label for="name">Seu nome</label><input id="name" autocomplete="name" placeholder="Nome completo" required></div><div class="field"><label for="phone">WhatsApp</label><input id="phone" type="tel" autocomplete="tel" placeholder="(99) 99999-9999" required></div>
-<button class="btn" type="submit">Solicitar agendamento →</button><p class="note">Demonstração visual: este formulário ainda não salva reservas nem verifica horários reais. A integração com Supabase será feita na próxima etapa.</p></form>
-</div></section>
-</main>
-<footer class="footer"><div class="wrap footgrid"><a class="brand" href="#inicio"><span class="flower">♧</span><span class="brandname">BELLA VITA<small>SALÃO DE BELEZA</small></span></a><div class="footitem"><span>◉</span>(99) 98765-4321<small>Fale conosco</small></div><div class="footitem"><span>⌖</span>Rua das Flores, 123<small>Centro · Sua cidade/UF</small></div><div class="footitem"><span>◎</span>@bellavita<small>Siga nosso perfil</small></div><div class="slogan">Beleza é<br>se sentir bem!</div></div><div class="copy">© <span id="year"></span> Bella Vita · Todos os direitos reservados.</div></footer>
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
-<script>
-const toast=document.getElementById('toast');let timer;
-function showToast(msg){toast.textContent=msg;toast.classList.add('show');clearTimeout(timer);timer=setTimeout(()=>toast.classList.remove('show'),3500)}
-document.querySelectorAll('[data-toast]').forEach(b=>b.addEventListener('click',()=>showToast(b.dataset.toast)));
-document.querySelectorAll('.book').forEach(b=>b.addEventListener('click',()=>{document.getElementById('service').value=b.dataset.service;document.getElementById('agendamento').scrollIntoView({behavior:'smooth'});showToast('Serviço selecionado: '+b.dataset.service)}));
-document.querySelectorAll('.product').forEach(b=>b.addEventListener('click',()=>showToast('Produto demonstrativo: '+b.dataset.product+'. Configure o WhatsApp oficial para pedidos.')));
-const d=document.getElementById('date'),now=new Date();d.min=[now.getFullYear(),String(now.getMonth()+1).padStart(2,'0'),String(now.getDate()).padStart(2,'0')].join('-');
-document.getElementById('bookingForm').addEventListener('submit',e=>{e.preventDefault();showToast('Formulário demonstrativo preenchido. Nenhuma reserva foi enviada ou salva.');});
-document.getElementById('year').textContent=new Date().getFullYear();
-// Integração JRB DIGITAL: use ?slug=IDENTIFICADOR cadastrado no painel.
-const JRB_SUPABASE_URL='https://hqoqbjwjjmnhctjizvcs.supabase.co';
-const JRB_SUPABASE_KEY='sb_publishable_QK2T4-OP6omrbgGmTwbmsw_VKfgeFuk';
-async function carregarDadosJRB(){
- const slug=new URLSearchParams(location.search).get('slug');
- if(!slug)return; // Sem slug, mantém a demonstração original intacta.
- try{
-  const endpoint=JRB_SUPABASE_URL+'/rest/v1/public_sites?select=name,slug,content,published&slug=eq.'+encodeURIComponent(slug)+'&limit=1';
-  const resp=await fetch(endpoint,{headers:{apikey:JRB_SUPABASE_KEY,Authorization:'Bearer '+JRB_SUPABASE_KEY}});
-  if(!resp.ok)throw new Error('Não foi possível consultar os dados publicados.');
-  const rows=await resp.json(); if(!rows.length||!rows[0].published)throw new Error('Este site não foi encontrado ou não está publicado.');
-  const site=rows[0],c=site.content||{};
-  const setText=(selector,value)=>{if(value!==undefined&&value!==null&&String(value).trim()){const el=document.querySelector(selector);if(el)el.textContent=String(value)}};
-  const setHref=(selector,value)=>{const el=document.querySelector(selector);if(el&&value){el.href=value;el.target='_blank';el.rel='noopener noreferrer'}};
-  document.title=(site.name||'Site')+' | Site oficial';
-  setText('.brandname',site.name||'');
-  const brandSmall=document.querySelector('.brandname small');if(brandSmall)brandSmall.textContent=c.tagline||c.subtitle||'SITE OFICIAL';
-  setText('.hero h1',c.heroTitle||c.headline||site.name);
-  setText('.hero p',c.description||c.tagline||c.subtitle);
-  if(c.logoUrl){const flower=document.querySelector('.brand .flower');if(flower){const img=document.createElement('img');img.src=c.logoUrl;img.alt='Logo '+site.name;img.style.cssText='width:42px;height:42px;object-fit:contain';flower.replaceWith(img)}}
-  setHref('.quick a[href^="https://wa.me/"]',c.whatsapp?(String(c.whatsapp).startsWith('http')?c.whatsapp:'https://wa.me/'+String(c.whatsapp).replace(/\D/g,'')):null);
-  setHref('.quick a[href^="https://instagram.com/"]',c.instagram?(String(c.instagram).startsWith('http')?c.instagram:'https://instagram.com/'+String(c.instagram).replace(/^@/,'')):null);
-  setHref('.quick a[href^="https://maps.google.com/"]',c.maps||c.googleMaps||c.addressLink);
-  setHref('.quick a[href*="google.com/search"]',c.googleReview||c.googleReviews);
-  const quickLinks=[...document.querySelectorAll('.quick a,.quick button')];
-  const pix=quickLinks.find(el=>el.textContent.includes('Pix'));if(pix&&c.pix){pix.onclick=()=>{navigator.clipboard?.writeText(String(c.pix));showToast('Chave Pix copiada: '+c.pix)}}
-  const wifi=quickLinks.find(el=>el.textContent.includes('Wi-Fi'));if(wifi&&(c.wifiNome||c.wifiSenha)){wifi.onclick=()=>showToast('Wi-Fi: '+(c.wifiNome||'')+' · Senha: '+(c.wifiSenha||'não informada'))}
-  if(c.primaryColor){document.documentElement.style.setProperty('--pink',c.primaryColor);document.documentElement.style.setProperty('--pink2',c.secondaryColor||c.primaryColor)}
-  if(c.bgColor)document.documentElement.style.setProperty('--bg',c.bgColor);
-  // Serviços: produtos/serviços no formato [{name, description, price, image, link}].
-  const renderCards=(selector,items,kind)=>{if(!Array.isArray(items)||!items.length)return;const host=document.querySelector(selector);if(!host)return;host.innerHTML='';items.forEach(item=>{const article=document.createElement('article');article.className='card';if(item.image){const img=document.createElement('img');img.src=item.image;img.alt=item.name||'';img.loading='lazy';article.appendChild(img)}const body=document.createElement('div');body.className='body';const h=document.createElement('h3');h.textContent=item.name||'Item';body.appendChild(h);if(item.description){const p=document.createElement('p');p.textContent=item.description;body.appendChild(p)}if(item.price){const price=document.createElement('div');price.className='price';price.textContent=item.price;body.appendChild(price)}const btn=document.createElement('button');btn.className='mini';btn.textContent=kind==='service'?'Agendar serviço':'Consultar produto';btn.onclick=()=>{if(kind==='service'){const sel=document.getElementById('service');if(sel){let opt=[...sel.options].find(o=>o.text===item.name);if(!opt){opt=new Option(item.name,item.name);sel.add(opt)}sel.value=item.name}document.getElementById('agendamento').scrollIntoView({behavior:'smooth'});}else if(item.link){window.open(item.link,'_blank','noopener')}else if(c.whatsapp){const phone=String(c.whatsapp).replace(/\D/g,'');window.open('https://wa.me/'+phone+'?text='+encodeURIComponent('Olá! Tenho interesse em '+item.name),'_blank','noopener')}else showToast('Entre em contato para consultar este item.');};body.appendChild(btn);article.appendChild(body);host.appendChild(article)})};
-  renderCards('#servicos .cards',c.services||c.servicos,'service');
-  renderCards('#catalogo .cards',c.products||c.catalog,'product');
-  if(Array.isArray(c.portfolio)&&c.portfolio.length){const g=document.querySelector('#portfolio .gallery');if(g){g.innerHTML='';c.portfolio.forEach(item=>{const src=typeof item==='string'?item:item.image||item.url;if(!src)return;const img=document.createElement('img');img.src=src;img.alt=(typeof item==='object'&&item.title)||'Trabalho do portfólio';img.loading='lazy';g.appendChild(img)})}}
-  const note=document.querySelector('#bookingForm .note');if(note)note.textContent='Solicitação enviada pelo WhatsApp do estabelecimento.';
-  const form=document.getElementById('bookingForm');if(form)form.onsubmit=e=>{e.preventDefault();const phone=String(c.whatsapp||'').replace(/\D/g,'');if(!phone){showToast('O estabelecimento ainda não cadastrou o WhatsApp.');return}const details={servico:document.getElementById('service').value,profissional:document.getElementById('professional').value,data:document.getElementById('date').value,horario:document.getElementById('time').value,nome:document.getElementById('name').value,whatsapp:document.getElementById('phone').value};const msg='Olá! Gostaria de solicitar um agendamento:\n'+Object.entries(details).map(([k,v])=>k+': '+v).join('\n');window.open('https://wa.me/'+phone+'?text='+encodeURIComponent(msg),'_blank','noopener')};
- }catch(err){console.error('JRB Digital:',err);showToast(err.message||'Erro ao carregar os dados do site.')}
+<div id="root">
+  <div class="login-wrapper"><div class="card login-card">
+    <div class="brand-area"><i class="fa-solid fa-crown brand-icon"></i><div><div class="brand-name">IMPÉRIO DIGITAL</div><div class="brand-sub">Painel do administrador</div></div></div>
+    <div class="login-intro"><h1>Bem-vindo de volta</h1><p>Entre na sua conta para gerenciar os sites dos seus clientes em um só lugar.</p></div>
+    <form id="loginForm">
+      <div class="input-group"><label for="email">E-mail de acesso</label><input type="email" id="email" class="input-field" placeholder="seuemail@exemplo.com" autocomplete="username" required></div>
+      <div class="input-group"><label for="password">Senha</label><input type="password" id="password" class="input-field" placeholder="Sua senha" autocomplete="current-password" required></div>
+      <button type="submit" id="loginBtn" class="btn-main" style="width:100%;margin-top:5px"><i class="fa-solid fa-right-to-bracket"></i> Entrar no painel</button>
+    </form><p id="statusMsg" class="status" role="status" aria-live="polite"></p>
+  </div></div>
+</div>
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+const SUPABASE_URL='https://hqoqbjwjjmnhctjizvcs.supabase.co';
+const SUPABASE_KEY='sb_publishable_QK2T4-OP6omrbgGmTwbmsw_VKfgeFuk';
+const supabase=createClient(SUPABASE_URL,SUPABASE_KEY);
+const root=document.getElementById('root');
+let todosSites=[];
+const PUBLIC_SITE_BASE='https://riquelmedasilvadiassilva010-prog.github.io/links-imperio/cliente.html?slug=';
+function linkPublicoSite(site){return PUBLIC_SITE_BASE+encodeURIComponent(site.slug||'');}
+async function copiarLinkSite(site){if(!site.published){alert('Publique o site antes de compartilhar o link.');return;}const url=linkPublicoSite(site);try{await navigator.clipboard.writeText(url);alert('Link público copiado! Agora é só colar no WhatsApp.');}catch(e){window.prompt('Copie o link público do site:',url);}}
+function compartilharWhatsApp(site){if(!site.published){alert('Publique o site antes de compartilhar o link.');return;}const url=linkPublicoSite(site);const mensagem=`Olá! Aqui está o link do site ${site.name}: ${url}`;window.open('https://wa.me/?text='+encodeURIComponent(mensagem),'_blank','noopener,noreferrer');}
+const escapeHtml=value=>String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+function mostrarStatus(message,tipo='erro'){const el=document.getElementById('statusMsg');if(!el)return;el.style.color=tipo==='sucesso'?'var(--green)':tipo==='aviso'?'var(--gold)':'var(--red)';el.textContent=message;}
+async function verificarAdministrador(user){
+ const {data:perfil,error}=await supabase.from('profiles').select('role').eq('id',user.id).maybeSingle();
+ if(error)throw new Error('Não foi possível verificar seu perfil. Confira a tabela profiles e suas políticas RLS.');
+ if(perfil?.role!=='admin'){await supabase.auth.signOut();throw new Error('Esta conta não tem permissão de administrador.');}
 }
-carregarDadosJRB();
-</script></body></html>
+async function init(){try{const {data,error}=await supabase.auth.getSession();if(error)throw error;if(data.session?.user){await verificarAdministrador(data.session.user);renderPainel(data.session.user);}}catch(err){mostrarStatus(err.message||'Não foi possível iniciar o painel.');}}
+document.getElementById('loginForm').addEventListener('submit',async event=>{
+ event.preventDefault();const email=document.getElementById('email').value.trim();const password=document.getElementById('password').value;const btn=document.getElementById('loginBtn');
+ if(!email||!password)return mostrarStatus('Preencha o e-mail e a senha.');
+ btn.disabled=true;btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Autenticando...';mostrarStatus('Verificando acesso...','aviso');
+ try{const {data,error}=await supabase.auth.signInWithPassword({email,password});if(error)throw error;await verificarAdministrador(data.user);renderPainel(data.user);}
+ catch(err){mostrarStatus(err.message||'Erro ao entrar no painel.');btn.disabled=false;btn.innerHTML='<i class="fa-solid fa-right-to-bracket"></i> Entrar no painel';}
+});
+function renderPainel(user){
+ root.innerHTML=`<div class="app-layout">
+ <aside class="sidebar"><div>
+  <div class="sidebar-brand"><div class="brand-area"><i class="fa-solid fa-crown brand-icon"></i><div><div class="brand-name">IMPÉRIO DIGITAL</div><div class="brand-sub">Painel Master</div></div></div>
+  <div class="user-chip"><div class="user-avatar"><i class="fa-solid fa-user-shield"></i></div><div class="user-email">${escapeHtml(user.email)}</div></div></div>
+  <div class="nav-label">Menu principal</div><nav><a class="nav-item active" href="#" id="btnNavDashboard"><i class="fa-solid fa-chart-pie"></i> Visão geral</a><a class="nav-item" href="#" id="btnNavNovo"><i class="fa-solid fa-circle-plus"></i> Cadastrar site</a></nav>
+ </div><div class="sidebar-bottom"><button type="button" id="sairBtn" class="btn-secondary"><i class="fa-solid fa-right-from-bracket"></i> Sair da conta</button></div></aside>
+ <main><header class="page-heading"><div><div class="eyebrow">Área administrativa</div><h1>Gerenciador de sites</h1><p>Gerencie seus clientes, personalize páginas e controle a publicação.</p></div><button type="button" id="btnNovo" class="btn-main"><i class="fa-solid fa-plus"></i> Novo cliente</button></header>
+ <section class="stats-grid" aria-label="Resumo dos sites">
+  <div class="stat-card"><div class="stat-top"><span>Total de sites</span><span class="stat-icon"><i class="fa-solid fa-layer-group"></i></span></div><div class="stat-value" id="statTotal">—</div><div class="stat-note">Sites cadastrados no painel</div></div>
+  <div class="stat-card"><div class="stat-top"><span>Publicados</span><span class="stat-icon" style="color:var(--green);background:#35d49a16"><i class="fa-solid fa-circle-check"></i></span></div><div class="stat-value" id="statActive">—</div><div class="stat-note">Visíveis para os visitantes</div></div>
+  <div class="stat-card"><div class="stat-top"><span>Não publicados</span><span class="stat-icon" style="color:var(--red);background:#ff6b7816"><i class="fa-solid fa-eye-slash"></i></span></div><div class="stat-value" id="statInactive">—</div><div class="stat-note">Ainda não estão disponíveis</div></div>
+ </section>
+ <div id="formContainer"></div>
+ <div class="list-toolbar"><div><h2>Seus sites</h2><p id="siteCountLabel">Carregando sua lista...</p></div><div class="toolbar-controls"><div class="search-wrap"><i class="fa-solid fa-magnifying-glass"></i><input id="siteSearch" class="input-field" type="search" placeholder="Buscar por nome ou slug..." aria-label="Buscar sites"></div><select id="siteFilter" class="input-field filter-select" aria-label="Filtrar sites"><option value="todos">Todos</option><option value="ativos">Publicados</option><option value="inativos">Não publicados</option></select></div></div>
+ <div id="sitesList" aria-live="polite"><div class="loading-state"><i class="fa-solid fa-spinner fa-spin"></i> Carregando sites...</div></div>
+ </main></div>`;
+ document.getElementById('sairBtn').onclick=async()=>{const {error}=await supabase.auth.signOut();if(error)alert('Não foi possível sair: '+error.message);else location.reload();};
+ document.getElementById('btnNovo').onclick=mostrarFormNovo;
+ document.getElementById('btnNavNovo').onclick=e=>{e.preventDefault();mostrarFormNovo();document.querySelectorAll('.nav-item').forEach(x=>x.classList.toggle('active',x.id==='btnNavNovo'));};
+ document.getElementById('btnNavDashboard').onclick=e=>{e.preventDefault();document.getElementById('formContainer').innerHTML='';document.querySelectorAll('.nav-item').forEach(x=>x.classList.toggle('active',x.id==='btnNavDashboard'));carregarSites();};
+ document.getElementById('siteSearch').addEventListener('input',renderListaFiltrada);
+ document.getElementById('siteFilter').addEventListener('change',renderListaFiltrada);
+ carregarSites();
+}
+async function carregarSites(){
+ const list=document.getElementById('sitesList');if(!list)return;
+ list.innerHTML='<div class="loading-state"><i class="fa-solid fa-spinner fa-spin"></i> Carregando sites...</div>';
+ let sitesCarregados=null;
+ let erroFuncao=null;
+ try{
+  const {data,error}=await supabase.functions.invoke('admin-clientes',{body:{action:'listar_sites'}});
+  if(error)erroFuncao=error;
+  else if(data?.error)erroFuncao=new Error(data.error);
+  else if(Array.isArray(data?.sites))sitesCarregados=data.sites;
+ }catch(err){erroFuncao=err;}
+ // Plano alternativo: tenta a consulta direta já usada anteriormente pelo painel.
+ // Isso permite carregar a lista se a Edge Function estiver temporariamente inacessível,
+ // desde que as políticas RLS do Supabase autorizem o administrador.
+ if(!sitesCarregados){
+  const {data,error}=await supabase.from('sites').select('*').order('created_at',{ascending:false});
+  if(error){
+   const detalhe=erroFuncao?.message?`Falha na Edge Function: ${erroFuncao.message}. `:'';
+   list.innerHTML=`<div class="empty-state"><i class="fa-solid fa-triangle-exclamation"></i><h3>Não foi possível carregar</h3><p>${escapeHtml(detalhe+error.message)}</p><p class="small-help">Confira a publicação da Edge Function <strong>admin-clientes</strong> e as políticas de acesso (RLS) da tabela <strong>sites</strong> no Supabase.</p></div>`;return;
+  }
+  sitesCarregados=data||[];
+ }
+ todosSites=sitesCarregados;
+ document.getElementById('statTotal').textContent=todosSites.length;
+ document.getElementById('statActive').textContent=todosSites.filter(s=>s.published).length;
+ document.getElementById('statInactive').textContent=todosSites.filter(s=>!s.published).length;
+ renderListaFiltrada();
+}
+function renderListaFiltrada(){
+ const list=document.getElementById('sitesList');if(!list)return;
+ const search=(document.getElementById('siteSearch')?.value||'').trim().toLocaleLowerCase('pt-BR');
+ const filter=document.getElementById('siteFilter')?.value||'todos';
+ const sites=todosSites.filter(site=>{
+  const content=site.content&&typeof site.content==='object'?site.content:{};
+  const matchesText=[site.name,site.slug,content.clientEmail].some(v=>String(v||'').toLocaleLowerCase('pt-BR').includes(search));
+  const matchesStatus=filter==='todos'||(filter==='ativos'&&site.published)||(filter==='inativos'&&!site.published);
+  return matchesText&&matchesStatus;
+ });
+ const label=document.getElementById('siteCountLabel');if(label)label.textContent=`${sites.length} ${sites.length===1?'site encontrado':'sites encontrados'}`;
+ if(!sites.length){list.innerHTML=`<div class="empty-state"><i class="fa-solid fa-folder-open"></i><h3>${todosSites.length?'Nenhum resultado encontrado':'Seu painel está pronto para começar'}</h3><p>${todosSites.length?'Tente mudar a busca ou o filtro.':'Cadastre seu primeiro cliente para começar a montar sua carteira de sites.'}</p>${todosSites.length?'':'<button type="button" class="btn-main" id="emptyNew" style="margin-top:15px"><i class="fa-solid fa-plus"></i> Cadastrar primeiro site</button>'}</div>`;document.getElementById('emptyNew')?.addEventListener('click',mostrarFormNovo);return;}
+ list.innerHTML='';
+ sites.forEach(site=>{
+  const content=site.content&&typeof site.content==='object'?site.content:{};
+  const div=document.createElement('article');div.className='site-card';
+  div.innerHTML=`<div class="site-header"><div class="site-identity"><div class="site-symbol"><i class="fa-solid fa-globe"></i></div><div class="site-details"><div class="site-name">${escapeHtml(site.name)}</div><div class="site-url"><i class="fa-solid fa-link"></i> /${escapeHtml(site.slug)}</div><div class="site-client">${content.clientEmail?`<span style="color:var(--green)"><i class="fa-solid fa-user-check"></i> ${escapeHtml(content.clientEmail)}</span>`:'<span style="color:var(--gold)"><i class="fa-solid fa-circle-exclamation"></i> E-mail do cliente não vinculado</span>'}</div></div></div><span class="badge ${site.published?'badge-active':'badge-inactive'}">${site.published?'Publicado':'Não publicado'}</span></div>
+  <div class="site-public-link" style="margin-top:12px;padding:10px 12px;background:#111722;border:1px solid #252b39;border-radius:9px;font-size:11px;overflow-wrap:anywhere"><strong style="color:var(--muted);display:block;margin-bottom:5px">LINK PÚBLICO</strong><span>${escapeHtml(linkPublicoSite(site))}</span></div>
+  <div class="action-row"><button type="button" class="btn-act btn-act-edit btn-edit"><i class="fa-solid fa-sliders"></i> Editar site</button><a href="${linkPublicoSite(site)}" target="_blank" rel="noopener noreferrer" class="btn-act btn-act-view"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver site</a><button type="button" class="btn-act btn-act-copy btn-copy" ${site.published?'':'disabled'}><i class="fa-solid fa-copy"></i> Copiar link</button><button type="button" class="btn-act btn-act-share btn-share" ${site.published?'':'disabled'}><i class="fa-brands fa-whatsapp"></i> WhatsApp</button><button type="button" class="btn-act btn-act-toggle btn-toggle"><i class="fa-solid ${site.published?'fa-eye-slash':'fa-eye'}"></i> ${site.published?'Despublicar':'Publicar'}</button><button type="button" class="btn-act btn-act-delete btn-delete"><i class="fa-solid fa-trash-can"></i> Apagar</button></div>`;
+  div.querySelector('.btn-toggle').onclick=async()=>{if(!confirm(`${site.published?'Despublicar':'Publicar'} o site "${site.name}"?`))return;const {error}=await supabase.from('sites').update({published:!site.published}).eq('id',site.id);if(error)return alert('Não foi possível alterar a publicação: '+error.message);await carregarSites();};
+  div.querySelector('.btn-copy').onclick=()=>copiarLinkSite(site);
+  div.querySelector('.btn-share').onclick=()=>compartilharWhatsApp(site);
+  div.querySelector('.btn-edit').onclick=()=>{abrirEditor(site);document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));};
+  div.querySelector('.btn-delete').onclick=async()=>{if(!confirm(`Tem certeza que deseja apagar definitivamente o site "${site.name}"? Esta ação não pode ser desfeita.`))return;const {error}=await supabase.from('sites').delete().eq('id',site.id);if(error)return alert('Não foi possível apagar o site: '+error.message);await carregarSites();};
+  list.appendChild(div);
+ });
+}
+function mostrarFormNovo(){
+ const container=document.getElementById('formContainer');
+ container.innerHTML=`<section class="card form-card"><div class="form-heading"><div class="site-symbol"><i class="fa-solid fa-user-plus"></i></div><div><h2>Cadastrar novo cliente</h2><p>Crie a ficha do negócio. O site começa não publicado, para você conferir antes de liberar.</p></div></div>
+ <div class="section-title"><i class="fa-solid fa-store"></i> Dados do negócio</div><div class="grid-2"><div class="input-group"><label for="nTipo">Modelo de site</label><select id="nTipo" class="input-field"><option value="links">Página de links</option><option value="business">Site comercial</option><option value="catalog">Catálogo de produtos/serviços</option><option value="portfolio">Portfólio profissional</option><option value="landing">Página de divulgação</option></select><p class="small-help">O modelo escolhido define como a página pública será apresentada.</p></div><div class="input-group"><label for="nNome">Nome do negócio</label><input id="nNome" class="input-field" placeholder="Ex.: Império Barber" maxlength="120"></div><div class="input-group"><label for="nSlug">Identificador / URL</label><input id="nSlug" class="input-field" placeholder="Ex.: imperio-barber" maxlength="80"></div><div class="input-group" style="grid-column:1/-1"><label for="nClientEmail">E-mail da conta do cliente (opcional)</label><input id="nClientEmail" type="email" class="input-field" placeholder="cliente@exemplo.com"></div><div class="input-group" style="grid-column:1/-1"><label for="nExternalUrl">Link do site já publicado no GitHub (opcional)</label><input id="nExternalUrl" type="url" class="input-field" placeholder="https://seuusuario.github.io/seu-site/"><p class="small-help">O link fica salvo no cadastro. Para o painel alterar o conteúdo desse site, o HTML publicado também precisa estar integrado ao Supabase.</p></div></div>
+ <p class="small-help"><i class="fa-solid fa-shield-halved"></i> Vincular um e-mail aqui registra o contato no cadastro. A permissão real de acesso do cliente precisa ser configurada separadamente no Supabase.</p>
+ <div class="form-actions"><button type="button" id="salvarNovo" class="btn-main"><i class="fa-solid fa-floppy-disk"></i> Salvar site</button><button type="button" id="cancelarNovo" class="btn-secondary">Cancelar</button></div><p id="msgNovo" class="status" role="status"></p></section>`;
+ container.scrollIntoView({behavior:'smooth',block:'start'});
+ document.getElementById('cancelarNovo').onclick=()=>container.innerHTML='';
+ document.getElementById('salvarNovo').onclick=async()=>{
+  const btn=document.getElementById('salvarNovo'),msg=document.getElementById('msgNovo');
+  const nome=document.getElementById('nNome').value.trim();
+  const slug=document.getElementById('nSlug').value.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9-]+/g,'-').replace(/^-+|-+$/g,'');
+  const clientEmail=document.getElementById('nClientEmail').value.trim().toLowerCase();
+  if(!nome||!slug){msg.style.color='var(--red)';msg.textContent='Preencha o nome e o identificador.';return;}
+  if(clientEmail&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clientEmail)){msg.style.color='var(--red)';msg.textContent='Confira o e-mail do cliente.';return;}
+  const externalUrl=document.getElementById('nExternalUrl').value.trim();if(externalUrl&&!/^https?:\/\//i.test(externalUrl)){msg.style.color='var(--red)';msg.textContent='O link do site deve começar com https:// ou http://.';return;}
+  btn.disabled=true;msg.style.color='var(--muted)';msg.textContent='Salvando...';
+  try{const {data:{user},error:userError}=await supabase.auth.getUser();if(userError||!user)throw new Error('Sua sessão expirou. Entre novamente.');
+   const {error}=await supabase.from('sites').insert({owner_id:user.id,name:nome,slug,content:{clientEmail,siteType:document.getElementById('nTipo').value,externalUrl:document.getElementById('nExternalUrl').value.trim()},published:false});if(error)throw error;
+   msg.style.color='var(--green)';msg.textContent='Site cadastrado como não publicado.';await carregarSites();setTimeout(()=>{if(container.isConnected)container.innerHTML='';},900);
+  }catch(err){msg.style.color='var(--red)';msg.textContent='Erro ao cadastrar: '+(err.message||'erro desconhecido');btn.disabled=false;}
+ };
+}
+function abrirEditor(site){
+ const container=document.getElementById('formContainer'),c=site.content&&typeof site.content==='object'?site.content:{};
+ container.innerHTML=`<section class="card form-card"><div class="form-heading"><div class="site-symbol"><i class="fa-solid fa-wand-magic-sparkles"></i></div><div><h2>Personalizar site</h2><p>Edite as informações, os links e o visual de <strong>${escapeHtml(site.name)}</strong>.</p>${c.externalUrl?`<p><a class="btn btn-secondary" href="${escapeHtml(c.externalUrl)}" target="_blank" rel="noopener">Abrir site publicado</a></p>`:""}</div></div>
+ <div class="section-title"><i class="fa-solid fa-user-lock"></i> Vínculo do cliente</div><div class="input-group"><label for="eClientEmail">E-mail da conta do cliente</label><input id="eClientEmail" type="email" class="input-field" value="${escapeHtml(c.clientEmail||'')}" placeholder="cliente@exemplo.com"></div>
+ <div class="input-group" style="grid-column:1/-1"><label for="eExternalUrl">Link do site publicado no GitHub</label><input id="eExternalUrl" type="url" class="input-field" value="${escapeHtml(c.externalUrl||'')}" placeholder="https://seuusuario.github.io/seu-site/"><p class="small-help">Este é o endereço do site que o cliente já vê. Salvar o endereço não altera páginas que não estejam conectadas ao Supabase.</p></div>
+ <div class="section-title"><i class="fa-solid fa-layer-group"></i> Modelo do site</div><div class="input-group"><label for="eTipo">Tipo de projeto</label><select id="eTipo" class="input-field"><option value="links" ${((c.siteType||c.model||'links')==='links')?'selected':''}>Página de links</option><option value="business" ${((c.siteType||c.model)==='business')?'selected':''}>Site comercial</option><option value="catalog" ${((c.siteType||c.model)==='catalog')?'selected':''}>Catálogo de produtos/serviços</option><option value="portfolio" ${((c.siteType||c.model)==='portfolio')?'selected':''}>Portfólio profissional</option><option value="landing" ${((c.siteType||c.model)==='landing')?'selected':''}>Página de divulgação</option></select><p class="small-help">Escolha o estilo visual e cadastre os produtos, serviços ou trabalhos que serão exibidos na página pública.</p></div> <div class="section-title"><i class="fa-solid fa-box-open"></i> Catálogo de produtos/serviços</div><div class="input-group"><label for="eCatalogItems">Produtos ou serviços</label><textarea id="eCatalogItems" class="input-field" rows="7" style="min-height:150px;resize:vertical" placeholder="Corte masculino | Corte tradicional | 35,00 | https://exemplo.com/corte.jpg">${escapeHtml((Array.isArray(c.products)?c.products:[]).map(x=>[x.name||'',x.description||'',x.price||'',x.image||''].join(' | ')).join('\n'))}</textarea><p class="small-help">Um item por linha, no formato: Nome | descrição | preço | link direto da imagem. Exemplo: Kit hidratação | Para cabelos | 35,00 | https://.../foto.jpg.</p></div><div class="section-title"><i class="fa-solid fa-scissors"></i> Serviços (modelo Bella Vita)</div><div class="input-group"><label for="eServicesItems">Lista de serviços</label><textarea id="eServicesItems" class="input-field" rows="6" style="min-height:120px;resize:vertical" placeholder="Corte feminino | Corte e finalização | R$ 60,00 | https://.../foto.jpg">${escapeHtml((Array.isArray(c.services)?c.services:[]).map(x=>[x.name||'',x.description||'',x.price||'',x.image||''].join(' | ')).join('\n'))}</textarea><p class="small-help">Um serviço por linha: Nome | descrição | preço | link direto da imagem.</p></div><div class="section-title"><i class="fa-solid fa-images"></i> Portfólio</div><div class="input-group"><label for="ePortfolioItems">Fotos dos trabalhos</label><textarea id="ePortfolioItems" class="input-field" rows="5" style="min-height:100px;resize:vertical" placeholder="https://.../trabalho1.jpg
+https://.../trabalho2.jpg">${escapeHtml((Array.isArray(c.portfolio)?c.portfolio:[]).map(x=>typeof x==='string'?x:(x.image||x.url||'')).filter(Boolean).join('\n'))}</textarea><p class="small-help">Cole um link direto de imagem por linha. Use URLs públicas terminando em .jpg, .png ou .webp.</p></div><div class="section-title"><i class="fa-solid fa-address-card"></i> Informações do negócio</div><div class="grid-2">
+ <div class="input-group"><label for="eNome">Nome do negócio</label><input id="eNome" class="input-field" maxlength="120" value="${escapeHtml(site.name)}"></div>
+ <div class="input-group"><label for="eSlug">Identificador / URL</label><input id="eSlug" class="input-field" maxlength="80" value="${escapeHtml(site.slug)}"></div>
+ <div class="input-group"><label for="eLogoUrl">Link direto da logo</label><input id="eLogoUrl" class="input-field" type="url" value="${escapeHtml(c.logoUrl||'')}" placeholder="https://.../logo.png"><p class="small-help">Use o link direto do arquivo da imagem, terminando normalmente em .png, .jpg ou .webp.</p></div>
+  <div class="input-group"><label for="eTagline">Frase abaixo da logo</label><input id="eTagline" class="input-field" maxlength="180" value="${escapeHtml(c.tagline||'')}" placeholder="Ex.: Mais que um serviço, uma experiência"><p class="small-help">Texto curto para aparecer abaixo da logo. A página pública também precisa exibir o campo tagline para ele ficar visível.</p></div>
+ <div class="input-group"><label for="eWhats">WhatsApp (números com DDI)</label><input id="eWhats" class="input-field" value="${escapeHtml(c.whatsapp||'')}" placeholder="Ex.: 5598999999999"></div>
+ <div class="input-group"><label for="eInsta">Instagram (usuário ou link)</label><input id="eInsta" class="input-field" value="${escapeHtml(c.instagram||'')}" placeholder="@seuperfil"></div>
+ <div class="input-group"><label for="ePix">Chave Pix</label><input id="ePix" class="input-field" value="${escapeHtml(c.pix||'')}" placeholder="Chave Pix para copiar"></div>
+ <div class="input-group"><label for="ePixNome">Nome do recebedor Pix</label><input id="ePixNome" class="input-field" maxlength="25" value="${escapeHtml(c.pixNome||'')}" placeholder="Nome do titular da conta"></div>
+ <div class="input-group"><label for="ePixCidade">Cidade do recebedor Pix</label><input id="ePixCidade" class="input-field" maxlength="15" value="${escapeHtml(c.pixCidade||'')}" placeholder="Ex.: SAO LUIS"></div>
+ <div class="input-group"><label for="eWifiNome">Nome do Wi-Fi</label><input id="eWifiNome" class="input-field" value="${escapeHtml(c.wifiNome||'')}"></div>
+ <div class="input-group"><label for="eWifiSenha">Senha do Wi-Fi</label><input id="eWifiSenha" class="input-field" value="${escapeHtml(c.wifiSenha||'')}"></div>
+ <div class="input-group"><label for="eMaps">Link do Google Maps / avaliações</label><input id="eMaps" class="input-field" value="${escapeHtml(c.maps||'')}" placeholder="https://..."></div></div>
+ <div class="section-title"><i class="fa-solid fa-layer-group"></i> Modelo de layout</div>
+ <div class="input-group"><label for="eLayout">Estilo visual deste cliente</label><select id="eLayout" class="input-field">
+ <option value="elegante" ${(!c.layout||c.layout==='elegante')?'selected':''}>Elegante — destaque e espaçamento premium</option>
+ <option value="moderno" ${c.layout==='moderno'?'selected':''}>Moderno — cartões compactos e dinâmicos</option>
+ <option value="minimalista" ${c.layout==='minimalista'?'selected':''}>Minimalista — visual simples e limpo</option>
+ </select><p class="small-help">O modelo muda a apresentação, não os links nem os dados deste cliente.</p></div>
+ <div class="section-title"><i class="fa-solid fa-image"></i> Fundo com imagem (somente administrador)</div>
+ <div class="input-group"><label for="eBgImage">Link direto da imagem de fundo</label><input id="eBgImage" class="input-field" type="url" value="${escapeHtml(c.bgImage||'')}" placeholder="https://.../imagem.jpg"><p class="small-help">Cole o link direto do arquivo da imagem (não a página de compartilhamento). Estes controles ficam apenas no painel administrativo; a página pública usa as configurações salvas neste site quando você atualizar o modelo cliente.html.</p></div>
+ <div class="grid-2">
+ <div class="input-group"><label for="eBgOpacity">Intensidade da imagem: <strong id="eBgOpacityValue">${Number.isFinite(Number(c.bgImageOpacity))?Number(c.bgImageOpacity):35}%</strong></label><input id="eBgOpacity" class="input-field" type="range" min="0" max="100" step="5" value="${Number.isFinite(Number(c.bgImageOpacity))?Math.max(0,Math.min(100,Number(c.bgImageOpacity))):35}" style="padding:8px 2px"><p class="small-help">0% quase invisível · 100% imagem bem forte.</p></div>
+ <div class="input-group"><label for="eBgGradient">Degradê escuro</label><select id="eBgGradient" class="input-field"><option value="0" ${String(c.bgGradient??'55')==='0'?'selected':''}>Sem degradê</option><option value="25" ${String(c.bgGradient??'55')==='25'?'selected':''}>Suave</option><option value="55" ${String(c.bgGradient??'55')==='55'?'selected':''}>Médio</option><option value="80" ${String(c.bgGradient??'55')==='80'?'selected':''}>Forte</option></select><p class="small-help">O degradê ajuda a manter os textos legíveis por cima da imagem.</p></div></div>
+ <div id="eBgPreview" style="min-height:125px;border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center;padding:18px;background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),#11151e;color:white;margin:10px 0 20px"><span style="font-weight:800;text-shadow:0 2px 8px #000">Prévia do fundo no painel<br><small style="font-weight:500;opacity:.85">A imagem e o degradê são ajustados aqui</small></span></div>
+ <div class="section-title"><i class="fa-solid fa-palette"></i> Design e identidade visual</div><div class="grid-3">
+ <div class="input-group"><label for="eBgColor">Cor de fundo</label><input type="color" id="eBgColor" class="input-field" value="${escapeHtml(c.bgColor||'#0a0b0e')}" style="height:48px;padding:5px"><label style="display:flex;align-items:center;gap:8px;margin-top:9px;font-size:12px"><input type="checkbox" id="eBgColorEnabled" ${c.bgColorEnabled===false?'':'checked'} style="width:16px;height:16px"> Ativar cor de fundo</label><label for="eBgColorOpacity" style="display:block;margin-top:10px">Opacidade da cor: <strong id="eBgColorOpacityValue">${Number.isFinite(Number(c.bgColorOpacity))?Number(c.bgColorOpacity):100}%</strong></label><input type="range" id="eBgColorOpacity" class="input-field" min="0" max="100" step="5" value="${Number.isFinite(Number(c.bgColorOpacity))?Math.max(0,Math.min(100,Number(c.bgColorOpacity))):100}" style="padding:8px 2px"><p class="small-help">Desative a cor ou reduza a opacidade para deixar a imagem aparecer mais.</p></div>
+ <div class="input-group"><label for="eCardColor">Cor dos cartões</label><input type="color" id="eCardColor" class="input-field" value="${escapeHtml(c.cardColor||'#14151c')}" style="height:48px;padding:5px"></div>
+ <div class="input-group"><label for="ePrimaryColor">Cor de destaque</label><input type="color" id="ePrimaryColor" class="input-field" value="${escapeHtml(c.primaryColor||'#e8b84a')}" style="height:48px;padding:5px"></div>
+ <div class="input-group"><label for="eTextColor">Cor do texto</label><input type="color" id="eTextColor" class="input-field" value="${escapeHtml(c.textColor||'#ffffff')}" style="height:48px;padding:5px"></div>
+ <div class="input-group"><label for="eFont">Fonte</label><select id="eFont" class="input-field"><option value="system-ui" ${c.font==='system-ui'?'selected':''}>Padrão (System UI)</option><option value="'Poppins', sans-serif" ${String(c.font||'').includes('Poppins')?'selected':''}>Poppins</option><option value="'Montserrat', sans-serif" ${String(c.font||'').includes('Montserrat')?'selected':''}>Montserrat</option><option value="'Playfair Display', serif" ${String(c.font||'').includes('Playfair')?'selected':''}>Playfair Display</option><option value="'Bebas Neue', cursive" ${String(c.font||'').includes('Bebas')?'selected':''}>Bebas Neue</option></select></div>
+ <div class="input-group"><label for="eBtnStyle">Formato dos botões</label><select id="eBtnStyle" class="input-field"><option value="12px" ${c.btnRadius==='12px'||!c.btnRadius?'selected':''}>Suave (12px)</option><option value="30px" ${c.btnRadius==='30px'?'selected':''}>Pílula (30px)</option><option value="0px" ${c.btnRadius==='0px'?'selected':''}>Quadrado (0px)</option></select></div></div>
+ <div class="form-actions"><button type="button" id="salvarEdicao" class="btn-main"><i class="fa-solid fa-floppy-disk"></i> Salvar alterações</button><button type="button" id="fecharEdicao" class="btn-secondary">Fechar editor</button></div><p id="msgEdit" class="status" role="status"></p></section>`;
+ container.scrollIntoView({behavior:'smooth',block:'start'});
+ const bgImageInput=document.getElementById('eBgImage'),bgOpacityInput=document.getElementById('eBgOpacity'),bgGradientInput=document.getElementById('eBgGradient'),bgOpacityValue=document.getElementById('eBgOpacityValue'),bgColorInput=document.getElementById('eBgColor'),bgColorEnabledInput=document.getElementById('eBgColorEnabled'),bgColorOpacityInput=document.getElementById('eBgColorOpacity'),bgColorOpacityValue=document.getElementById('eBgColorOpacityValue'),bgPreview=document.getElementById('eBgPreview');
+ function atualizarPreviaFundo(){
+  const opacity=Math.max(0,Math.min(100,Number(bgOpacityInput.value)||0))/100;
+  const gradient=Math.max(0,Math.min(100,Number(bgGradientInput.value)||0))/100;
+  const colorOpacity=bgColorEnabledInput.checked?Math.max(0,Math.min(100,Number(bgColorOpacityInput.value)||0))/100:0;
+  bgOpacityValue.textContent=Math.round(opacity*100)+'%';
+  bgColorOpacityValue.textContent=Math.round(Number(bgColorOpacityInput.value)||0)+'%';
+  const url=bgImageInput.value.trim();
+  const safeUrl=/^https?:\/\//i.test(url)?url.replace(/[\\"'()]/g,''):'';
+  const hex=(bgColorInput.value||'#0a0b0e').replace('#','');
+  const rgb=[parseInt(hex.slice(0,2),16),parseInt(hex.slice(2,4),16),parseInt(hex.slice(4,6),16)].join(',');
+  bgPreview.style.backgroundColor='#11151e';
+  if(safeUrl){
+   const layers=[];
+   if(gradient>0) layers.push(`linear-gradient(rgba(0,0,0,${gradient}),rgba(0,0,0,${gradient}))`);
+   if(colorOpacity>0) layers.push(`linear-gradient(rgba(${rgb},${colorOpacity}),rgba(${rgb},${colorOpacity}))`);
+   if(opacity<1) layers.push(`linear-gradient(rgba(0,0,0,${1-opacity}),rgba(0,0,0,${1-opacity}))`);
+   layers.push(`url("${safeUrl}")`);
+   bgPreview.style.backgroundImage=layers.join(',');
+  } else {
+   bgPreview.style.backgroundImage=bgColorEnabledInput.checked?`linear-gradient(rgba(${rgb},${colorOpacity}),rgba(${rgb},${colorOpacity}))`:'none';
+  }
+  bgPreview.style.backgroundSize='cover';bgPreview.style.backgroundPosition='center';
+ }
+ [bgImageInput,bgOpacityInput,bgGradientInput,bgColorInput,bgColorOpacityInput,bgColorEnabledInput].forEach(el=>el.addEventListener('input',atualizarPreviaFundo));atualizarPreviaFundo();
+ document.getElementById('fecharEdicao').onclick=()=>container.innerHTML='';
+ document.getElementById('salvarEdicao').onclick=async()=>{
+  const btn=document.getElementById('salvarEdicao'),msg=document.getElementById('msgEdit'),nome=document.getElementById('eNome').value.trim();
+  const slug=document.getElementById('eSlug').value.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9-]+/g,'-').replace(/^-+|-+$/g,'');
+  const email=document.getElementById('eClientEmail').value.trim().toLowerCase();
+  if(!nome||!slug){msg.style.color='var(--red)';msg.textContent='Preencha o nome e o identificador.';return;}
+  if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){msg.style.color='var(--red)';msg.textContent='Confira o e-mail do cliente.';return;}
+  btn.disabled=true;msg.style.color='var(--muted)';msg.textContent='Salvando alterações...';
+  const parseItems=(id)=>document.getElementById(id).value.split('\n').map(line=>line.trim()).filter(Boolean).map(line=>{const parts=line.split('|').map(v=>v.trim());return {name:parts[0]||'',description:parts[1]||'',price:parts[2]||'',image:parts[3]||''}}).filter(x=>x.name);
+  const products=parseItems('eCatalogItems');
+  const services=parseItems('eServicesItems');
+  const portfolio=document.getElementById('ePortfolioItems').value.split('\n').map(line=>line.trim()).filter(line=>/^https?:\/\//i.test(line));
+  const externalUrl=document.getElementById('eExternalUrl').value.trim();
+  if(externalUrl&&!/^https?:\/\//i.test(externalUrl)){msg.style.color='var(--red)';msg.textContent='O link do site deve começar com https:// ou http://.';return;}
+  const updatedContent={...c,products,services,portfolio,clientEmail:email,externalUrl,siteType:document.getElementById('eTipo').value,layout:document.getElementById('eLayout').value,logoUrl:document.getElementById('eLogoUrl').value.trim(),whatsapp:document.getElementById('eWhats').value.trim(),instagram:document.getElementById('eInsta').value.trim(),pix:document.getElementById('ePix').value.trim(),pixNome:document.getElementById('ePixNome').value.trim(),pixCidade:document.getElementById('ePixCidade').value.trim(),wifiNome:document.getElementById('eWifiNome').value.trim(),wifiSenha:document.getElementById('eWifiSenha').value.trim(),maps:document.getElementById('eMaps').value.trim(),bgColor:document.getElementById('eBgColor').value,bgColorEnabled:document.getElementById('eBgColorEnabled').checked,bgColorOpacity:Number(document.getElementById('eBgColorOpacity').value),cardColor:document.getElementById('eCardColor').value,primaryColor:document.getElementById('ePrimaryColor').value,textColor:document.getElementById('eTextColor').value,font:document.getElementById('eFont').value,btnRadius:document.getElementById('eBtnStyle').value,bgImage:document.getElementById('eBgImage').value.trim(),bgImageOpacity:Number(document.getElementById('eBgOpacity').value),bgGradient:Number(document.getElementById('eBgGradient').value)};
+  try{const {error}=await supabase.from('sites').update({name:nome,slug,content:updatedContent}).eq('id',site.id);if(error)throw error;msg.style.color='var(--green)';msg.textContent='Alterações e e-mail do cliente salvos no banco de dados.';await carregarSites();setTimeout(()=>{if(container.isConnected)container.innerHTML='';},900);}
+  catch(err){msg.style.color='var(--red)';msg.textContent='Erro ao salvar: '+(err.message||'erro desconhecido');btn.disabled=false;}
+ };
+}
+init();
+</script>
+</body>
+</html>
